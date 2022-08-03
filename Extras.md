@@ -23,6 +23,7 @@ generate a token for that IAM role(eg: developer, engineeer).temporary credentia
 
 **AWS identities for non human ( for services)**: Eg Lambda reading data from DB.Associate an IAM role with services.
 
+An organization may have many AWS accounts. 
 
 Create a Role:
 
@@ -32,8 +33,15 @@ Create a Role:
 - SAML 2.0 federation ( Corporate Identity) : For federated Human identities
 
 
-**How authentication works in AWS**: Credentials taken. Request signed with hMac(or hmax ??) signature. Service validates the signature(Authentication). Validates Policies( Authorization).
+**How authentication works in AWS**: Credentials taken. Request signed with hMac(or hmax ??) signature. Service validates the signature(Authentication). Validates Policies( Authorization). Caller account and Destination Account both need to allow access.
 
-Policy Statement: Effect(Allow or Deny), Action(sqs:*), Resource( arn of resource this policy is applicable)
+**Policies**
+IAM policies attached to IAM principal or identities(users, roles) . What can this identity do? Policy Statement: Effect(Allow or Deny), Action(sqs:*), Resource( arn of resource this policy is applicable)
 
-An organization may have many AWS accounts. 
+**Working across accounts**
+- Resource Based Policy: IAM policies attached to a resource.Who can access this resource? eg : S3 bucket policy. Policy Statement: Effect, **Principal**( Who can take this action), Action, Resource
+- Assume role: Role trust policy attached to an IAM role in destination account. It states who can assume this role. 
+  Effect: Allow, Action: stsAssumeRole, Principal: Account B. Source Account A ->  Caller IAM role should allow to assume cross account role in B. 
+  
+  **AWS Organizations**
+  To manage multiple accounts
