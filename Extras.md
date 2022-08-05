@@ -45,3 +45,42 @@ IAM policies attached to IAM principal or identities(users, roles) . What can th
   
   **AWS Organizations**
   To manage multiple accounts
+  
+  Master Account owns AWS Organization Service.They pay the bills.
+  Organization units under AWS Organization.
+  Accounts with OUs.
+  AWS Single Signon : Allows mapping to accounts in OUc.
+  Use Organizations **Service Control Policy** to control access across all organizations. They deny what people cannot do.
+  
+  # KMS
+  
+  - SSE-S3: AES-256. Server Side Encrytption with AWS managed keys. AWS manages the encryption key.
+  - AWS-KMS: SSE-KMS. An AWS KMS key in your account. Customer managed key(CMK). Role that Reads S3, should have permission for key as well.
+  
+  Envelop Encryption: 
+  
+  # VPC
+  
+  VPC is bound to a Region.
+  Each Region has Availability Zones. VPC Network spans AZ.
+  Each AZ has one public subnet and one private subnet.
+  Each subnet is non-overlapping ip range.
+  Application Load Balancers will be in Public subnet. One ALB in each AZ.
+  VPCs are normally for one account. You can share VPC between accounts.
+  Ec2 instances and RDS in private subnet.
+  
+  Security Groups
+  - Stateful goverance. Reply traffic is allowed.
+  
+  Routing
+  
+  Public subnet: Have publicaly routable IPs. Rouing table -> Any local ip : local VPC, any other ip : Internet Gateway
+  Private subnet:No direct route to internet.Packet cannot leave VPC. By default only one route which sets route to "local VPC".
+  
+  Internet Gateway: Attached to VPC. 
+  
+  NAT Gateway: Is not reachable from internet. But can reach Internet.
+  
+  Some AWS Services are not in VPC- > S3, CloudWatch Logs. How private subnets reach to them? VPC end points.
+  VPC end point configured in ur private subnet allows to configure routes from private subnet to AWS services.
+  VPC Endpoint Policy: Attached to a network.
