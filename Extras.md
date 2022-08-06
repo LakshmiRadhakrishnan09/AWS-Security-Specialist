@@ -84,3 +84,7 @@ IAM policies attached to IAM principal or identities(users, roles) . What can th
   Some AWS Services are not in VPC- > S3, CloudWatch Logs. How private subnets reach to them? VPC end points.
   VPC end point configured in ur private subnet allows to configure routes from private subnet to AWS services.
   VPC Endpoint Policy: Attached to a network.
+  
+  https://www.youtube.com/watch?v=SGntDzEn30s
+  
+  
