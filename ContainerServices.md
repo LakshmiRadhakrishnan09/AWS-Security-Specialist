@@ -18,6 +18,8 @@ ECS: Container Orchestration service in AWS.
 
 ECS Cluster managed by AWS. 
 
+### ECS with EC2
+
 Where are these containers running?\
 On EC2 instances. These EC2 instances will have Docker Agent and ECS Agent. You have **delegated management of containers to ECS**. \
 You still have to manage the actual Ec2 instances.\
@@ -26,6 +28,8 @@ You need to manage OS, Docker agent, ECS agent.\
 You have full access to Infrastructure. \
 Infrastrure is managed by you.\
 Pay for all Ec2 instances irrespective of their usage.
+
+### ECS with Fargate
 
 If you want to delegate infrastructure management also to AWS : AWS Fargate.\
 Alternate to EC2 instances. You dont need to provision any infrastructure.Fargate will take care of spinning up VMs.\
