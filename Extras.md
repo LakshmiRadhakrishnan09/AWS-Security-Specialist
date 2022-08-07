@@ -109,9 +109,22 @@ IAM policies attached to IAM principal or identities(users, roles) . What can th
   - IAM role: What it can access, Who can assume it. Permission should be given for resource to assume role
   - Use IAM roles for EC2 instances.
   - Enable CloudTrails to get logs of all API calls. Enable all all regions even in regions u dont operate. Logs are stored in S3. This S3 should not be publicaly accessible.
+  - Centralize CloudTrail logs
+  - Do not store secrets in code
+  
   
   Control access using AWS resource tag. Use **tag-based access control**. When new resources are created, users will have automatic access.
   
   Account Management for organization: Two options : Single account or Multiple accounts
   
+  https://www.youtube.com/watch?v=oam8FDNJhbE
   
+  ## Security Services
+  
+  - AWS GuardDuty: 
+  - Amazon Inspector: 
+  - Amazon Macie:
+  - AWS Sheild:
+  - AWS WAF:
+
+
