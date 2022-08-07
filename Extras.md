@@ -87,4 +87,31 @@ IAM policies attached to IAM principal or identities(users, roles) . What can th
   
   https://www.youtube.com/watch?v=SGntDzEn30s
   
+  IAM : Controls who can do what in AWS account.
+  
+  Security -> Deny by default
+  
+  ## IAM Best Practices
+  
+  ### Identity and Credential Management
+  
+  - Create Individual Users
+  - Do not use root account. Reduce or Remove root user(Delete access keys).
+  - Configure a strong password policy
+  - Rotate credentials regularly. Use **Credentail Report** to audit rotation
+  - Enable MFA for priviledged users.( Virtual MFA or Hardware MFA)
+  - Use **groups** to manage permissions(instead of managing permission at user level)
+  - Grant least access
+  - Use IAM role when u want to delegate access across accounts
+  - Use IAM role to delegate access within an account. ( Eg: very sensitive actions )
+  - Use roles for federated users
+  - IAM roles: Short lived credentials
+  - IAM role: What it can access, Who can assume it. Permission should be given for resource to assume role
+  - Use IAM roles for EC2 instances.
+  - Enable CloudTrails to get logs of all API calls. Enable all all regions even in regions u dont operate. Logs are stored in S3. This S3 should not be publicaly accessible.
+  
+  Control access using AWS resource tag. Use **tag-based access control**. When new resources are created, users will have automatic access.
+  
+  Account Management for organization: Two options : Single account or Multiple accounts
+  
   
