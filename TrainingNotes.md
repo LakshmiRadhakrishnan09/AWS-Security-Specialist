@@ -216,6 +216,27 @@ AWS System Manager: For patching EC2 instances. Other options Chef or Puppet. Ap
 
 To run system manager u need to run an agent.
 
+Detection and Incident Management
+
+
+Services with build in logs: S3 server access logs, VPC flow logs, ELB access logs
+
+CloudWatch Logs: Never Expires. Metrics: Around 13 days. So put them to S3.
+
+X-Ray
+
+Trusted Advisor: Evaluate ur services
+
+* AWS Security Hub
+* AWS Guard Duty: Inspector is for EC2 instances. GuardDuty overlaps.
+
+Analyze logs centrally
+
+
+AWS System Manager Incident Manager: Have Runbooks.
+
+Cloud Watch agents can be used on on premise.
+
 
 
 
