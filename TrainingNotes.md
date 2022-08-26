@@ -49,6 +49,109 @@ AWS Complaince Programs: https://aws.amazon.com/compliance/programs/
 **AWS will not move data between regions**. AWS move it between AZ. You need to ask AWS to move it between regions.
 
 
+Every call to AWS is API interface(create bucket).Multiple ways - Console, Cmd or SDK.
+
+
+## IAM
+
+* Users : Dont use
+* Groups : Eg: Developers group.
+* Role: Best option to use. Temporary AWS Credentials. 
+
+**TAG ALL RESOURCES**
+
+
+When to use users: You need to use CLI to work with AWS \
+When to use role: Applications, Temporary users, federated users. \
+Policies can be applied to users, groups and roles. \
+  * AWS Managed : U can use. You cannot change
+  * Customer Managed:
+
+
+Permission Boundary: Max level of permission u could be granted. It will not grant u any permission. But if u are not allowed, u cannot be granted permission beyond the boundary.
+
+Trust Relationship --> Associated to Roles ---> Who can assume this role. Eg: Only an. Ec2 instance can assume this Role.A trust policy can not have an empty principal. It will give an error.
+
+Revoke Session: Read more
+
+Policy Simulator: Select Role. Select Service and action.
+
+* Identity based policies: Permissions on an IAM identity. Have "Resource" field to mention to which resource access is given.
+* Resource based policies: 
+
+** NEVER USER ROOT USER**. Use admin user with admin priveldges(proxy root user). If admin user is compromised, u can use root user to recover. \
+
+AWS Managed Microsoft AD: Users of your organization
+Cognito: For external users. Users who are not part of ur organization.Ur web amd mobile users. Sign up and create an identity pool. \
+AWS Single Sign on: \
+AWS Organizations: Master Account( Service Control Policies : limit what child accounts can do), Org Units, Accounts. \
+
+
+S3:
+* Object ACL od bucket ACL : Old way
+* Bucket Policy(Recommended): Permissions allowed on that bucket. Cross account access. 
+
+Identity and Resource based permission: If there is a DENY, then it will be denied. If there is no DENY but allow at buckey policy, then it is allowed. There should be atleast **ONE EXPLICIT ALLOW**. There **SHOULD NOT BE ANY EXPLICIT DENY**.
+
+
+S3 Envelop Encrytion: Key for each data. ( Why we need Envelop: If all data is encrypted by same key, an compromise will expose all data).
+
+
+Encryption:
+* Client Side
+* Server Side: Client Managed Key(KMS) and AWS Managed Key(SSE-S3).
+
+* Amazon Macie: PII data in AWS.
+* AWS Certificate Manager: 
+
+IAM Policy Example
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "s3:GetObject",
+                "s3:ListBucket"
+            ],
+            "Resource": [
+                "arn:aws:s3:::alpha-bucket-us-west-2-111222333",
+                "arn:aws:s3:::alpha-bucket-us-west-2-111222333/*"
+            ],
+            "Effect": "Allow"
+        }
+    ]
+}
+
+
+Bucket Policy Example
+
+{
+  "Version": "2008-10-17",
+  "Statement": [
+    {
+      "Sid": "S3Write",
+      "Effect": "Allow",
+      "Principal": {
+          "AWS": "arn:aws:iam::111122223333:role/BucketsRole"
+      },
+      "Action": [
+          "s3:GetObject",
+          "s3:PutObject"
+      ],
+      "Resource": "arn:aws:s3:::bravo-bucket-us-west-2-111222333/*"
+    },
+    {
+      "Sid": "ListBucket",
+      "Effect": "Allow",
+      "Principal": {
+          "AWS": "arn:aws:iam::111122223333:role/BucketsRole"
+      },
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::bravo-bucket-us-west-2-111222333"
+    }
+  ]
+}
+
 
 
 
