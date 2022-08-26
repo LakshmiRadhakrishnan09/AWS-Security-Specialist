@@ -105,6 +105,7 @@ Encryption:
 * AWS Certificate Manager: 
 
 IAM Policy Example
+```
 {
     "Version": "2012-10-17",
     "Statement": [
@@ -121,10 +122,11 @@ IAM Policy Example
         }
     ]
 }
+```
 
 
 Bucket Policy Example
-
+```
 {
   "Version": "2008-10-17",
   "Statement": [
@@ -151,6 +153,72 @@ Bucket Policy Example
     }
   ]
 }
+```
+
+## VPC
+
+* VPCs cannot cross Region.
+* To be highly available ur VPC should be in atlest 2 AZ.
+* Public Subnet : Route table entry that go to internet.
+* Private Subnet: No route table entries that go to internet. Have a route to NAT gateway. No Public IPs. 
+* Protected Subnet: No route to NAT gateway. Eg: Databases.
+* Load Balancers: Connects Applications(web servers) in different AZ. They are not part of VPC. They are peered to VPC.
+* Each subnets are in have its own route table.
+
+OutBound Traffic : Only things that should be in public subnet \
+* Internet Gateway. No single point of failure.Highly available
+* Elastic Load Balancer
+
+
+* Virtual Private Gateway: To connect to on premise. No single point of failure.
+* Nat Gateway: Sits in a AZ. How it is made highly available?
+
+Security Features
+
+* Subnet Routing
+* Network ACL
+* Security Groups: Attached to ENI of Amazon Ec2. 
+
+* VPC Main Route Table: Destination(10.0.0.0/16). Target(Local)
+* Public Subnet( 10.0.0.0/24) ---> Public route Table: Destination(10.0.0.0/24). Target(Local), **Destination(10.0.0.0/0). Target(IGW-ID)***
+* Private Subnet(10.0.0.0/24) -----> Private route Table: Destination(10.0.0.0/24). Target(Local), **Destination(10.0.0.0/0). Target(NAT-GAT_ID)**
+* To access AWS resources(S3) --- > VPC End Point( Associate ENI)
+
+Network ACL 
+* Stateless. Check both direction (ingress and outgress)
+* Allow Both Allow and Deny
+* By default they allow traffic
+* Order Matters
+
+Security Group
+* Statefull
+* Allow rules only
+* Order is irrelevant
+* By default DENY any communication
+
+AWS WAF: Can integrate with CloudFront, API Gateway and ALB. Detect and block malicious web requests. You can write firewall rules. Custom rules, Managed Rule. Block a region, Country, SQL injection. Block by reg expression. Based on size of request.
+
+DDos Mitigation: 
+
+AWS Shield: Free with AWS Account. Advanced -> 24/7 DDos experts. Repay on DDos attack.
+
+* AWS Direct Connect: Connect AWS to ur data center. Private Connectivity. Work with partner data centers. Use two direct connect. Only one is not fault tolerant
+* AWS Cloud Formation:
+* AWS Firewall Manager
+
+Points to remember
+AMI must be hardened. Think how they are secured. Everyone when AWS release a new AMI, it sends a notification. Make lambda to listen it and trigger Ec2 Image Builder can build a new one and next time when asg create a new instance this new AMi can be used.
+
+Amazon Inspector. Send events to SNS. Use Lambda to listen and take action. If any non-compliant issue found create a workflow to remediate it.
+
+
+AWS System Manager: For patching EC2 instances. Other options Chef or Puppet. Apply OS patches...Shows Inventory ( anything installed on that instance). Run Chef Recipes to automate.
+
+To run system manager u need to run an agent.
+
+
+
+
 
 
 
