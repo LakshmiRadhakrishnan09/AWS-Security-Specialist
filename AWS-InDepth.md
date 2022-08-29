@@ -71,19 +71,23 @@ Direct Connect seems to be cost effictive as it is not using Public network.
 
 DNS Resolution: Onpremise and AWS. Private hosted zone. Route 53 Resolvers. On premise DNS resolvers.
 
+AWS Storage Gateway: Local caching in on premise data center. Gateway both on premise and on AWS. To and from cloud.
+* As file gateway: NFS or SNB
+* As volume gateway:
+* As tape gateway:
 
+VMWare Cloud on AWS: VM ware cluster. VM ware VMs as managed services.Like dedicated reserved instance.Cloud Migration. Modernazation. Disaster Recovery.
 
+AWS Outposts: For applications that need to run on on-premise. Latency requirements. Extend AWS Cloud to on premise data center. Outpost **rack** in ur data center.
 
+AWS Local zones: Reduce latency for end users. You can enable it just like another availability zone. Datacenter in that metropolitan area. Pricing is different(higher). Gaming companies.
 
+AWS Wavelength: 5G network. AWS ar carrier Edge. Verizon and Vodaphone.Inside CSP Mobile networks. 
 
+**VPC Peering** : Connects VPC. Is not transitive. It is 1:1.
+**Transit Gateway**: A virual router in cloud. From On premise, connect to Transit Gateway to connect to cloud VPCs. Is **Regional**. You can peer Transit Gateways in another region.
 
-
-
-
-
-
-
-
+**AWS Resource Manager**
 
 
 
