@@ -89,6 +89,41 @@ AWS Wavelength: 5G network. AWS ar carrier Edge. Verizon and Vodaphone.Inside CS
 
 **AWS Resource Manager**
 
+**Containers**
+
+Virtual Machines: Use Hypervisors and Guest OS \
+Containers: No Hypervisor. Share OS. Docker engine on OS. Very quick to start. 
+
+Docker: Single Server. Multiple Apps.
+Versioining in Docker: Tags. Glue green deplyments will use it. "latest" is default tag.
+
+AWS Cloud9
+AWS CodeCommit
+AWS CodeBuild
+
+How I can run containers in AWS:
+* EC2: 
+* ECS:
+* EKS
+* Fargate:
+
+Spring Boot Application: Run in EC2
+
+1. Copy Jar to EC2
+2. Install JDK 8
+3. Run jar java jar
+4. Modify Security Group
+
+Spring Boot Application: How can you make it a container?
+
+1. Create DockerFile
+2. Docker build and docker run
+
+Spring Boot Application Container in EC2
+
+1. Install docker in EC2
+2. Start docker service
+3. Docker run port image-artifactory
 
 
 
