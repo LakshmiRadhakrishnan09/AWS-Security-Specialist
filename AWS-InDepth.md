@@ -107,6 +107,36 @@ How I can run containers in AWS:
 * EKS
 * Fargate:
 
+ECS Task Definitions:
+Which image
+Specify CPU and memmory
+What roles
+What env variables
+
+EKS: Journey
+Choose Region. Set up VPC. AZ. Subnets. Route Tables, Internet Gateway.
+Operational: Patch.
+Create Cluster. 
+
+Migrate Onpremise K8s to EKS : Route 53 weighted
+
+Hardware Security Module: Encryption keys must be protected. HSM do cryptograpghic processing. \
+KMS: \
+CloudHSM:U are responsible for infra. For reg requirements. Runs in ur Amazon VPC. CloudHSM cluster. 
+
+Envelop Encryption: Symetric data key . Since it is symetric it is fast. Data is encrypted by data key and the encrypted data key is kept along with data. And then we protect the key used for encrypting data key.
+
+Keys are Region specific. S3 is also Regional.
+
+Secret Manager: Secrets doent exist in code. Rotating passwords will be easy.
+
+Large Data Set: 
+
+
+
+
+
+
 Spring Boot Application: Run in EC2
 
 1. Copy Jar to EC2
