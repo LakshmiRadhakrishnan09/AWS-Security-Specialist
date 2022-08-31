@@ -133,6 +133,20 @@ Secret Manager: Secrets doent exist in code. Rotating passwords will be easy.
 Large Data Set: 
 
 
+**Migration**:
+
+Analyse application and Identify
+
+* Refactor
+* Replatform: Migrating databases.
+* Repurchase
+* Rehost: list and shift
+* Relocate
+* Retain
+* Retire
+
+CloudFront + Route 53 : Reduce latency
+
 
 
 
