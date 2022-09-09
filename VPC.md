@@ -27,7 +27,26 @@ VPC :
    * Choose Availability Zones ( Atleast two)
 * EC2
   * When u create an EC2, it is assigned a private Ip that belongs to CIDR range of the subnet.
-  * If the subnet "Auto-assign public IPv4 address" attribute is true a public IP address is assigned to your instance from Amazon's pool of public IPv4 addresses, and is not associated with your AWS account. When a public IP address is disassociated from your instance, it is released back into the public IPv4 address pool, and you cannot reuse it. By default an instance is not assigned a public IP.
+  * If the subnet "Auto-assign public IPv4 address" attribute is true or providinf while creating a instance , a public IP address is assigned to your instance from Amazon's pool of public IPv4 addresses, and is not associated with your AWS account. When a public IP address is disassociated from your instance, it is released back into the public IPv4 address pool, and you cannot reuse it. By default an instance is not assigned a public IP
+  * Private address is attached to primary ENI. Disassociated when instance is terminated.
+  * A private DNS hostname is also given that resolves to private ip
+  * Secondary interfaces can also be attched. Can be detached and attch to another instance.
+  * Public Ip is released when u stop a instance.
+  * Elastic IP: Remain attached until u detach.
+* Security Group
+   * Allow rules only
+   * Both inbound and outbound
+   * Default SG: Allow all outbounds
+   * Statefull firewall : **If inbound is allowed, outbound is allowed**
+   * Outbound rule: When server need to talk to external services
+* Network ACL
+   * At subnet level
+   * Both allow and deny
+   * Stateless : Allow both request and response
+   * Ordered: First rule that matches will allow or deny. From lowest number
+   * Default NACL: Allow all inbound and outbound traffic
+   * Response traffic is send to an ephemeral port. Servers listen on well known ports. But listenes on ephemeral ports for reciving response. Solution: only allow epheral port for VPC ports only.
+   * Tricky to configure
 
 
 
@@ -74,3 +93,4 @@ Deployment for a Web application \
 * ELB on private subnet for app server
 
 
+P
