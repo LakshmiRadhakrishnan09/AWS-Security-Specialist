@@ -152,4 +152,28 @@ SQS Security: SQS by default is publicaly accessible. You can control access by 
 Scenario: Is there a change in end point for S3 and SQS with and without VPC endpoint? How to confirm we are using VPC end point?
 
 
+****************************************************************************************************************************************************
+
+## Integrating between VPC
+
+Why should two applications in same organisation over intenet? \
+Two VPC into a single logical network: VPC peering. Once connected they can communicate with private IP. No Single point of failure. CIDR should not overlap. Need to update route table in both VPC. this-vpc-cidr-block -> local. other-voc-cidr-local -> peering-connection. Peering connection is bi-directional(both side traffic)  and both parties need to accept. Not transitive. 
+We can peer VPC
+* In same region
+* Different region
+* Across accounts
+
+Transit Gateway: Connect all VPC to transit gateway. One connection per VPC. To route traffic between region, u need to peer transit gateway in both regions. TG1 in region 1 ---- TG Peering ---- TG2 in region2
+
+## Third Party Integration
+
+Third party is not in cloud : ALB end point. Traffic over internet. \
+Third party in AWS Cloud: We cannot peer VPC . It is a security issue. To share application service privaltely. use **interface endpoints**. \
+Steps for configuring the service( expose the service):
+* Network Load balancer
+* Create end point service configuration 
+* Share configuration with third party
+Steps for consumning service: 
+* Add endpoint
+Communication will be through AWS internet.Can we used by enterprsie to share applications.
 
