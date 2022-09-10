@@ -1,4 +1,4 @@
-
+**VPC**
 
 VPC : 
 * CIDR: 10.0.0.0/16. This is a private address block.
@@ -177,3 +177,11 @@ Steps for consumning service:
 * Add endpoint
 Communication will be through AWS internet.Can we used by enterprsie to share applications.
 
+## Log into systems
+
+Public instances are accessible. Public instances inbound Security Group must allow SSH and RDP. Allow only from corporate IP. \
+Private instances: Using Bastion Host or System Manager. \
+Bastion Host: Deployed in public subnet. Assigned with Elastic IP. \
+  * Bastion Host SG: SSH and RDP from corporate network
+  * Private Instance: SSH and RDP from Bastion Host
+Systems Manager: Session Manager. Agent required. Can establish a remote session. Private instances need to create interface endpoints. Much safer. Do not use SSH or RDP ports. \
