@@ -2,7 +2,7 @@
 
 VPC : 
 * CIDR: 10.0.0.0/16. This is a private address block.
-* Main Route Table: Service in VPC can communicate eachother with VPC.
+* Main Route Table: Service in VPC that enables communicate each other within VPC.
   * 10.0.0.0/16 : local
 * PublicSubnet
   * CIDR: 10.0.1.0/24
@@ -15,7 +15,9 @@ VPC :
   * Availability Zone : us-east-2a
   * Route Table
      * 10.0.0.0/16 : local
-* Internet Gateway: Attached to VPC. VPC has connection to internet. 
+* Internet Gateway: 
+  * Attached to VPC. 
+  * Without an Internet Gateway, nothing in a VPC can access the internet, even with a public IP address. 
   * To send and receive traffic, server must have public ip. Instance should have a public address for communicating with internet. 
 * NAT Gateway: 
      * Attached to a subnet. Either public or private
@@ -92,5 +94,62 @@ Deployment for a Web application \
 * ELB on public subnet for web server
 * ELB on private subnet for app server
 
+Question: how can instances in private network use AWS resources? \
+Answer: Use NAT. NAT gateway should be in public subnet. Update route table of private subnet to allow traffic 0.0.0.0/0 to Nagw-id.  \
+Option2: End point. Add endpoint in your VPC. For same region. For different region should use NAT gateway. With endpoint S3 and DynamoDB will have routing by private IP. So it will appear like they are part of your VPC. 
 
-P
+https://www.uturndata.com/2021/02/23/aws-quick-tips-internet-gateways-nat-gateways-and-nat-instances/
+
+NAT Gateway 
+* Managed Service- Automatically scale
+* Elastic IP
+* Is bound to a subnet(AZ)
+* Single point of failure
+* Deploy NAT in multiple AZ
+
+EndPoints
+* Gateway Endpoints
+  * S3, DynamoDb
+  * Create endpoint in your VPC
+  * Update Route table of private subnet and public subnet
+    * prefix_list_id	-> gateway_endpoint_id
+* Interface Endpoints
+  * All newer services use Interface Endpoint
+  * Create Interface endpoint in your subnet. One for one AZ.
+  * Service will appear as a local service
+  * No need to update route table
+  * Private DNS Host name option in ur VPC should be enabled. This automatically maps to Endpoint IP address.So even though services use SQS DNS name, requests are routed through interface endpoints.
+  * One Interface Endpoint per AZ. 
+  * Interface Endpoints are also called PrivateLinks
+  * Interface EndPoint can be used not only for interacting with AWS resources but also for interacting with your own services.
+
+Availability Zone and Availability Zone ID \
+Scenario: SQS in AZ us-east-1. Interface Endpoint in us-east1 and use-east-2 to map to SQS. But us-east-1 used by SQS(AWS account) may logically map to a different zone. Use Availability Zone ID instead.
+
+Read more:
+* Gateway Endpoint
+* Interface Endpoint
+
+Scenario: EC2-1 in public subnet with Internet gateway. EC2-2 in private subnet. \
+AWS Session Manager. Outside VPC. A AWS Service. By default AWS Session Manager can connect to EC2-1. \
+For AWS SSM to connect to private subnet, need to create a interface end point. Create an interface end point and add it to private subnet. Add service as ssm in same region and AZ. \
+After this u can connect to rpivate EC2-2 using SSM. \
+
+Secanario: EC2-1 in public subnet with Internet gateway. EC2-2 in private subnet. \
+Public S3. \
+S3 is outside VPC. Only Public instance can access S3. \
+
+Public Instance can access S3. \
+aws s3 cp s3://labstack-940b008d-c20a-4b52-b4d3-31a1d9-labbucket-vmksv0anfyt9/demo.txt ~/. \
+Private Instance does not have a route to S3.To connect, create vpc end point. \
+
+
+Scenario: If S3 is private, then can it be accessed via internet? Can it be accessed only NAT? Can it be accessed by only VPC end point. \
+Answer: Only using VPC endpoint.
+
+SQS Security: SQS by default is publicaly accessible. You can control access by policies. Security best practice - Use VPC end point for accessing quque. use queue policies to control access to queues from specific Amazon VPC endpoints or from specific VPCs.
+
+Scenario: Is there a change in end point for S3 and SQS with and without VPC endpoint? How to confirm we are using VPC end point?
+
+
+
