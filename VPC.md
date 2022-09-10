@@ -177,7 +177,7 @@ Steps for consumning service:
 * Add endpoint
 Communication will be through AWS internet.Can we used by enterprsie to share applications.
 
-## Log into systems
+## Log in into systems
 
 Public instances are accessible. Public instances inbound Security Group must allow SSH and RDP. Allow only from corporate IP. \
 Private instances: Using Bastion Host or System Manager. \
@@ -185,3 +185,49 @@ Bastion Host: Deployed in public subnet. Assigned with Elastic IP. \
   * Bastion Host SG: SSH and RDP from corporate network
   * Private Instance: SSH and RDP from Bastion Host
 Systems Manager: Session Manager. Agent required. Can establish a remote session. Private instances need to create interface endpoints. Much safer. Do not use SSH or RDP ports. \
+
+## End to end flow
+
+Scenario: EC2 with public ip in public subnet. From internet request send with public ip. Internet Gateway has a lookup table which maps all public address in the VPC to corresponding private address. Once EC2 instance send the request back, IG does an address translation to remove private ip with public ip and forward the request. \
+EC2 instance in private subnet. Cannot receive request from internet. It can make outbount calls to internet using NAT. NAT will do address transaltation and replace private ip of EC2 instance with its own public ip and fwd to destination machine. IG will send the request with elatic ip of NAT as origin address.
+
+## Hybrid Network
+
+Question: How to connect AWS cloud of an enterprise with its onpremise data center? \
+Answer: VPN connectivity.IPSec based encrypted communication. Cloud becomes an extension of ur data center. Use private ip over encrypted channel. Channel is over internel. Inconsistent performance issue. \
+Direct Connect: Dedicated link. Use private ip. But not over intenet. Consistent performance. 
+
+VPC Connectivity Options:
+* Site to Site: AWS and On Premise corporate network
+* Cloud Hub: AWS to multiple branches. Multiple site to site vpn. Branch offices can communicate with each other and with AWS
+* Client VPN: AWS and laptop. Remote access from any location.
+
+How to set up site to site VPN? \
+Add Virtual Private Gateway(VGW) to VPC. Add Customer Gateway(CGW- software or hardware) on on-premise network. Virtual Private Gateway is configured with customer gateway details. Is there a single point of failure? At AWS side VPN uses 2 tunnels each ending at different AZ. Customer Gateway is a single point of failure. For HA, we need to customer gateways in different data center. Two VPN connections from the same VGW but to different CGW. \
+
+
+Add Virtual Private Gateway(VGW) to VPC. Add Customer Gateway(CGW- software or hardware) on on-premise network. Virtual Private Gateway is configured with customer gateway details. Is there a single point of failure? At AWS side VPN uses 2 tunnels each ending at different AZ. Customer Gateway is a single point of failure. For HA, we need two customer gateways in different data center. Two VPN connections from the same VGW but to different CGW. \--
+
+VPN1: AWS VPC --- VGW(AZ1) --- Datacenter-1, AWS VPC ---- VGW(AZ2) ---- Datacenter -1 \
+VPN2: AWS VPC --- VGW(AZ1) --- Datacenter-2, AWS VPC ---- VGW(AZ2) ---- Datacenter -2 \
+
+If there are multiple VPCs, lot of connections to maintain. Instead of using Virtual Private Gateway use a Transit Gateway. Terminate VPN connection at transit gateway. 
+
+Cloud Hub can also use Transit Gateway. 
+
+How to set up Direct Connect? \
+Multiple Direct Connect locations around the world. Work with ISP to set up connection to one of this DX location. For ctitical workloads use 2 Direct connect locations. \
+Add Virtual Private Gateway(VGW) to VPC. Configure it to use direct connect link. Work for only single VPC. \
+For multiple VPC, use Direct Connect Gateway.Multiple VPCs across regions to share direct connect link. \
+Better option. Use Transit Gateway also. \
+
+VPC1, VPC2, VPC3 (in same region) -- TGW1 , VPC1, VPC2, VPC3 (in another region) -- TGW2 \
+Connect both to Direct Connect Gateway.
+
+To connect to AWS Services( S3) from onpremise - Direct Connect with Public virtual interface.  
+
+**VPN over Direct Connect** : Encryption over consistent network. \
+USe VPN as backup for Direct Connect. 
+
+
+
