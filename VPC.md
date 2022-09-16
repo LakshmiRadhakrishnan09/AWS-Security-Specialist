@@ -54,6 +54,7 @@ VPC :
 
 Question: If we have REST API deployed in an EC2 instance. Should EC2 be in public subnet or private subnet? \
 Option1: ALB in public subnet. EC2 in public subnet. \
+Option2: LB in public subnet and EC2 in private subnet. As per documentation this is possible...Try this out!! \ 
 Option2: EC2 in private subnet. API Gateway - NLB - ALB - EC2?? Read more
 
 
