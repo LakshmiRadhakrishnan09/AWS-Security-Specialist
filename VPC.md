@@ -88,6 +88,15 @@ VPC is for a region. \
 Subnet is for a AZ. \
 Instances are deployed in a subnet. \
 
+| Scenario                     | Behaviour |
+| ---------------------------- | ------------- |
+| Public ip in public subnet   | Accessible from internet. Can connect to internet  |
+| Private ip in public subnet  | Not accessible from internet. Can connect to internet  |
+| Public ip in private subnet with NAT  | Not accessible from internet. Can connect to internet  |
+| Private ip in private subnet with NAT | Not accessible from internet. Can connect to internet |
+
+To be accessible from internet: Should have a public IP. Should have a route to Internet Gateway.
+
 Deployment for a Web application \
 * Web layer on public subnet in multiple AZs
 * App layer on private subnet in multiple AZs
