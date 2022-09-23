@@ -1,3 +1,7 @@
+To monitor
+- Logs
+- Event Bus
+- CloudWatch Monitoring
 
 ### CloudWatch : Monitoring
 
@@ -32,11 +36,18 @@ Assign retension setting to a Log Group. Assign Metric Filter to Log Stream. Met
 
 - Using SDK. Application directly writes to CloudWatch Logs service.
 
-### CloudWatch Events
+### CloudWatch Events 
 
 Look for events and trigger action. Eg: Scheduled tasks like take snapshot of EBS.
 
 ### CloudTrail: Audit Trail
 
-Log API calls.
+Captures all API calls in your account.
+- Who made the call with what credentials
+- TimeStamp
+- Requestor IP address, region
+- AWS service, action
+- Final response
+
+
 
