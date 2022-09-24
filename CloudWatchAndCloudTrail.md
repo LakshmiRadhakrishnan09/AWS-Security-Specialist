@@ -40,14 +40,92 @@ Assign retension setting to a Log Group. Assign Metric Filter to Log Stream. Met
 
 Look for events and trigger action. Eg: Scheduled tasks like take snapshot of EBS.
 
+Old Service . New service is EventBridege
+
+### EventBridge
+
+Any change on state is send as events to EventBridge. Subscribers services like EC2, Lambda can subscribe to these events.
+
+Eg events: EC2 instance state changes. \
+You can configure scheduled events. EBS snapshot \
+ASG event when new instances added\removed. \
+CloudTrail also publishes API actions as events. An event in CloudTrail is the record of an activity in an AWS account. \
+Ur application can also publish events.
+
+To log events : configure a log group and subscribe to event bridege. 
+
 ### CloudTrail: Audit Trail
 
 Captures all API calls in your account.
+
+An event in CloudTrail is the record of an activity in an AWS account.
+
 - Who made the call with what credentials
 - TimeStamp
 - Requestor IP address, region
-- AWS service, action
+- AWS service, action, resource
+- error messages
 - Final response
+
+- Management Event
+      - Changes to Security Group, Launching new instance, **Console log in**
+      - KMS Management Events
+        - Read Events. Eg. KMS Encrypt, decrypt , generate data key -> High Volume events
+        - Write Events. Eg. Disable, delete -> Low Volume events
+- Data Events
+      - S3 Object Access
+      - Lambda Function Invocation
+      - Data events are not logged by default when you create a trail. 
+
+CloudTrail Evenst are captured in Event Histiory, S3, CloudWatch Logs, CloudWatch Events, CloudTrail Insights.
+
+Event History : 
+  - Captures limited management events
+  - 90 days
+  - Region specififc
+
+S3:
+  - Events across region to single bucket
+  - u can enable log file integrity validation( Log file + digest file)
+
+CloudWatch Logs
+  - All regions
+  - Log Insight Query Tool
+
+CloudWatch Events(with EventBus)
+  - Can have subscribes to process events
+
+CloudTrail Insights
+  - ML to analyse
+  - Detect anomalies
+
+#### CloudTrail Configuration Best Practices
+
+CloudTrail is Region Specific. To monitor activities in all regions cloudTail need to be set up in each region. Use "Enable Trail in all regions". Trail configuration is centally managed. CloudTrail send to S3 bucket to single log group.
+
+Create S3 bucket and Log Group in seperate Account. 
+
+Use s3-kms encryption
+
+Manage life cycle and use Glacier for long term storage
+
+Enable AWS Organization Trails. Multiple Accounts to a single Log Group
+
+Most global services log events in N.Virginia
+
+### Service Logs
+
+Global Service Logs: GA, CloudFront
+
+VPC Flow Logs
+
+ELB Logs
+
+You can consolidate and analyse all these logs using CloudWatch.
+
+Most of AWS service deliver logs to S3 or cloudWatch or eventbus(temporary storage)
+
+Logging is not enabled by default.
 
 
 
