@@ -54,6 +54,8 @@ Ur application can also publish events.
 
 To log events : configure a log group and subscribe to event bridege. 
 
+In a region, Go to EventBridge console. Select Event Buses. Default bus is used by aws and automatically created. Select Rules. Create Rule(On Event or Scheduled). Eg: EC2StateChangeRule. Select Service-Ec2. Select Events ( Eg: AWS API call with CloudTrail , EBS snapshot notification, Spot Instance Interruption warning, EC2 instance state change notification). Select event bus. Configure Target (multiple). Target can be CloudWatch Log Group or Lambda. Create Rule. (note: If u go to CloudWatch console , u can see rule here. In earlier versions events are created under cloud watch events)
+
 ### CloudTrail: Audit Trail
 
 Captures all API calls in your account.
@@ -103,6 +105,7 @@ CloudWatch Log Groups
   - Log Insight Query Tool
 
 Go to CloudTrail -- Go to ur primary Region -- Create Trail \
+```
     By default available for all regions(after u create a trail) \
     Enable for all accounts in my organization( if u are using master account) \
     Create S3 bucket - in primary region \
@@ -118,28 +121,34 @@ Go to CloudTrail -- Go to ur primary Region -- Create Trail \
       Cloud Watch Log Group \
       each region will have trail which is periodically upload to central group \
       If u go to another region, u can see the configured trail(listed) with home region set \
-            - If u go to S3, AWSLog/Account/CloudTrail/<region>/<year>/<month>/<day> \
+            If u go to S3, AWSLog/Account/CloudTrail/<region>/<year>/<month>/<day> \
               files are json compressed \
               Digest files \
-            - If u go to CloudWatch Service, Select Log Group
-              U can see events in Log Stream ( similar to kibana logs/events, json)
-      
-
-CloudWatch Events(with EventBus)
-  - Can have subscribes to process events
-
-##### CloudTrail Insights
-      
-  - ML to analyse
-  - Detect anomalies
-      
-##### CloudWatch Log Insights
+            If u go to CloudWatch Service, Select Log Group \
+              U can see events in Log Stream ( similar to kibana logs/events, json) \
+ ```     
+**CloudWatch Log Insights: For querying CloudTail events in CloudWatch Log Groups**
 
 Go to CloudWatch Console. Select Insights. Select Log Group to query. Pick CloudTrail Log Group. You can see events as in kibana dashboard. 
 It Automatically discovers the fields(different for cloudtrail and vpc log and Ec2 log). You can write query based on fields and run query.
 Easily query events in LogGroup. Since Loggroup has consolidated logs from all regions it is easy. So compared to Event History this is better to query and get a consolidated view.
       
-With Log group subscription you can publish events to other services.( eg: lambda, elastic search )    
+With Log group subscription you can publish events to other services.( eg: lambda, elastic search )  
+
+**S3 Athena: For querying CloudTrail events in S3**
+
+Configure Athena. Configure S3 for storing results. Create Table. From Event History u can create Athena Table. Parse json and present as a table. Perfect for adhoc analysis of S3 data.
+
+##### CloudWatch Events(with EventBus)
+  - Can have subscribers to process events
+  - In single region
+  - when to use this: when u want to take actions
+
+##### CloudTrail Insights
+      
+  - ML to analyse
+  - Detect anomalies
+  
 
 #### CloudTrail Configuration Best Practices
 
@@ -155,7 +164,7 @@ Enable AWS Organization Trails. Multiple Accounts to a single Log Group
 
 Most global services log events in N.Virginia
 
-### Service Logs
+##### Service Logs
 
 Global Service Logs: GA, CloudFront
 
@@ -170,4 +179,9 @@ Most of AWS service deliver logs to S3 or cloudWatch or eventbus(temporary stora
 Logging is not enabled by default.
 
 
+How to detect and take action if root identity is used? Configure Rule in event bus for Console Sign In by Root and subscribe SNS topic. Or configure CloudWatch Metric for Log Group. \
 
+Option 2 explained: Trail Home Region. CloudWatch Console. Log Group. Go to CloudTrail Log Group(u created). Go to Metric Filter Tab Group. Create Metric Filter. Apply filter on incoming log events . 
+{ $.userIdentity.type == "Root" } . Set up Alarm . Set Notification.
+
+Event Bus approach is near real time. Log group approach has some delivery delay( up to 15 minutes). Advantage is u can implement more complex alarms.
