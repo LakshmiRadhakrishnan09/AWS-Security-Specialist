@@ -1,7 +1,7 @@
 To monitor
 - Logs
 - Event Bus
-- CloudWatch Monitoring
+- CloudWatch : Metrics Monitoring 
 
 ### CloudWatch : Monitoring
 
@@ -60,12 +60,12 @@ Captures all API calls in your account.
 
 An event in CloudTrail is the record of an activity in an AWS account.
 
-- Who made the call with what credentials
-- TimeStamp
-- Requestor IP address, region
-- AWS service, action, resource
-- error messages
-- Final response
+      - Who made the call with what credentials
+      - TimeStamp
+      - Requestor IP address, region
+      - AWS service, action, resource
+      - error messages
+      - Final response
 
 - Management Event
       - Changes to Security Group, Launching new instance, **Console log in**
@@ -77,27 +77,69 @@ An event in CloudTrail is the record of an activity in an AWS account.
       - Lambda Function Invocation
       - Data events are not logged by default when you create a trail. 
 
+Sign in events are always reported on N.Virgnia
+
 CloudTrail Evenst are captured in Event Histiory, S3, CloudWatch Logs, CloudWatch Events, CloudTrail Insights.
 
-Event History : 
+##### CloudTrail Event History : 
   - Captures limited management events
   - 90 days
-  - Region specififc
+  - Region specific
+  - Under Cloud Trail Service
+            - Event History
+            - All events are listed under a table
+            - Can view details and event json in Console
+ - By default available
+ - Not very useful as we need to check events in different regions( Console Login in N.Virginia, S3 calls and VPC calls in specif regions)
+
+##### Create Trail in S3 or CloudWatch Log Groups
 
 S3:
   - Events across region to single bucket
   - u can enable log file integrity validation( Log file + digest file)
 
-CloudWatch Logs
+CloudWatch Log Groups
   - All regions
   - Log Insight Query Tool
+
+Go to CloudTrail -- Go to ur primary Region -- Create Trail \
+    By default available for all regions(after u create a trail) \
+    Enable for all accounts in my organization( if u are using master account) \
+    Create S3 bucket - in primary region \
+    Enable encryption \
+    Enable log file validation \
+    Enable CloudWatch Logs. Create a new Log Group. Role for LogGroup delivery \
+    Choose Log events. Pick Management Events or Data Events or Insight Events \
+    Choose Managmenet Events : Read or Write or Exclude KMS events \
+    Create Trail \
+      Home region \
+      Multi Region \
+      S3 bucket \
+      Cloud Watch Log Group \
+      each region will have trail which is periodically upload to central group \
+      If u go to another region, u can see the configured trail(listed) with home region set \
+            - If u go to S3, AWSLog/Account/CloudTrail/<region>/<year>/<month>/<day> \
+              files are json compressed \
+              Digest files \
+            - If u go to CloudWatch Service, Select Log Group
+              U can see events in Log Stream ( similar to kibana logs/events, json)
+      
 
 CloudWatch Events(with EventBus)
   - Can have subscribes to process events
 
-CloudTrail Insights
+##### CloudTrail Insights
+      
   - ML to analyse
   - Detect anomalies
+      
+##### CloudWatch Log Insights
+
+Go to CloudWatch Console. Select Insights. Select Log Group to query. Pick CloudTrail Log Group. You can see events as in kibana dashboard. 
+It Automatically discovers the fields(different for cloudtrail and vpc log and Ec2 log). You can write query based on fields and run query.
+Easily query events in LogGroup. Since Loggroup has consolidated logs from all regions it is easy. So compared to Event History this is better to query and get a consolidated view.
+      
+With Log group subscription you can publish events to other services.( eg: lambda, elastic search )    
 
 #### CloudTrail Configuration Best Practices
 
