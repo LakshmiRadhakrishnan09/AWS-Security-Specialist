@@ -19,3 +19,10 @@ White Papers
 Security Pillar of the AWS Well Architected Framework
 KMS Best Practices and KMS Details
 Best Practices for DDoS Resiliency
+
+
+https://aws.amazon.com/architecture/security-identity-compliance/?cards-all.sort-by=item.additionalFields.sortDate&cards-all.sort-order=desc&awsf.content-type=*all&awsf.methodology=*all
+
+https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-standards-fsbp.html
+
+https://docs.aws.amazon.com/securityhub/latest/userguide/what-is-securityhub.html
