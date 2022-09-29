@@ -78,3 +78,71 @@ t is also a best practice to perform the investigation in the same AWS Region wh
 
 
 AWS enhanced networking uses single root I/O virtualization (SR-IOV) to provide high-performance networking capabilities on supported instance types. SR-IOV is a method of device virtualization that provides higher I/O performance and lower CPU utilization when compared to traditional virtualized network interfaces. Enhanced networking provides higher bandwidth, higher packet per second (PPS) performance, and consistently lower inter-instance latencies. There is no additional charge for using enhanced networking. 
+
+Options for automated response
+
+
+* AWS Lambda : System using AWS Lambda only, using your organizations enterprise language. Speed Flexibility Maintenance Skillset
+* AWS Step Functions : System using AWS Step Speed Functions, Lambda, and SSM Agent.Speed Flexibility Maintenance Skillset 
+* Auto Remediation with AWS Config Rules:Maintenance & Skillset Speed & Flexibility
+* SSM Agent : Maintenance & Skillset Speed Flexibility
+* AWS Fargate: Flexibility Speed Maintenance & Skillset
+* Amazon EC2: Flexibility Speed Maintenance Skillset
+
+For example, AWS Lambda offers more speed and requires less technical skillset. AWS Fargate offers more flexibility, and requires less maintenance and technical skillset.
+
+Centralization refers to a central account that drives all of the detection and remediation for an organization. This approach may seem like the best choice out-of-the-box, and it is the current best practice.We encourage you to get started by leveraging the approach of the Security Tooling account in the Multi-Account Framework in AWS Organizations or AWS Control Tower.
+
+Cost for automation is determined by
+- Events per second (EPS) is the metric that you use to best estimate cost
+- Scanning mode for anomaly detection- event based and time based
+
+For example, Amazon EC2 and AWS Fargate have the highest costs for running 0-10 EPS, whereas AWS Lambda and AWS Step Functions have the highest costs for running 76+ EPS.
+
+In many cases, a combination of both scanning approaches is most likely the best choice in a fully mature organization. The AWS Security Hub and AWS Foundational Security Best Practices standard provide a combination of both scanning methods.
+
+IR for EC2 instance 
+
+1. Capture the metadata from the Amazon EC2 instance, before you make any changes to your environment.
+2. Protect the Amazon EC2 instance from accidental termination by enabling termination protection for the instance.
+3. Isolate the Amazon EC2 instance by switching the VPC Security Group. However, be aware of VPC connection tracking and other containment techniques.
+4. Detach the Amazon EC2 instance from any AWS Auto Scaling groups.
+5. Deregister the Amazon EC2 instance from any related Elastic Load Balancing service.
+6. Snapshot the Amazon EBS data volumes that are attached to the EC2 instance for preservation and follow-up investigations.
+8. Tag the Amazon EC2 instance as quarantined for investigation, and add any pertinent metadata, such as the trouble ticket associated with the investigation.
+
+To capture volatile data and do investigation
+
+Although you could authenticate directly to the machine using a standard method (such as Linux secure shell (SSH) or Microsoft Windows remote desktop (RDP)), manual interaction with the operating system is not a best practice. We recommend that you programmatically use an automation tool to execute tasks on a host.
+
+**The AWS Systems Manager Run Command helps you to remotely and securely perform on-demand changes running Linux shell scripts and Windows PowerShell commands on a targeted instance.**
+
+Automating the Capture
+
+One method to invoke the SSM Agent is to target the Run Command through Amazon CloudWatch Events when the instance is tagged with a specific tag. For example, if you apply the Response=Isolate+MemoryCapture tag to an affected instance, you can configure Amazon CloudWatch Events to trigger two actions:
+• ALambdafunctionthatperformstheisolationactivities
+• ARunCommandthatexecutesashellcommandtoexporttheLinuxmemorythroughtheSSMAgent
+**This tag-driven response is another method of event-driven response.**
+
+
+Cloud Services for various activities
+
+
+• LoggingandEvents
+    -  CloudTrail
+    -  CloudWatch Logs
+    - CloudWatch Events
+• VisibilityandAlerting
+    - Security Hub
+    - GuardDuty
+    - Macie
+    - Trusted Advisor
+    - AWS Config Rules
+    - Inspector
+    - Detective
+• Automation
+    - System Manager
+    - Lambda
+• SecureStorage
+    - S3
+• Custom(p.44)
