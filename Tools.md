@@ -1,3 +1,32 @@
+### Web Application Firewall (WAF)
+
+Protects from web application vulnerabilities(OWASP 20, CVV). WAF can block requests with suspicious content( Injection attacks, Server Side Request Forgery). Application Layer Protection(**layer7**). **Protect web application from common exploits.** Monitors https, https. WAF can be integrated with ALB, CloudFront, API Gateway.
+
+WAF + CloudFront -> block cache bursting attacks
+
+Visibility with cloudwatch metrics. Can log header and other parameters.
+
+- Configure Web Access Control List(rules and rules group).
+- Associate ACL with resources(CloudFront, ALB..)
+
+Managed Rule Groups - provided by AWS. for OWASP Top 10, CVE, IP Restriction list, Ip Anonymous list( proxies, VPN, ). Automatically updated.
+
+By default ALB doesnt protect you from Injection attacks. U need to associate WACL to ALB and then it prevent Injection and other attacks.
+
+### AWS Sheild
+
+Standard: Infrastructure layer protection(layer 3 and 4). For all customers. Free
+
+Advanced: DDos response team. DDos auto scaling cost protection.Support plan. Includes WAF
+
+### Firewall Manager
+
+Administraction and maintaince task in multiple accounts( WAF rules, Shield Advanced, Security Groups)
+
+### AWS System Manager(SSM)
+
+For parching systems at scale.
+
 ### Amazon Macie
 
 Amazon Macie is a data security and data privacy service that uses machine learning (ML) and pattern matching to discover and protect your sensitive data
@@ -147,3 +176,9 @@ There are a number of partner tools available, such as those listed in our **APN
 ## AWS Artifact 
 
 AWS Artifact is your go-to, central resource for compliance-related information that matters to you. It provides on-demand access to AWS’ security and **compliance reports** and select online agreements. Reports available in AWS Artifact include our Service Organization Control (SOC) reports, Payment Card Industry (PCI) reports, and certifications from accreditation bodies across geographies and compliance verticals that validate the implementation and operating effectiveness of AWS security controls. Agreements available in AWS Artifact include the Business Associate Addendum (BAA) and the Nondisclosure Agreement (NDA).
+
+
+
+Note:
+
+With CloudFront whitlelist query paramater to prevent cache bursting attacks.
