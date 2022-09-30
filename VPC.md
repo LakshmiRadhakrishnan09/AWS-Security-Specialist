@@ -241,3 +241,8 @@ USe VPN as backup for Direct Connect.
 
 
 
+Extras
+
+ALB supports Security Group. NLB does not support Security Group.
+
+Edge services like CF, Lambda@Edge, GA has inbuild DoS attack protection. ELB also has DoS attack protection.
