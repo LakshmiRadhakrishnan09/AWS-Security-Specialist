@@ -13,19 +13,19 @@ Managed Rule Groups - provided by AWS. for OWASP Top 10, CVE, IP Restriction lis
 
 By default ALB doesnt protect you from Injection attacks. U need to associate WACL to ALB and then it prevent Injection and other attacks.
 
-### AWS Sheild
-
-Standard: Infrastructure layer protection(layer 3 and 4). For all customers. Free
-
-Advanced: DDos response team. DDos auto scaling cost protection.Support plan. Includes WAF
-
 ### Firewall Manager
 
-Administraction and maintaince task in multiple accounts( WAF rules, Shield Advanced, Security Groups)
+Administraction and maintaince task in multiple accounts( Manage WAF rules, Shield Advanced, Security Groups across accounts)
 
 ### AWS System Manager(SSM)
 
-For parching systems at scale.
+For parching systems at scale. Centrally manage all servers. Need to install a agent in each server. **OS and software patches**. Run commands on a fleat of instances without login into server. **Session Manager**. IAM based access to servers. No need to use SSH, Bastion Hosts, RDP. AWS Config Integration.
+
+Parameter Store: To store passwords and configuration data. Secret Manager stores everything encrypted. Parameter store - u need to encrypt and store. Parameter Store supports three parameter types: String, StringList and SecureString
+
+Maintain consistent configuration.Automation of administrative tasks.
+
+App Config: Manage application configuration
 
 ### Amazon Macie
 
@@ -44,9 +44,29 @@ AWS Security Hub's Foundational Security Best Practices,
 
 ### Amazon Access Analyzer
 
+### AWS Inspector
+
+Security vulnerabilities of EC2 instance
+
+Host assessment: Compare installed OS and software against CVE list. Also evaluate against CIS benchmark. Evaluate against AWS best practices
+
+Network assessment : Identify Ports that are reachable. Processes listening of port.
+
+U need to install an agent.
+
 ### Amazon Detective
 
 Amazon Detective collects log data from your AWS resources and uses machine learning, statistical analysis, and graph theory to help you **identify the root cause of potential security issues or suspicious activities**
+
+## AWS Trusted advisor
+
+Scans and compare infrastructure against AWS best practices in 5 areas - Cost optimization, Performance, Security, Fault Tolerance, Service Limits.
+
+All customers have access to 7 core checks.
+
+S3 with public access, SG with ports access to SSH to everyone, No MFA for root account, EBS snapshots that are public, Compare Service Limit
+
+Business and Enterprise Plan - Full check.
 
 ### AWS Managed Services
 
@@ -68,15 +88,31 @@ AWS Managed Services (AMS) helps enterprises adopt **AWS at scale and operate mo
 
 ## AWS Shield
 
+Standard: Infrastructure layer protection(layer 3 and 4). For all customers. Free
+
+Advanced: 24/7 DDos response team. Visibility and repoting. DDos auto scaling cost protection.Support plan. Includes WAF
+
+
 AWS offers customers AWS Shield, which provides a managed **DDoS protection service** that safeguards web applications running on AWS. AWS Shield provides always-on detection and automatic inline mitigations that minimize application downtime and latency, so there is no need to engage AWS Support to benefit from DDoS protection. There are two tiers of AWS Shield: Standard and Advanced.
 
-All AWS customers benefit from the no cost, automatic protections of AWS Shield Standard. AWS Shield Standard defends against most common, frequently occurring network and transport layer DDoS attacks that target your website or applications. When you use AWS Shield Standard with Amazon CloudFront and Amazon Route 53, you receive comprehensive availability protection against all known infrastructure (Layer 3 and 4) attacks.
+All AWS customers benefit from the no cost, automatic protections of AWS Shield Standard. AWS Shield Standard defends against most common, frequently occurring **network and transport layer DDoS attacks** that target your website or applications. When you use AWS Shield Standard with Amazon CloudFront and Amazon Route 53, you receive comprehensive availability protection against all known infrastructure (**Layer 3 and 4**) attacks.
 
 For higher levels of protection against attacks targeting your web applications running on Amazon Elastic Compute Cloud (Amazon EC2), Elastic Load Balancing (ELB), Amazon CloudFront, and Amazon Route 53 resources, you can subscribe to AWS Shield Advanced. Additionally, AWS Shield Advanced gives you 24/7 access to the AWS DDoS Response Team (DRT). 
 
-## AWS Trusted advisor
+Layer 3 attack - Eg: UDP reflection attack. Overwhelm the system with flood of large packets. \
+Layer 4 - Eg: SYN Flood. Attacker sends large number of SYNs. Connection half open. Never send ACK. \
+
+
 
 ## AWS Config Rules
+
+Continuously monitor all resources.
+
+Eg: Access keys rotated periodically, Unused EBS volume, unused Elastic IP, Check if multi-az configured for RDS.
+
+Can aggrgate data from multiple accounts. 
+
+Alert when changes are detected.
 
 ## How to use these services
 
@@ -173,9 +209,17 @@ Security Hub: Single place for all findings
 
 There are a number of partner tools available, such as those listed in our **APN Security Competency program**. You might also want to write your own queries to search your logs. With the extensive number of managed services that AWS offers, this has never been easier. There are many additional AWS services that can assist you with investigation that are outside the scope of this paper, such as Amazon Athena, Amazon OpenSearch Service, Amazon QuickSight, Amazon Machine Learning, and Amazon EMR.
 
-## AWS Artifact 
+### AWS Artifact 
 
 AWS Artifact is your go-to, central resource for compliance-related information that matters to you. It provides on-demand access to AWS’ security and **compliance reports** and select online agreements. Reports available in AWS Artifact include our Service Organization Control (SOC) reports, Payment Card Industry (PCI) reports, and certifications from accreditation bodies across geographies and compliance verticals that validate the implementation and operating effectiveness of AWS security controls. Agreements available in AWS Artifact include the Business Associate Addendum (BAA) and the Nondisclosure Agreement (NDA).
+
+### IPTables, Windows Firewall, Host/Instance Based Firewall
+
+Can be used for for unique requirements that are not easily met by AWS provided firewalls. Eg: Allow traffic only to www.abc.com. Using SG and NACL, we can limit only be CIDR block.
+
+### Secrets Manager
+
+Rotate credentials. Integrates with RDS and Redshift. Automatically rotate credentials without impacting application. In other cases, use lambda for credential rotation.  
 
 
 
