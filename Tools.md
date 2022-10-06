@@ -27,6 +27,16 @@ Maintain consistent configuration.Automation of administrative tasks.
 
 App Config: Manage application configuration
 
+Quick Setup -> Configure for all accounts or one account.
+
+Need two roles.One role for SSM. One role for EC2 to communicate with SSM. \
+
+AmazonSSMManagedInstanceCore, CloudWatchAgentServerPolicy
+
+Collect Inventory
+
+Chhose all instances, or specific instances by tags.
+
 ### Amazon Macie
 
 Amazon Macie is a data security and data privacy service that uses machine learning (ML) and pattern matching to discover and protect your sensitive data
