@@ -185,3 +185,14 @@ Option 2 explained: Trail Home Region. CloudWatch Console. Log Group. Go to Clou
 { $.userIdentity.type == "Root" } . Set up Alarm . Set Notification.
 
 Event Bus approach is near real time. Log group approach has some delivery delay( up to 15 minutes). Advantage is u can implement more complex alarms.
+
+### Monitor failed login attempts
+
+Linux OS log failed login attempts in /var/log/secure. To monitor these logs, configure cloudwatch agents. 
+
+Install cloudwatch agent using System Manager. Store configurations in Paramaeter store. To install agent use Run Command. Run command need a document. It refers to a set of actions. AWS-ConfigureAWSPackage document. Select AmazonCloudWatch Agent and Choose Install. Login to EC2 instance using session manager. Start Wizard for configuration(by running command). Select configuration for cloudwatch( do you want to monitor host metrics?, high resolution?, any log files to monitor?). Store configuration in Parameter Store. 
+
+To start agent. CloudWatchManage document. Specify parameter name. 
+
+
+CloudWatch Agent can be used for publishing memory usage and disk usage.
