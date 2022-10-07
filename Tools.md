@@ -13,6 +13,8 @@ Managed Rule Groups - provided by AWS. for OWASP Top 10, CVE, IP Restriction lis
 
 By default ALB doesnt protect you from Injection attacks. U need to associate WACL to ALB and then it prevent Injection and other attacks.
 
+**AWS WAF does not support NLB.** One option is to configure CloudFront distribution with NLB as the origin and associate AWS WAF to the CloudFront distribution.
+
 ### Firewall Manager
 
 Administraction and maintaince task in multiple accounts( Manage WAF rules, Shield Advanced, Security Groups across accounts)
@@ -67,17 +69,21 @@ AWS Security Hub's Foundational Security Best Practices,
 
 Security vulnerabilities of EC2 instance
 
-Host assessment: Compare installed OS and software against CVE list. Also evaluate against CIS benchmark. Evaluate against AWS best practices
+Host assessment: Compare installed OS and software against CVE list. Also evaluate against CIS benchmark. Evaluate against AWS best practices. Need an agent(If instance is managed by SSM, Inspector can run commands). 
 
-Network assessment : Identify Ports that are reachable. Processes listening of port.
+Network assessment : Network reachability assessment. Identify Ports that are reachable. Processes listening of port. Agent not required.Optional agent.
 
-U need to install an agent.
+Schedule for weekly once or Run once. Takes 1 hr to run assessment. 
+
+U can trigger assessment as response to an event ( someone changes SG).
 
 ### Amazon Detective
 
 Amazon Detective collects log data from your AWS resources and uses machine learning, statistical analysis, and graph theory to help you **identify the root cause of potential security issues or suspicious activities**
 
 ## AWS Trusted advisor
+
+Do Benchmarking. Global resource.
 
 Scans and compare infrastructure against AWS best practices in 5 areas - Cost optimization, Performance, Security, Fault Tolerance, Service Limits.
 
@@ -86,6 +92,8 @@ All customers have access to 7 core checks.
 S3 with public access, SG with ports access to SSH to everyone, No MFA for root account, EBS snapshots that are public, Compare Service Limit
 
 Business and Enterprise Plan - Full check.
+
+Can be configured to run weekly.
 
 ### AWS Managed Services
 
@@ -137,7 +145,14 @@ Monitor resources in a region for an account.
 
 Remediation : Using SSM document.
 
-Timeline of changes
+Timeline of changes.
+
+**AWS Config Aggregator**: Multi-Account Multi-Region Data Aggregation.
+"An aggregator is an AWS Config resource type that collects AWS Config configuration and compliance data from the following:
+
+Multiple accounts and multiple regions. Single account and multiple regions. An organization in AWS Organizations and all the accounts in that organization.
+
+Use an aggregator to view the resource configuration and compliance data recorded in AWS Config."
 
 ## How to use these services
 
@@ -253,3 +268,5 @@ Note:
 With CloudFront whitlelist query paramater to prevent cache bursting attacks.
 
 To manage private instances using SSM : Create systems manager endpoints for three services: ssm, ssmmessages and ec2messages.  The endpoint security group must allow 443 https traffic from your instance to the endpoint.
+
+AWS Inspector can automatically scan Container Images stored in Elastic Container Registry (ECR). This is better than Basic Scanning provided by ECR.
