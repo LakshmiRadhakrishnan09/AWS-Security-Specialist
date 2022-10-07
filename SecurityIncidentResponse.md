@@ -10,10 +10,9 @@ Incident Response
 AWS Cloud Adoption Framework(CAF) Security Perspective
 
 The Security Perspective includes four components:
-• Directive controls : establish the governance,risk,andcompliancemodelswithinwhichthe environment operates.
+• Directive controls : establish the governance,risk,and compliance models within which the environment operates.
 • Preventive controls: protect your workloads and mitigate threats and vulnerabilities.
-• Detectivecontrols: providefullvisibilityandtransparencyovertheoperationofyourdeploymentsin
-AWS.
+• Detectivecontrols: provide full visibility and transparency over the operation of your deployments in AWS.
 • Responsivecontrolsdriveremediationofpotentialdeviationsfromyoursecuritybaselines.
 
 Incident Domain
