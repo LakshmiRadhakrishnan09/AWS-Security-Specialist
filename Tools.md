@@ -33,9 +33,18 @@ Need two roles.One role for SSM. One role for EC2 to communicate with SSM. \
 
 AmazonSSMManagedInstanceCore, CloudWatchAgentServerPolicy
 
-Collect Inventory
+Collect Inventory. OS used. applications running. You can find out how many instances are using a particular version of software. \
+Instances that are compliant
 
-Chhose all instances, or specific instances by tags.
+Chhose all instances, or specific instances by tags. 
+
+SSM can manage on-premise servers. On-premise need to have a certificate(instaed of IAM role) + Activation ID
+
+Session Manager : to connect
+
+Distributor: Install additional agents
+
+Patch Manager: Configure Custom Patching. Select Patch Baseline for OS. Configure Schedule.
 
 ### Amazon Macie
 
@@ -123,6 +132,12 @@ Eg: Access keys rotated periodically, Unused EBS volume, unused Elastic IP, Chec
 Can aggrgate data from multiple accounts. 
 
 Alert when changes are detected.
+
+Monitor resources in a region for an account.
+
+Remediation : Using SSM document.
+
+Timeline of changes
 
 ## How to use these services
 
@@ -236,3 +251,5 @@ Rotate credentials. Integrates with RDS and Redshift. Automatically rotate crede
 Note:
 
 With CloudFront whitlelist query paramater to prevent cache bursting attacks.
+
+To manage private instances using SSM : Create systems manager endpoints for three services: ssm, ssmmessages and ec2messages.  The endpoint security group must allow 443 https traffic from your instance to the endpoint.
