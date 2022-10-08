@@ -17,9 +17,13 @@ By default ALB doesnt protect you from Injection attacks. U need to associate WA
 
 ### Firewall Manager
 
-Administraction and maintaince task in multiple accounts( Manage WAF rules, Shield Advanced, Security Groups across accounts)
+Administraction and maintaince task in multiple accounts( Manage WAF rules, Shield Advanced, Security Groups across accounts).
 
-### AWS System Manager(SSM)
+Centally maintain Firewall rules. 
+
+Findings are send to Security Hub
+
+### AWS System Manager(SSM) and Patch Manager
 
 For parching systems at scale. Centrally manage all servers. Need to install a agent in each server. **OS and software patches**. Run commands on a fleat of instances without login into server. **Session Manager**. IAM based access to servers. No need to use SSH, Bastion Hosts, RDP. AWS Config Integration.
 
@@ -50,20 +54,48 @@ Patch Manager: Configure Custom Patching. Select Patch Baseline for OS. Configur
 
 ### Amazon Macie
 
-Amazon Macie is a data security and data privacy service that uses machine learning (ML) and pattern matching to discover and protect your sensitive data
-in **S3**.
+Amazon Macie is a data security and data privacy service that uses machine learning (ML) and pattern matching to discover and protect your sensitive data in **S3**.
 
 Discover sensitive Data -  PII data , protected health data, IP(Intellectual Property)
 
-### AWS Security Hub
-
-Security Hub gives you a comprehensive view of your high-priority **security alerts** and **compliance status** acrossAWS accounts in one place, enabling better visibility to these indicators. 
-
-AWS Security Hub's Foundational Security Best Practices,
+* Sensitive Data Finding
+* Policy Finding : When Bucket Policy is changed. Bucket Encryption disabled.
 
 ### Amazon GuardDuty
 
-### Amazon Access Analyzer
+Threat Detection Service: detect malicious and abnormal activities. unusual activities
+
+It is difficult to monitor log trials and events manually. Guarduty automatically monitors it for you. GuardDuty monitors CloudTrail(Event Logs, Management events, S3 Data Events), VPC flow logs, DNS Logs.
+
+GuardDuty is regional. Need to be enabled in each region.
+
+GuardDuty in N.Virgia for Global resources.
+
+Report suspicious activity in reions u do not use.
+
+Currently GuardDuty generate findings for **EC2, IAM and S3**.
+
+SEVERITY \
+HIGH -> Immediate Action \
+MEDIUM -> Investigate \
+LOW -> Indication
+
+Can configure Trusted IPs. Known Malicious IPs.
+
+Supression Findings -> Exfilteration reported due to on-premiese AWS connectivity for gateway. Bastion Host.
+
+GuardDuty -> EventBridge Integration. GuarDuty just report findings. You need to take action.
+
+GuarDuty and AWS Organization for multi account. \
+Nominate one of the member as GuardDuty admin account. This Admin account can manage configuration for all accounts. \
+Do not use organization master account or root account. \
+Need to be delegated for each region. Repeat for every region. \
+
+### Amazon IAM Access Analyzer
+
+Resources shared to another account outside of AWS organizations generates a finding.
+
+Only for services that support Resource based policy - S3 bucket, IAM roles, KMS keys, Lambda functions, SQS queus, Secret Manager
 
 ### AWS Inspector
 
@@ -77,41 +109,11 @@ Schedule for weekly once or Run once. Takes 1 hr to run assessment.
 
 U can trigger assessment as response to an event ( someone changes SG).
 
-### Amazon Detective
+### Network Firewalls and Route 53 Resolver DNS Firewall
 
-Amazon Detective collects log data from your AWS resources and uses machine learning, statistical analysis, and graph theory to help you **identify the root cause of potential security issues or suspicious activities**
+Block suspicious packages
 
-## AWS Trusted advisor
-
-Do Benchmarking. Global resource.
-
-Scans and compare infrastructure against AWS best practices in 5 areas - Cost optimization, Performance, Security, Fault Tolerance, Service Limits.
-
-All customers have access to 7 core checks.
-
-S3 with public access, SG with ports access to SSH to everyone, No MFA for root account, EBS snapshots that are public, Compare Service Limit
-
-Business and Enterprise Plan - Full check.
-
-Can be configured to run weekly.
-
-### AWS Managed Services
-
-AWS Managed Services offers two operations plans to meet your needs: 1) AWS Managed Services Accelerate for your new and existing AWS accounts via detective controls, giving you full control and flexibility to use AWS as you always have, and 2) AWS Managed Services Advanced with preventative controls via a change management system within an AWS managed landing zone, which provides a full operational solution and trades some flexibility for increased operational rigor to protect your critical business applications. Customers can select either operations plan on an account by account basis.
-
-AWS Managed Services (AMS) specializes in managing AWS infrastructure and services. AMS **automates common activities such as change requests, monitoring, patch management, security, and backup services, and provides full-lifecycle services to provision, run, and support your infrastructure.**
-
-As an Infrastructure Operator, AMS takes responsibility for deploying a suite of security detective controls and provides a 24/7 first line of response to alerts, using a follow-the-sun model. When an alert is triggered, AMS follows a standard set of automated and manual runbooks to ensure a consistent response. These runbooks are shared with AMS customers during onboarding so they can develop and coordinate response with AMS. AMS encourages the joint execution of security response simulations with customers to develop operational muscle before a real incident occurs.
-
-### AWS Support
-
-AWS Support offers a range of plans that provide access to tools and expertise that support the success and operational health of your AWS solutions. All support plans provide 24/7 access to customer service, AWS documentation, whitepapers, and support forums. If you need technical support and more resources to help plan, deploy, and optimize your AWS environment, you can select a support plan that best aligns with your AWS use case.
-
-## Diff between AWS Support and AWS Managed Service
-
-AWS Support provides a mix of tools and technology, people, and programs designed to proactively help customers optimize performance, lower costs, and innovate faster. AWS Support addresses requests that range from answering best practices questions, guidance on configuration, all the way to break-fix and problem resolution.
-
-AWS Managed Services (AMS) helps enterprises adopt **AWS at scale and operate more efficiently and securely**. We are able to execute operational best practices on behalf of the customer through specialized automations, skills, and experience that are contextual to their environment and applications. We provide proactive, preventative, and detective capabilities that raise the operational bar and help reduce risk without constraining agility, allowing customers to focus on innovation. We extend customers' teams and operational capabilities including monitoring, incident detection, security, patch, backup, and cost optimization.
+Block DNS queries
 
 ## AWS Shield
 
@@ -153,6 +155,63 @@ Timeline of changes.
 Multiple accounts and multiple regions. Single account and multiple regions. An organization in AWS Organizations and all the accounts in that organization.
 
 Use an aggregator to view the resource configuration and compliance data recorded in AWS Config."
+
+
+### AWS Security Hub
+
+Security Hub gives you a comprehensive view of your high-priority **security alerts** and **compliance status** acrossAWS accounts in one place, enabling better visibility to these indicators. 
+
+Integrated with AWS Security Hub's Foundational Security Best Practices.
+
+Consolidates threats and prioritize from GuradDuty, Macie, IAM access analyzer, Firewall Manager, Inspector, Patch Manager.
+
+Problem with all these tools: \
+All these tools are regional. No global-view. 
+
+**Security Hub and Amazon Detective attempt to do samething -> Consolidate View**
+
+
+### Amazon Detective
+
+Amazon Detective collects log data from your AWS resources and uses machine learning, statistical analysis, and graph theory to help you **identify the root cause of potential security issues or suspicious activities**
+
+Visualize interation.
+
+**Security Hub reports. Detective to find root cause.** 
+
+## AWS Trusted advisor
+
+Do Benchmarking. Global resource.
+
+Scans and compare infrastructure against AWS best practices in 5 areas - Cost optimization, Performance, Security, Fault Tolerance, Service Limits.
+
+All customers have access to 7 core checks.
+
+S3 with public access, SG with ports access to SSH to everyone, No MFA for root account, EBS snapshots that are public, Compare Service Limit
+
+Business and Enterprise Plan - Full check.
+
+Can be configured to run weekly.
+
+
+### AWS Managed Services
+
+AWS Managed Services offers two operations plans to meet your needs: 1) AWS Managed Services Accelerate for your new and existing AWS accounts via detective controls, giving you full control and flexibility to use AWS as you always have, and 2) AWS Managed Services Advanced with preventative controls via a change management system within an AWS managed landing zone, which provides a full operational solution and trades some flexibility for increased operational rigor to protect your critical business applications. Customers can select either operations plan on an account by account basis.
+
+AWS Managed Services (AMS) specializes in managing AWS infrastructure and services. AMS **automates common activities such as change requests, monitoring, patch management, security, and backup services, and provides full-lifecycle services to provision, run, and support your infrastructure.**
+
+As an Infrastructure Operator, AMS takes responsibility for deploying a suite of security detective controls and provides a 24/7 first line of response to alerts, using a follow-the-sun model. When an alert is triggered, AMS follows a standard set of automated and manual runbooks to ensure a consistent response. These runbooks are shared with AMS customers during onboarding so they can develop and coordinate response with AMS. AMS encourages the joint execution of security response simulations with customers to develop operational muscle before a real incident occurs.
+
+### AWS Support
+
+AWS Support offers a range of plans that provide access to tools and expertise that support the success and operational health of your AWS solutions. All support plans provide 24/7 access to customer service, AWS documentation, whitepapers, and support forums. If you need technical support and more resources to help plan, deploy, and optimize your AWS environment, you can select a support plan that best aligns with your AWS use case.
+
+## Diff between AWS Support and AWS Managed Service
+
+AWS Support provides a mix of tools and technology, people, and programs designed to proactively help customers optimize performance, lower costs, and innovate faster. AWS Support addresses requests that range from answering best practices questions, guidance on configuration, all the way to break-fix and problem resolution.
+
+AWS Managed Services (AMS) helps enterprises adopt **AWS at scale and operate more efficiently and securely**. We are able to execute operational best practices on behalf of the customer through specialized automations, skills, and experience that are contextual to their environment and applications. We provide proactive, preventative, and detective capabilities that raise the operational bar and help reduce risk without constraining agility, allowing customers to focus on innovation. We extend customers' teams and operational capabilities including monitoring, incident detection, security, patch, backup, and cost optimization.
+
 
 ## How to use these services
 
@@ -270,3 +329,8 @@ With CloudFront whitlelist query paramater to prevent cache bursting attacks.
 To manage private instances using SSM : Create systems manager endpoints for three services: ssm, ssmmessages and ec2messages.  The endpoint security group must allow 443 https traffic from your instance to the endpoint.
 
 AWS Inspector can automatically scan Container Images stored in Elastic Container Registry (ECR). This is better than Basic Scanning provided by ECR.
+
+Data Classification
+* Tier1 : Information for Internal use only
+* Tier2: Restrcited Data
+* Tier3: Highly Strategic ( IP, Tradesecrets)
