@@ -219,8 +219,6 @@ How to set up site to site VPN? \
 Add Virtual Private Gateway(VGW) to VPC. Add Customer Gateway(CGW- software or hardware) on on-premise network. Virtual Private Gateway is configured with customer gateway details. Is there a single point of failure? At AWS side VPN uses 2 tunnels each ending at different AZ. Customer Gateway is a single point of failure. For HA, we need to customer gateways in different data center. Two VPN connections from the same VGW but to different CGW. \
 
 
-Add Virtual Private Gateway(VGW) to VPC. Add Customer Gateway(CGW- software or hardware) on on-premise network. Virtual Private Gateway is configured with customer gateway details. Is there a single point of failure? At AWS side VPN uses 2 tunnels each ending at different AZ. Customer Gateway is a single point of failure. For HA, we need two customer gateways in different data center. Two VPN connections from the same VGW but to different CGW. \--
-
 VPN1: AWS VPC --- VGW(AZ1) --- Datacenter-1, AWS VPC ---- VGW(AZ2) ---- Datacenter -1 \
 VPN2: AWS VPC --- VGW(AZ1) --- Datacenter-2, AWS VPC ---- VGW(AZ2) ---- Datacenter -2 \
 
@@ -252,7 +250,7 @@ Edge services like CF, Lambda@Edge, GA has inbuild DoS attack protection. ELB al
 
 Default VPC CIDR block is fixed to 172.31.0.0/16
 
-You can  share a transit gateway with another account using RAM.
+You can  share a transit gateway with another account using RAM. You can share subnet with other account using RAM.
 
 NAT Instance Source Destination Check: Check if source and destination is actually the correct EC2 instance that is sending and receiving the packet.
 This check protect ur instances. 
@@ -261,4 +259,4 @@ In order to specify a **NAT instance as a target in the route table, you must di
 If the source/destination check is not disabled, you cannot specify a NAT instance as a target in the route table.
 This applies to any other security appliance that performs inline packet inspection before forwarding to the destination.
 
-NAT Gateway and NAT Instance does not support IPv6 traffic.For IPv6, you would need to use an **egress-only internet gateway**. This is a highly available, horizontally scaled, redundant, VPC component that allows outbound communication over IPv6 and blocks unsolicited inbound IPv6 requests to your instance.
+NAT Gateway and NAT Instance does not support IPv6 traffic. For IPv6, you would need to use an **egress-only internet gateway**. This is a highly available, horizontally scaled, redundant, VPC component that allows outbound communication over IPv6 and blocks unsolicited inbound IPv6 requests to your instance.
