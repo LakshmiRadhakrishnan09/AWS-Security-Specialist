@@ -166,8 +166,11 @@ Scenario: Is there a change in end point for S3 and SQS with and without VPC end
 
 ## Integrating between VPC
 
-Why should two applications in same organisation over intenet? \
+Why should two applications in same organisation connect over intenet? \
+
+Use VPC Peering so that u can connect using AWS Global network( not internet)
 Two VPC into a single logical network: VPC peering. Once connected they can communicate with private IP. No Single point of failure. CIDR should not overlap. Need to update route table in both VPC. this-vpc-cidr-block -> local. other-voc-cidr-local -> peering-connection. Peering connection is bi-directional(both side traffic)  and both parties need to accept. Not transitive. 
+
 We can peer VPC
 * In same region
 * Different region
@@ -246,3 +249,16 @@ Extras
 ALB supports Security Group. NLB does not support Security Group.
 
 Edge services like CF, Lambda@Edge, GA has inbuild DoS attack protection. ELB also has DoS attack protection.
+
+Default VPC CIDR block is fixed to 172.31.0.0/16
+
+You can  share a transit gateway with another account using RAM.
+
+NAT Instance Source Destination Check: Check if source and destination is actually the correct EC2 instance that is sending and receiving the packet.
+This check protect ur instances. 
+But 
+In order to specify a **NAT instance as a target in the route table, you must disable Source and Destination Check on a NAT instance.**
+If the source/destination check is not disabled, you cannot specify a NAT instance as a target in the route table.
+This applies to any other security appliance that performs inline packet inspection before forwarding to the destination.
+
+NAT Gateway and NAT Instance does not support IPv6 traffic.For IPv6, you would need to use an **egress-only internet gateway**. This is a highly available, horizontally scaled, redundant, VPC component that allows outbound communication over IPv6 and blocks unsolicited inbound IPv6 requests to your instance.
