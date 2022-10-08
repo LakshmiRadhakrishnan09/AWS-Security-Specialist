@@ -147,3 +147,5 @@ Answer: Option 1: Use a vault. Option 2: Enable identity federation between on-p
 
 
 Enable Private DNS Name option: the standard AWS KMS DNS hostname (https://kms.<region>.amazonaws.com) will resolve to your VPC endpoint.
+ 
+Note: For a resource based policy with IP restriction, we can use only Public IPs. 
