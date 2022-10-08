@@ -149,3 +149,14 @@ Answer: Option 1: Use a vault. Option 2: Enable identity federation between on-p
 Enable Private DNS Name option: the standard AWS KMS DNS hostname (https://kms.<region>.amazonaws.com) will resolve to your VPC endpoint.
  
 Note: For a resource based policy with IP restriction, we can use only Public IPs. 
+ 
+SAML Provider Integration
+ 
+* Use SAML provider with Amazon Cognito
+* Configure SAML provider in Cognito to Map attributes to Cognito user pool attributes
+* Establish Trust between SAML provider and Cognito 
+* Configure API Gateway to use Cognito
+ 
+For Lambda to log to CloudWatch \
+Allow logs:CreateLogGroup(When function is first executed), logs:CreateLogStream( For each lambda execution), logs:PutLogEvents
+ 
