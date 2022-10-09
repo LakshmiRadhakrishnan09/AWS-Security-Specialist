@@ -34,7 +34,7 @@ Invalidation Option
 
 Personalized : HTTP Cookies, Query String parameters
 
-Backup origin
+Backup origin: If origin is down, route request to backup.
 
 ### Security
 
