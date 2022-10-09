@@ -83,4 +83,41 @@ To make your bucket publicly readable, you must disable block public access sett
 
 CloudFront does not support region-specific origins.
 
+## Global Accelerator
 
+ELB -> Regional Load Balancing \
+GA -> Cross region load balancing
+
+Global Applications:
+
+CF does not support region specific origin. \
+
+Route 53 allows global applications. Limitation: 
+      - DNS records are cached in client and DNS resolvers for TTL.  Assume app deployed in 4 regions. Route 53 route request to nearest application. If that server is down, route 52 redirects to another healthy nearest one. But due to caching this rerouting traffic to new endpoint will be delayed.
+      - Infrastructure action results in IP address change. ALB adds and removes nodes. ALB nodes ip address are configured in Route 53. Delay in responding to these scaling actions by applications
+
+
+Global Accelerator -> Single Entry point for your global applications. **Two Static anycast IPs**. Route 53 for your domain will have only these 2 static IPs.\
+
+Client example.com -> Route 53 -> Returns Static IP og GA. \
+Client connect to GA in nearest Edge location -> GA decides how to route request to web server( to nearest server). **All requests use AWS network**.\
+GA monitor health of app servers. 
+
+In case of Route 53 , one DNS is resolved, client to web server request goes via Internet.
+
+End point can be private. Eg: ALB is private. GA takes to endpoint using private IP address
+
+Client affinity : Request send to same end point. like sticky sessions
+
+DDos protection at edge.
+
+AWS Shield Integration. **No WAF integartion**
+
+Traffic Dial : Percentage of requests routed between regions.  \
+Weight: Traffic to end point. Blue Green Deployment.
+
+Note:
+
+GA is a global resource, but service is configured in Oregon region.
+
+You can hit GA using static IPs or DNS name.
