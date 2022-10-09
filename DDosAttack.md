@@ -23,3 +23,5 @@ There is no charge for inbound data transfer on AWS and you do not pay for DDoS 
 Using **AWS Shield Advanced** with Elastic IP addresses allows you to protect Network Load Balancer (NLBs) or Amazon EC2 instances.
 
 
+https://d1.awsstatic.com/whitepapers/Security/DDoS_White_Paper.pdf
+
