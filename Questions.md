@@ -19,4 +19,12 @@ Which service can you use for this requirement?
 
 ```EFS is a file share for Linux instances. FSx for windows is a file share for windows instances and also now supports Linux and MacOS. FSx for Lustre is a high performance file share and it currently supports only Linux instances.```
 
-6. 
+6. The requests for a web application need to be routed to the webserver close to the user.  Which of these options would you use?  ( CF or Route 53 or ELB)
+
+``` Route 53 latency-based routing.  With Route 53, you can configure region-specific endpoints. Route 53 will respond with the nearest endpoint address for a DNS query. Elastic Load Balancers are regional resources and are meant for routing traffic to web servers in the same region.  While private IP based cross-region registration is possible, it will not guarantee to route the request to the nearest webserver.  All webservers in an elastic load balancer receive equal traffic.  CloudFront routes request to the edge and the configured origin.CloudFront does not support region-specific webservers.```
+
+
+7. CloudFront offers protection against DDoS attack
+
+``` True.CloudFront uses global edge network to block certain types of infrastructure level DDoS attacks.You can also whitelist acceptable query parameters and headers to block cache-busting attacks.```
+
