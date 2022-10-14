@@ -26,3 +26,5 @@ https://aws.amazon.com/architecture/security-identity-compliance/?cards-all.sort
 https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-standards-fsbp.html
 
 https://docs.aws.amazon.com/securityhub/latest/userguide/what-is-securityhub.html
+
+https://aws.amazon.com/blogs/security/category/security-identity-compliance/
