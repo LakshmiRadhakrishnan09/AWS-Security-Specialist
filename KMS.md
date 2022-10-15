@@ -1,4 +1,80 @@
+## Types of KMS Keys
 
+|Type of KMS key.         | Can view KMS key metadata| Can manage KMS key|Used only for my AWS account| Automatic rotation        | Pricing
+**Customer managed key**	        Yes	                  Yes	                Yes	               Optional. Every year (approximately 365 days) 
+Monthly fee (pro-rated hourly) . Per-use fee
+
+**AWS managed key**	          Yes	                  No	                   Yes	               Required. Every year (approximately 365 days)	
+No monthly fee. Per-use fee (some AWS services pay this fee for you)
+
+**AWS owned key**	             No	                  No	                    No	                 Varies	                     No fees
+
+
+Customer Managed Keys: **Customer managed keys are KMS keys in your AWS account that you create, own, and manage. You have full control over these KMS keys**, including establishing and maintaining their key policies, IAM policies, and grants, enabling and disabling them, rotating their cryptographic material, adding tags, creating aliases that refer to the KMS keys, and scheduling the KMS keys for deletion.
+
+AWS managed keys are KMS keys in your account that are created, managed, and used on your behalf by an AWS service integrated with AWS KMS to protect your resources in the service.**You don't have to create or maintain the key or its key policy**.You have permission to view the AWS managed keys in your account, view their key policies, and audit their use in AWS CloudTrail logs. However, you cannot change any properties of AWS managed keys, rotate them, change their key policies, or schedule them for deletion. And, you cannot use AWS managed keys in cryptographic operations directly; the service that creates them uses them on your behalf.All AWS managed keys are automatically rotated every year. You cannot change this rotation schedule.In general, unless you are required to control the encryption key that protects your resources, an AWS managed key is a good choice.
+
+AWS owned keys. You don't need to create or maintain the key or its key policy.AWS owned keys are not in your AWS account. The rotation of AWS owned keys varies across services. In general, unless you are required to audit or control the encryption key that protects your resources, an AWS owned key is a good choice.The rotation of AWS owned keys varies across services.
+
+## S3 Encryption at Rest
+
+- Server-Side Encryption with Amazon S3-Managed Keys (SSE-S3)
+            - Is a AWS Owned Key.
+            - No fee
+            - Key totation handled automatically. No control
+- Server-Side Encryption with KMS keys Stored in AWS Key Management Service (SSE-KMS)
+            - To upload an object encrypted with an AWS KMS key to Amazon S3, you need **kms:GenerateDataKey** permissions on the key. To download an object encrypted with an AWS KMS key, you need **kms:Decrypt** permissions. 
+            - Can use AWS Managed Key or Customer Managed Key
+            - Amazon S3 supports only symmetric encryption KMS keys and not asymmetric keys.
+            - All GET and PUT requests for AWS KMS encrypted objects must be made using (SSL) or (TLS). Requests must also be signed using valid credentials, such as AWS Signature Version 4 (or AWS Signature Version 2)
+            - If your object uses SSE-KMS, don't send encryption request headers for GET requests and HEAD requests, or you’ll get an HTTP 400 BadRequest error.
+- Server-Side Encryption with Customer-Provided Keys (SSE-C)
+            - you manage the encryption keys and Amazon S3 manages the encryption, as it writes to disks, and decryption, when you access your objects.
+            - Amazon S3 does not store the encryption key you provide. 
+
+
+If you need server-side encryption for all of the objects that are stored in a bucket.
+```
+{
+  "Version": "2012-10-17",
+  "Id": "PutObjectPolicy",
+  "Statement": [
+    {
+      "Sid": "DenyIncorrectEncryptionHeader",
+      "Effect": "Deny",
+      "Principal": "*",
+      "Action": "s3:PutObject",
+      "Resource": "arn:aws:s3:::awsexamplebucket1/*",
+      "Condition": {
+        "StringNotEquals": {
+          "s3:x-amz-server-side-encryption": "AES256"
+        }
+      }
+    }
+  ]
+}
+
+```
+
+```
+"Condition":{
+            "StringNotEquals":{
+               "s3:x-amz-server-side-encryption":"aws:kms"
+            }
+         }
+ ```
+ 
+ ```
+ "Condition": {
+                "Null": {
+                    "s3:x-amz-server-side-encryption-customer-algorithm": "true"
+                }
+            }
+ ```
+ 
+** Amazon S3 Bucket Keys**
+
+When you configure server-side encryption using AWS KMS (SSE-KMS), you can configure your bucket to use **S3 Bucket Keys for SSE-KMS**. Using a bucket-level key for SSE-KMS can reduce your AWS KMS request costs by up to 99 percent by decreasing the request traffic from Amazon S3 to AWS KMS.
 
 * Symmetric Encryption: Same Key for encryption and decryption. AES 256.( 256 bits). Is fast.
 * Asymmetric encryption or public-key encryption: Public key and private key. Encrypt with one key and decrypt with another key. RSA, ECC, DH. Computation expensive. 
@@ -155,5 +231,7 @@ SSE-KMS: Customer Managed Keys(CMKs) stored in AWS KMS. There are two types of C
 
 SSE with Customer-Provided Keys (SSE-C): Key is generated by customer and stored by customer. A client has to send the encryption key along with the object to be uploaded in a request. S3 then encrypts the object using the provided key and the object is stored in S3. Note that the encryption key is deleted from the system.When the user wants to download or retrieve the object it has to supply the encryption key in the request. S3 first verifies that it is the correct encryption key, after the successful match it decrypts the object and returns it to the Client.
 
-
+Note:
+AWS KMS is replacing the term customer master key (CMK) with AWS KMS key and KMS key. The concept has not changed. To prevent breaking changes, AWS KMS is keeping some variations of this term.
+The KMS keys that you create are customer managed keys. AWS services that use KMS keys to encrypt your service resources often create keys for you. KMS keys that AWS services create in your AWS account are AWS managed keys. KMS keys that AWS services create in a service account are AWS owned keys.
 
