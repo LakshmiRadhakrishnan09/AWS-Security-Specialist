@@ -112,7 +112,7 @@ Each object has different data key.
 
 #### EBS Encryption
 
-Optional feature u can enable when u create a volume. An unencrypted volume cannot be enabled with encryption directly. U need to create snapshot first.U can enable encryption while copying snapshot or while creatig new volume from snapshot. Inorder to change encryption also same.
+Optional feature u can enable when u create a volume. An unencrypted volume cannot be enabled with encryption directly. U need to create snapshot first.U can enable encryption while **copying** snapshot or while **creatig new volume from snapshot**. Inorder to change encryption also same. (Note: While taking snapshot u cannot specify encryption)
 
 - EBS calls KMS service to get data key.
 - The encrypted data key is stored in the volume.
