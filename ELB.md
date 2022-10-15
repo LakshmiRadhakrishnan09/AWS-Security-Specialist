@@ -75,6 +75,41 @@ Used by
 * ECS
 * DynamoDB
 * Aurora
-* 
 
+
+### Enabling SSL at Load Balancer
+
+- Register Domain using Route53Eg. www.example.com
+- Certificate for Domain using Certificate Manager
+- Attach certificate to LB
+- Alias Record to route traffic to LB in Route53. Eg site1.example.com -> elb.us-west-1.amazon.com
+
+ALB need to be configured with Security Cyphers. List of cyphers that will be used with client. 
+
+Certificate is Regional. One certificate in each region.
+
+### End to end encryption
+If you need end-end encryption, then you need to configure certificates in the webserver. Since load balancer to webserver/target is using the private IP, you can also use self-signed and expired certificates in the webserver. The load balancer does not check the validity of the certificates.
+
+### Enabling SSL for CloudFront
+
+- Certificate in N.Virginia
+- Attach certificate to CF
+- Alias Record to route traffic to CF in Route53
+
+Clinet ->(SSL)-> CloudFront ->(SSL)- ELB as Origin
+
+CloudFront certificate in N.Virginia.
+
+### S3 and SSL
+
+Amazon S3 website endpoints do not support HTTPS. http://bucket-name.s3-website-Region.amazonaws.com. To use SSL end point:
+1. Use REST API endpoint. Will not support custom domian
+2. Use CloudFront
+
+Note:
+
+Certificates in ACM is regional.
+
+For certificate in cloudFront -> Only in N.virgiia. Not in all edge regions.
     
