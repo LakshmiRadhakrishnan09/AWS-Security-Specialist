@@ -45,7 +45,7 @@ VPC :
    * At subnet level
    * Both allow and deny
    * Stateless : Allow both request and response
-   * Ordered: First rule that matches will allow or deny. From lowest number
+   * Ordered: First rule that matches will allow or deny. From lowest number. "1" has highest order. Starts evaluating from "1".
    * Default NACL: Allow all inbound and outbound traffic
    * Response traffic is send to an ephemeral port. Servers listen on well known ports. But listenes on ephemeral ports for reciving response. Solution: only allow epheral port for VPC ports only.
    * Tricky to configure
@@ -240,7 +240,40 @@ To connect to AWS Services( S3) from onpremise - Direct Connect with Public virt
 **VPN over Direct Connect** : Encryption over consistent network. \
 USe VPN as backup for Direct Connect. 
 
+## VPC Flow Log
 
+Once configured appear in CloudWatch Log Groups.
+
+- ACCEPT/REJECT
+- Start addr/port and Destination addr/port
+- Protocol(ICMP for Ping)
+
+VPC flow log do not capture packet content. If u want to capture packet content:
+1. VPC traffic mirroring for EC2 instances: allowing customers to natively replicate their network traffic without having to install and run packet-forwarding agents on EC2 instances
+
+2. Third-party AMIs in the marketplace approved for packet capture
+
+**IAM Role for VPC Flow Capture**
+
+VPC service requires your permission to capture the flow log; this permission is granted using the IAM role.
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents",
+        "logs:DescribeLogGroups",
+        "logs:DescribeLogStreams"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+```
 
 Extras
 
@@ -260,3 +293,5 @@ If the source/destination check is not disabled, you cannot specify a NAT instan
 This applies to any other security appliance that performs inline packet inspection before forwarding to the destination.
 
 NAT Gateway and NAT Instance does not support IPv6 traffic. For IPv6, you would need to use an **egress-only internet gateway**. This is a highly available, horizontally scaled, redundant, VPC component that allows outbound communication over IPv6 and blocks unsolicited inbound IPv6 requests to your instance.
+
+
