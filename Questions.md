@@ -32,4 +32,18 @@ Which service can you use for this requirement?
 
 ```CloudHSM```
 
+9. Your organization requires the use of approved protocols and ciphers for HTTPS communication.  Where would you configure this information?
+
+``` Security Policy in ALB```
+
+10. You are planning to deploy your web app with the Application Load Balancer in Oregon and Frankfurt regions. Both regions need to be accessible using the same domain name. You have configured latency-based routing in Route 53.  How many certificates do you need in this scenario?
+
+``` Two certificates one for each region.```
+
+11. When you use HTTPS to connect to CloudFront distribution, which part of the connection is encrypted?
+
+``` Client to Edge Location is encrypted. If you need end-end encryption, you also need to configure CloudFront to use HTTPS when talking to Origin.```
+
+12. AWS Certificate Manager Certificates are: Free and can be used with AWS resources
+
 
