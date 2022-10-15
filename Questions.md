@@ -28,3 +28,8 @@ Which service can you use for this requirement?
 
 ``` True.CloudFront uses global edge network to block certain types of infrastructure level DDoS attacks.You can also whitelist acceptable query parameters and headers to block cache-busting attacks.```
 
+8. What capability allows you to have a single-tenant hardware security module in the AWS cloud for key generation and other cryptographic operations.
+
+```CloudHSM```
+
+
