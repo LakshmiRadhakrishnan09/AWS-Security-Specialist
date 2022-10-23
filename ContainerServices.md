@@ -65,3 +65,11 @@ EKS is much better choice than ECS generally from orchestration perspective.
 When to use ECS: If u have a less complex system, then deploy to ECS.
 
 Amazon ECR: Repository for Container images.
+
+
+
+Why should we use EKS/ECS over EC2?
+
+- Zero down time deployments are difficult with EC2. 
+- If u run containers in EC2, management is difficult.
+- If its a monolith, then EC2 is fine.
