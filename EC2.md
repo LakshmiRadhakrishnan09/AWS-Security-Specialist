@@ -1,5 +1,5 @@
 
-How AMI are created and distributed across accounts in an enterprise? 
+How AMI are created and distributed across accounts in an enterprise? EC2 instances with API are repaved at regular intervals. New instances are created wit latest version.
 
 Instance metadata : http://169.254.169.254/latest/meta-data/
 
