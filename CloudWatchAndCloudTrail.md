@@ -131,7 +131,7 @@ Go to CloudTrail -- Go to ur primary Region -- Create Trail \
 
 Go to CloudWatch Console. Select Insights. Select Log Group to query. Pick CloudTrail Log Group. You can see events as in kibana dashboard. 
 It Automatically discovers the fields(different for cloudtrail and vpc log and Ec2 log). You can write query based on fields and run query.
-Easily query events in LogGroup. Since Loggroup has consolidated logs from all regions it is easy. So compared to Event History this is better to query and get a consolidated view.
+Easily query events in LogGroup. **Since Loggroup has consolidated logs from all regions it is easy. So compared to Event History this is better to query and get a consolidated view.**
       
 With Log group subscription you can publish events to other services.( eg: lambda, elastic search )  
 
