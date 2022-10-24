@@ -66,10 +66,88 @@ When to use ECS: If u have a less complex system, then deploy to ECS.
 
 Amazon ECR: Repository for Container images.
 
+## ECS Task Definition
 
+In ECS we define an application using one or more task definitions.
+
+For a web application with web, app and data containers, if u create one task definition for all 3 containers, then they are started together and co-located together on same host. Not a good practice. Do not scale independently.
+
+Define one container per task definition. Each layer can scale seperately.
+
+Containers in a task are co-located in the same host. AWS recommends that each task definition contains one container image and an optional sidecar that enhances the primary container. Mixing different containers and business functions in the same task definition is not recommended
+
+Tasks can be run as
+- Batch : Scheduled tasks
+- Service: Continuous tasks
+- Run-Task: Manual
+
+## ECS Cluster
+
+EC2 based - Cost effective for workloads which consistantly need high CPU. Direct access to host. Can configure additional logging/control.
+
+Fargate - If complete capacity is needed only during some time or based on events.No management
+
+### Other compute options
+
+Local Zones
+
+Wavelength
+
+AWS outpost
+
+ECS Anywhere
+
+### ECS Permissions
+
+There are two types of role
+
+#### Task Execution Role
+
+Used by Fargate agent. To download images, retrieve credentials from secret manager, publish logs to cloudwatch
+
+#### Container Instance Role(Similar to above role)
+
+Used by EC2 Container agent. To communicate with ECS Service. For registeration and removal of nodes.
+
+#### Task Role
+
+Used by application to talk to other AWS Services like s3, dynamodb. 
+
+### Logging
+
+Container logs can be published to CloudWatch using  awslogs driver
+
+### Deployment option
+
+- Rolling: Desired 6. Minimum 100%, Maximum 200%. There should be 6 tasks always running. Can have 12 tasks maximum. Gradually replace existing containers with new containers.
+Desired 6. Minimum 50%, Maximum 200%. Reduced num ber of cycles.
+- Blue Green. Old and new tasks running side by side. More expensive. Able to respond to issues with new version. Use double the capacity.
+
+### Networking
+
+- Host : Container is conneced to host network. Container port 3000 uses Host port 3000. You can run one instance of an application in a host. Port already used. Security issues as container can access other ports running on host.
+- Bridge: Virtual layer between host and container. Map host port to container port. Dynamic Port mapping : Docker assigns a random host port for container. Inside host, application runs on same port , say 3000, but different host ports are mapped to this containers. problem is caller need to know the random ports. ELB hides dynamic ports. Problem: SG and NACL need to allow traffic on dynamic ports.
+- AWS VPC : Each task is assigned a network interface and private IP.  No need to use dynamic port. Can configure SG at task level. You can use network monotoring tools for task.Problems: There is a limit on number of tasks running in a EC2 instance. Enable ENI trunking. Start up delay.
+
+Bridge mode can be configured to use dynamic port allocation. Docker will assign an unused host port and map it to the container port in this setup. This flexibility comes with a drawback. Since the port is assigned from a wide range of ephemeral ports, we need to open the Security group and NACL firewalls to allow traffic on those ports. Both Host networking and awsvpc use static port allocation, and this makes it easier to monitor traffic.
+
+Use awsvpc mode networking and specify task level security group. With the awsvpc mode, each Task is assigned an elastic network interface (ENI) and receives a private IP address within the VPC. We can attach a security group to the task network interface and configure the inbound rule to allow access from an upstream service security group. This approach would ensure that calls are allowed only in a specific direction and from specific callers. Host and Bridge networking modes do not support task-level security groups
+
+  
+### Service to Service Communication
+
+1. Internal Load Balancer for each service
+2. Shared Internal Load Balancer
+3. CloudMap. Service Domains mapped in CloudMap. Can cause DNS cache issues.
+4. AppMesh. Each container use an envoy side-car container. So a container only talks to its envoy. Envoy fwds request to another service's envoy. Envoys are controlled by App Mesh. Service Discovery + Load Balancing. Extremely low latency.
+  
+  
+
+Notes:
 
 Why should we use EKS/ECS over EC2?
 
 - Zero down time deployments are difficult with EC2. 
 - If u run containers in EC2, management is difficult.
 - If its a monolith, then EC2 is fine.
+- Even if we run as containers in EC2, we cannot run multiple instane of same application in a Ec2 due to port issues. See networking section above for details.
