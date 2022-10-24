@@ -75,9 +75,9 @@ An event in CloudTrail is the record of an activity in an AWS account.
        - Read Events. Eg. KMS Encrypt, decrypt , generate data key -> High Volume events
        - Write Events. Eg. Disable, delete -> Low Volume events
 - Data Events
-      - S3 Object Access
-      - Lambda Function Invocation
-      - Data events are not logged by default when you create a trail. 
+     - S3 Object Access
+     - Lambda Function Invocation
+     - Data events are not logged by default when you create a trail. 
 
 Sign in events are always reported on N.Virgnia
 
