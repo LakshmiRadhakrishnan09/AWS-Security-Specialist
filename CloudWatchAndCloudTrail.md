@@ -196,3 +196,11 @@ To start agent. CloudWatchManage document. Specify parameter name.
 
 
 CloudWatch Agent can be used for publishing memory usage and disk usage.
+
+Final Notes:
+
+**CloudWatch Log Insights : For querying CloudTail events in CloudWatch Log Groups. Events from all regions available in one place.
+
+**You can configure alarms in EventBridge or configure Metric Filter for CloudTrail Log Group.**
+
+
