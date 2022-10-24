@@ -14,6 +14,9 @@ Web Servers, App Servers and databases : Should be in **private network**. Use A
 An internet gateway enables resources in your public subnets (such as EC2 instances) to connect to the internet if the resource has a public IPv4 address 
 or an IPv6 address. Similarly, resources on the internet can initiate a connection to resources in your subnet using the public IPv4 address or IPv6 address. 
 
+what is difference between NAT Gateway and Internet Gateway?\
+
+If a VPC does not have an Internet Gateway, then the resources in the VPC cannot be accessed from the Internet.A NAT Instance is an Amazon EC2 instance configured to forward traffic to the Internet. 
 
 Route 53 : Across Region Load balancing.
 
