@@ -70,10 +70,10 @@ An event in CloudTrail is the record of an activity in an AWS account.
       - Final response
 
 - Management Event
-      - Changes to Security Group, Launching new instance, **Console log in**
-      - KMS Management Events
-        - Read Events. Eg. KMS Encrypt, decrypt , generate data key -> High Volume events
-        - Write Events. Eg. Disable, delete -> Low Volume events
+     - Changes to Security Group, Launching new instance, **Console log in**
+     - KMS Management Events
+       - Read Events. Eg. KMS Encrypt, decrypt , generate data key -> High Volume events
+       - Write Events. Eg. Disable, delete -> Low Volume events
 - Data Events
       - S3 Object Access
       - Lambda Function Invocation
