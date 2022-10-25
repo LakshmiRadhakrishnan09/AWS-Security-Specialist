@@ -122,19 +122,19 @@ Although you could authenticate directly to the machine using a standard method 
 Automating the Capture
 
 One method to invoke the SSM Agent is to target the Run Command through Amazon CloudWatch Events when the instance is tagged with a specific tag. For example, if you apply the Response=Isolate+MemoryCapture tag to an affected instance, you can configure Amazon CloudWatch Events to trigger two actions:
-• ALambdafunctionthatperformstheisolationactivities
-• ARunCommandthatexecutesashellcommandtoexporttheLinuxmemorythroughtheSSMAgent
+* A Lambda function that performs the isolation activities
+* A Run Command that executes shell command to export the Linux memory through the SSMAgent
 **This tag-driven response is another method of event-driven response.**
 
 
 Cloud Services for various activities
 
 
-• LoggingandEvents
+* LoggingandEvents
     -  CloudTrail
     -  CloudWatch Logs
     - CloudWatch Events
-• VisibilityandAlerting
+* VisibilityandAlerting
     - Security Hub
     - GuardDuty
     - Macie
@@ -142,9 +142,9 @@ Cloud Services for various activities
     - AWS Config Rules
     - Inspector
     - Detective
-• Automation
+* Automation
     - System Manager
     - Lambda
-• SecureStorage
+* SecureStorage
     - S3
-• Custom(p.44)
+* Custom(p.44)
