@@ -6,3 +6,14 @@ For example, when using IAM Identity Center as the identity source, configure th
 For machine identities, you should rely on IAM roles to grant access to AWS. For EC2 instances, you can use roles for Amazon EC2. You can attach an IAM role to your EC2 instance to enable your applications running on Amazon EC2 to use temporary security credentials that AWS creates, distributes, and
 rotates automatically through the **Instance Metadata Service (IMDS)**. The latest version of IMDS helps protect against vulnerabilities that expose the temporary credentials and should be implemented. For accessing EC2 instances using keys or passwords, **AWS Systems Manager** is a more secure way to access and manage your instances using a pre-installed agent without the stored secret. Additionally, other AWS services, such as AWS Lambda, enable you to configure an IAM service role to grant the service permissions to perform AWS actions using temporary credentials. In situations where you cannot use temporary credentials, use programmatic tools, such as AWS Secrets Manager, to automate credential rotation and management.
 
+
+Best practices:
+
+Do not use IAM user. Use federated users. Configure SSO using Identity Center.
+
+For AWS resources use role.
+
+Use Session Manager of AWS Systems Manager. Do not use Bastion Host.
+
+Use Secret Manager.
+
