@@ -14,6 +14,10 @@
 * DDos protection
 
 * internet-facing : Only ALB in public subnet. EC2 instances in private subnet. 
+      * If EC2 is in private subnet
+      * Create a public subnet in same AZ
+      * Configure ELB with public subnet
+      * Configure SG of instances and LB.
 * internal: LB in private.
 
 ### Security
