@@ -79,6 +79,8 @@ If you need server-side encryption for all of the objects that are stored in a b
 ** Amazon S3 Bucket Keys**
 
 When you configure server-side encryption using AWS KMS (SSE-KMS), you can configure your bucket to use **S3 Bucket Keys for SSE-KMS**. Using a bucket-level key for SSE-KMS can reduce your AWS KMS request costs by up to 99 percent by decreasing the request traffic from Amazon S3 to AWS KMS.
+            
+When you use SSE-KMS to protect your data without an S3 Bucket Key, Amazon S3 uses an individual AWS KMS data key for every object. It makes a call to AWS KMS every time a request is made against a KMS-encrypted object.
 
 * Symmetric Encryption: Same Key for encryption and decryption. AES 256.( 256 bits). Is fast.
 * Asymmetric encryption or public-key encryption: Public key and private key. Encrypt with one key and decrypt with another key. RSA, ECC, DH. Computation expensive. 
