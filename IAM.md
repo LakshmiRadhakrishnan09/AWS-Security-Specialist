@@ -124,8 +124,8 @@ A permissions boundary set the maximum permissions that an identity-based policy
 ### Shared responsibility
 
 EC2
-* U are responsible for updating and patching OS, Firewalls, Security Group, Network ACL
-Managed Product- S3
+* U are responsible for updating and patching OS, Firewalls, Security Group, Network ACL. \
+S3(Managed Product)
 * AWS responsible for Hardware, Software, Scalability
 
 
