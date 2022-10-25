@@ -44,7 +44,7 @@ Use case: Restrict some services to all accounts. Restrct regions to all account
 
 Apply Trail to my organization: Will consolidate activities to a central bucket in master account.
 
-## AWS Sigle Sign on
+## AWS Sigle Sign on ( AWS Identity Center - New )
 
 Single Sign on is available only if u allow AWS organisations
 
