@@ -39,9 +39,25 @@ Create a Role:
 IAM policies attached to IAM principal or identities(users, roles) . What can this identity do? Policy Statement: Effect(Allow or Deny), Action(sqs:*), Resource( arn of resource this policy is applicable)
 
 **Working across accounts**
+
+Two approches:
+
 - Resource Based Policy: IAM policies attached to a resource.Who can access this resource? eg : S3 bucket policy. Policy Statement: Effect, **Principal**( Who can take this action), Action, Resource
 - Assume role: Role trust policy attached to an IAM role in destination account. It states who can assume this role. 
   Effect: Allow, Action: stsAssumeRole, Principal: Account B. Source Account A ->  Caller IAM role should allow to assume cross account role in B. 
+  
+https://aws.amazon.com/premiumsupport/knowledge-center/cross-account-access-s3/  
+
+Scenario: S3 bucket in Account A 
+
+Resource Based Policy: Step1: Create an IAM role in Account B with premission for Account A bucket. ( Keep resource as Bucket in Account A). \
+Step2: Bucket Policy of S3 should allow IAM role in Account B.( Use resource as Bucket in Account A and Principal as IAM role in Account B).
+
+
+Assume Role: Step1: Create IAM role in Account A with permission for bucket. Role's Trust Policy to allow role to be assumed by role in Account B. \
+Step2: Create a IAM role in Account B, and grant pemission to assume role in Account A.
+
+Assume role is better, because, it is more centralized. If multiple Buckets are there first approach is difficult.
   
   **AWS Organizations**
   To manage multiple accounts
