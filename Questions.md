@@ -56,7 +56,8 @@ ECS Cluster with EC2 instance launch type. Even though the ECS manages the under
 
 14. The container images are hosted on a third-party private repository. The image must be privately shared with applications running on an ECS cluster. How would you configure security to allow image access for authorized applications?
 
-```Store access credentials in Secrets Manager and configure Task Execution Role with permission to access Secrets Manager. The task execution role is assigned to a specific task definition and is used by ECS Container Agent to download images and run the container. The Container Instance Role would also work; however, the permissions are assigned to the EC2 instance, and all Tasks running on that instance would get elevated privileges. The task role is used for granting permissions to your application code to access other AWS services (like S3, DynamoDB, SQS, and so forth)
+```
+Store access credentials in Secrets Manager and configure Task Execution Role with permission to access Secrets Manager. The task execution role is assigned to a specific task definition and is used by ECS Container Agent to download images and run the container. The Container Instance Role would also work; however, the permissions are assigned to the EC2 instance, and all Tasks running on that instance would get elevated privileges. The task role is used for granting permissions to your application code to access other AWS services (like S3, DynamoDB, SQS, and so forth)
 ```
 
 16. You would like to reduce the time to launch new tasks in your ECS Cluster. Which of these container repositories can reduce the image download time?
