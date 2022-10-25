@@ -50,14 +50,19 @@ No. EBS volume is availability zone specific; so, you can attach an EBS volume t
 
 13. The corporate requirement calls for a mandatory host intrusion detection system and hardening operating system parameters to secure the system. A containerized application developed by the company's application team needs to be deployed in AWS. Which of the following would you use that meets the requirements while minimizing the effort needed to maintain the system?
 
-```ECS Cluster with EC2 instance launch type. Even though the ECS manages the underlying EC2 instances, you still have administrative access to the EC2 instances. You can configure additional software that needs to be run along with optimizing the parameters based on your need. Fargate does not provide customers with access to underlying instances. While a customer can deploy their own cluster and manage EC2 instances, it requires more effort as ECS already takes care of cluster management
+```
+ECS Cluster with EC2 instance launch type. Even though the ECS manages the underlying EC2 instances, you still have administrative access to the EC2 instances. You can configure additional software that needs to be run along with optimizing the parameters based on your need. Fargate does not provide customers with access to underlying instances. While a customer can deploy their own cluster and manage EC2 instances, it requires more effort as ECS already takes care of cluster management
 ```
 
 14. The container images are hosted on a third-party private repository. The image must be privately shared with applications running on an ECS cluster. How would you configure security to allow image access for authorized applications?
+
 ```Store access credentials in Secrets Manager and configure Task Execution Role with permission to access Secrets Manager. The task execution role is assigned to a specific task definition and is used by ECS Container Agent to download images and run the container. The Container Instance Role would also work; however, the permissions are assigned to the EC2 instance, and all Tasks running on that instance would get elevated privileges. The task role is used for granting permissions to your application code to access other AWS services (like S3, DynamoDB, SQS, and so forth)
 ```
+
 16. You would like to reduce the time to launch new tasks in your ECS Cluster. Which of these container repositories can reduce the image download time?
+
 ``` ECR: traffic internal to AWS network ```
+
 18. A distributed application uses many containers to process the pending work. The containers are short-lived, and after completing the work, they stop running. The container logs must be stored in CloudWatch logs to troubleshoot any issues. How would you send the logs to CloudWatch logs?
 ```Configure awslog driver in task definition. Docker containers use log drivers to collect containers' standard output and standard error streams and forward the log to the configured destination. The awslogs driver publishes the captured logs to the CloudWatch log group. This is a straightforward setup to consolidate logs from containers```
 20.
