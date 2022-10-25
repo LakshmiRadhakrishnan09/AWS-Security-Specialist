@@ -32,6 +32,8 @@ Even AWS cannot read about your memory(Security reason: Otherwise from Ec2 --> H
 
 How s3 is 99.99 durable? - Answer: Replication. Every time u put a data in S3, AWS make 5 copies and 3 copies will be in 3 different AZ. 
 
+CloudTrail is enabled by default for your AWS account. You can use Event history in the CloudTrail console to view and analyze. For an ongoing record of events in your AWS account, create a trail. By default, when you create a trail in the console, the trail applies to all AWS Regions. If you have created an organization in AWS Organizations, you can create a trail that will log all events for all AWS accounts in that organization. 
+
 ### Shared Responsibilty Tools
 Give you tools. You need to implement it. \
 You are responsible for patching AMIs for Ec2. Use system manager for patching EC2 instances. \
