@@ -141,7 +141,12 @@ Read more:
 * Interface Endpoint
 
 How to Configure Gateway Endpoint for S3? \
-To create a gateway endpoint that connects to Amazon S3: Go to same VPC in the region as S3. Create gateway end point. AWS automatically add a route that points traffic destined for the service to the endpoint network interface.
+To create a gateway endpoint that connects to Amazon S3: Go to same VPC in the region as S3. Create gateway end point(Select VPC and Route Tables). AWS automatically add a route that points traffic destined for the service to the endpoint network interface. Note: So for each subnet, that have a route configured, traffic to S3 use VPC end point route.
+
+How to create Interface End Point? \
+For each subnet that you specify from your VPC, we create an endpoint network interface in the subnet and assign it a private IP address from the subnet address range. Create Endpoint.Select VPC.  For Subnets, select one subnet per Availability Zone from which you'll access the AWS service. Note: So for each subnet, traffic uses endpoint network interface.
+
+
 
 Scenario: EC2-1 in public subnet with Internet gateway. EC2-2 in private subnet. \
 AWS Session Manager. Outside VPC. A AWS Service. By default AWS Session Manager can connect to EC2-1. \
