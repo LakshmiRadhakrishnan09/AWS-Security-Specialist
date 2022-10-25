@@ -146,6 +146,10 @@ To create a gateway endpoint that connects to Amazon S3: Go to same VPC in the r
 How to create Interface End Point? \
 For each subnet that you specify from your VPC, we create an endpoint network interface in the subnet and assign it a private IP address from the subnet address range. Create Endpoint.Select VPC.  For Subnets, select one subnet per Availability Zone from which you'll access the AWS service. Note: So for each subnet, traffic uses endpoint network interface.
 
+https://docs.aws.amazon.com/images/vpc/latest/privatelink/images/endpoint-services.png![image](https://user-images.githubusercontent.com/33679023/197662277-ec6502c0-bfef-4161-890f-d23782012a1e.png)
+
+1. When a service provider creates a VPC endpoint service, AWS generates an endpoint-specific DNS hostname for the service.Eg: vpce-svc-071afff70666e61e0.us-east-2.vpce.amazonaws.com. A service provider can also associate a private DNS name for their endpoint service, so that service consumers can continue to access the service using its existing DNS name.
+2. When a service consumer creates an interface VPC endpoint, we create Regional and zonal DNS names that the service consumer can use to communicate with the endpoint service. If the service provider associated a private DNS name with the endpoint service, the service consumer can enable private DNS names for the interface endpoint. 
 
 
 Scenario: EC2-1 in public subnet with Internet gateway. EC2-2 in private subnet. \
