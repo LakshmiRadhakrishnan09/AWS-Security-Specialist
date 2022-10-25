@@ -18,7 +18,8 @@ Policies at AWS organization(available at master account)
 
 Only the actions permitted by both inherited policy and policy that is attached to OU are allowed.
 
-SCPs can be applied at root, OU, or individual account.
+SCPs can be applied at root, OU, or individual account. SCPs cannot be applied for parent account. ( Best practice is do not use parent account for production workloads. Use only for management).
+
 
 ```
 “You can attach policies to organization entities (organization root, organizational unit (OU), or account) in your organization:
