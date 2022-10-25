@@ -48,9 +48,9 @@ ARN:
 
 **Attribute based Access Control** : Tag based. In RBAC(Role based) model , when new resources are added, policy need to be updated.In ABAC, require fewer polcies and scale nicely(eg: cost center matches)
 
-**By default all requests are denied**
-**Should be allowed atleast once**
-**Explicit Deny overrides explicit allow**
+**By default all requests are denied** \
+**Should be allowed atleast once** \
+**Explicit Deny overrides explicit allow** \
 **Permission Boundary, SCM policy, Session polciy may override allow with a deny**
 
 Important: If any one of these policy types [identity-based policies, resource-based policies, permissions boundaries, Organizations SCPs, or session policies] explicitly denies access for an operation, then the request is denied.
