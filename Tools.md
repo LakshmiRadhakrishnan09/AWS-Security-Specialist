@@ -1,6 +1,6 @@
 ### Web Application Firewall (WAF)
 
-Protects from web application vulnerabilities(OWASP 20, CVV). WAF can block requests with suspicious content( Injection attacks, Server Side Request Forgery). Application Layer Protection(**layer7**). **Protect web application from common exploits.** Monitors https, https. WAF can be integrated with ALB, CloudFront, API Gateway.
+Protects from web application vulnerabilities(OWASP 20, CVV). WAF can block requests with suspicious content( Injection attacks, Server Side Request Forgery). Application Layer Protection(**layer7**). **Protect web application from common exploits.** Monitors https, https. WAF can be integrated with **ALB, CloudFront, API Gateway**.**AWS WAF does not support NLB.** 
 
 WAF + CloudFront -> block cache bursting attacks
 
@@ -13,7 +13,7 @@ Managed Rule Groups - provided by AWS. for OWASP Top 10, CVE, IP Restriction lis
 
 By default ALB doesnt protect you from Injection attacks. U need to associate WACL to ALB and then it prevent Injection and other attacks.
 
-**AWS WAF does not support NLB.** One option is to configure CloudFront distribution with NLB as the origin and associate AWS WAF to the CloudFront distribution.
+AWS WAF does not support NLB. One option is to configure CloudFront distribution with NLB as the origin and associate AWS WAF to the CloudFront distribution.
 
 ### Firewall Manager
 
