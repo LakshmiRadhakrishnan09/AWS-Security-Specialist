@@ -240,7 +240,17 @@ AWS System Manager Incident Manager: Have Runbooks.
 Cloud Watch agents can be used on on premise.
 
 
+Note:
+Modem: Single IP address provided by ISP. Only one device can use this IP\
+Router: Single IP address provided by ISP. Maps this to multiple local IPs. Many devices can connect.
 
+Internet Gateway is like a router. Without IG nothing in VPC can access Internet. 
+
+The internet gateway logically provides the one-to-one NAT on behalf of your instance, so that when traffic leaves your VPC subnet and goes to the internet, **the reply address field is set to the public IPv4 address or Elastic IP address of your instance**, and not its private IP address. Conversely, traffic that's destined for the public IPv4 address or Elastic IP address of your instance has its destination address translated into the instance's private IPv4 address before the traffic is delivered to the VPC.
+
+The NAT device replaces the source IPv4 address of the instances with the address of the NAT device. When sending response traffic to the instances, the NAT device translates the addresses back to the original source IPv4 addresses.
+
+IG supports both Ipv4 and Ipv6. NAT devices are not supported for IPv6 traffic—use an egress-only internet gateway instead. 
 
 
 
