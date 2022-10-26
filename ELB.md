@@ -20,6 +20,15 @@
       * Configure SG of instances and LB.
 * internal: LB in private.
 
+### ALB vs NLB
+
+- ALB supports only HTTP/1.1, HTTP/2, or gRPC. 
+- NLB is faster
+- NLB can handle traffic spikes
+- NLB provides static IP address for clients to connect. ALB Ip changes.
+
+The ALB is like a fully-managed, scalable, and highly available version of NGINX, HAProxy, or Caddy.
+
 ### Security
 * Off load SSL/TLS encryption and decryption. Terminate SSL termination.
 *     Manage certificate at LB
@@ -110,6 +119,8 @@ CloudFront certificate in N.Virginia.
 Amazon S3 website endpoints do not support HTTPS. http://bucket-name.s3-website-Region.amazonaws.com. To use SSL end point:
 1. Use REST API endpoint. Will not support custom domian
 2. Use CloudFront
+
+
 
 Note:
 
