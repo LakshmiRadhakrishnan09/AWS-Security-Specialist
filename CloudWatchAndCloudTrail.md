@@ -204,3 +204,10 @@ Final Notes:
 **You can configure alarms in EventBridge or configure Metric Filter for CloudTrail Log Group.**
 
 
+S3 access logs - An access log record contains details about the requests that are made to a bucket. This information can include the request type, the resources that are specified in the request, and the time and date that the request was processed. .
+
+CF access logs- CloudFront standard logs provide detailed records about every request that's made to a distribution. These logs are useful for many scenarios, including security and access audits.Contains Source Ip address and protocol details.
+
+VPC Flow Logs- VPC Flow Logs are made up of individual records that capture source and destination IP address, ports, protocol, start and end time, number of packets and number of bytes, action  They do not allow for full packet reconstruction, because they are abstracted records.
+
+
