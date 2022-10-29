@@ -111,6 +111,11 @@ U can trigger assessment as response to an event ( someone changes SG).
 
 Rule packages: Security best practices, RunTime Bahaviour Analysis, Common vulnerabilities, CIS OS Security Configuration Bechnmarks.
 
+For EC2 and containers in ECS.
+
+* Package vulnerability of software(CVE)
+* Network Reachability( only for EC2 but checks various network configuration of VPC)
+
 ### Network Firewalls and Route 53 Resolver DNS Firewall
 
 Block suspicious packages
