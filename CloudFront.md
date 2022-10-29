@@ -21,20 +21,47 @@ CloudFront - Distribution Types
 - web( for live straming
 - rtmp( adobe media files)
 
+Encryption at Transit
+- HTTPS between viewer and CF
+      - Update Viewer Protocol Policy( Redirect HTTP to HTTPS, HTTPS Only)
+      - Redirect HTTP to HTTPS - charged two times
+      - Can use SSL provided by AWS
+      - Or using Custom Domian
+- HTTPS between CF and origin
+      - For S3
+           - If your Amazon S3 bucket is configured as a website endpoint, you can't configure CloudFront to use HTTPS to communicate with your origin because Amazon S3 doesn't support HTTPS connections in that configuration.
+           - When your origin is an Amazon S3 bucket that supports HTTPS communication, CloudFront always forwards requests to S3 by using the protocol that viewers used to submit the requests. The default setting for the Protocol (custom origins only) setting is **Match Viewer and can't be changed.**. So if u want https betwwen CF and S3, then u need to configure https between viewer and CF.
+
 ### Origin
 
 Static Content -> S3 \
 Dynamic Content -> EC2, ELB
 
-Signed URL and Signed Cookies
+Signed URL and Signed Cookies: 
 
-GeoRestriction
+Use signed URLs in the following cases:
+
+- You want to restrict access to individual files, for example, an installation download for your application.
+- Your users are using a client (for example, a custom HTTP client) that doesn't support cookies.
+
+Use signed cookies in the following cases:
+
+- You want to provide access to multiple restricted files, for example, all of the files for a video in HLS format or all of the files in the subscribers' area of website.
+- You don't want to change your current URLs.
+      
+
+GeoRestriction : can configure approved countried or block banned countries. CloudFront determines the location of your users by using a third-party database.
 
 Invalidation Option
 
 Personalized : HTTP Cookies, Query String parameters
 
 Backup origin: If origin is down, route request to backup.
+
+Restricting access to origin so that users access data only using CF
+
+- S3 : Origin Access Identity
+- ELB: Using Custom HTTP Header. 
 
 ### Security
 
@@ -121,3 +148,8 @@ Note:
 GA is a global resource, but service is configured in Oregon region.
 
 You can hit GA using static IPs or DNS name.
+
+
+#### Resource Ownership
+
+AWS account is the resource owner ( irrespective of who created the resource)
