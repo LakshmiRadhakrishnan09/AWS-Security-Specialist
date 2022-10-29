@@ -186,9 +186,11 @@ Visualize interation.
 
 **Security Hub reports. Detective to find root cause.** 
 
-**GuardDuty should be enabled.**
+**GuardDuty should be enabled atleast for last 48 hours**
 
 Analyze CloudTrail, VPC flow Logs and GuardDuty Findings. Integrates with GuardDuty and SecurityHub.
+
+Create behaviour Graph. Memeber accounts need to be invited.
 
 ## AWS Trusted advisor
 
