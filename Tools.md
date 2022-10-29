@@ -186,6 +186,10 @@ Visualize interation.
 
 **Security Hub reports. Detective to find root cause.** 
 
+**GuardDuty should be enabled.**
+
+Analyze CloudTrail, VPC flow Logs and GuardDuty Findings. Integrates with GuardDuty and SecurityHub.
+
 ## AWS Trusted advisor
 
 Do Benchmarking. Global resource.
