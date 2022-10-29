@@ -36,8 +36,9 @@ CloudFront does not support resource-based policies, but it does support resourc
 
   <img width="956" alt="Screenshot 2022-10-29 at 9 56 28 PM" src="https://user-images.githubusercontent.com/33679023/198842540-23a7729f-5e5a-40f9-ab25-761d6e7f6f46.png">
 
+<img width="760" alt="Screenshot 2022-10-29 at 10 00 30 PM" src="https://user-images.githubusercontent.com/33679023/198842793-3e420a60-7d47-4463-a3c4-9e30ec20b560.png">
 
-<img width="956" alt="Screenshot 2022-10-29 at 9 56 28 PM" src="https://user-images.githubusercontent.com/33679023/198842665-c979f185-90f8-4990-862f-cb5b7b462fa1.png">
+EC2: Guest OS is controlled by customer.
 
 Different instances running on the same physical machine are isolated from each other via the Xen hypervisor. 
 
