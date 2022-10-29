@@ -34,3 +34,12 @@ Route 53: For custom domains and routing
 
 CloudFront does not support resource-based policies, but it does support resource-level policies. 
 
+  <img width="956" alt="Screenshot 2022-10-29 at 9 56 28 PM" src="https://user-images.githubusercontent.com/33679023/198842540-23a7729f-5e5a-40f9-ab25-761d6e7f6f46.png">
+
+
+<img width="956" alt="Screenshot 2022-10-29 at 9 56 28 PM" src="https://user-images.githubusercontent.com/33679023/198842665-c979f185-90f8-4990-862f-cb5b7b462fa1.png">
+
+Different instances running on the same physical machine are isolated from each other via the Xen hypervisor. 
+
+
+
