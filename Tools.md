@@ -208,6 +208,8 @@ Business and Enterprise Plan - Full check.
 
 Can be configured to run weekly.
 
+The AWS Trusted Advisor service provides four checks at no additional charge to all users, including three important security checks: specific ports unrestricted, IAM use, and MFA on root account. When you sign up for Business- or Enterprise-level AWS Support, you receive full access to all Trusted Advisor checks.
+
 
 ### AWS Managed Services
 
