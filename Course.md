@@ -32,5 +32,5 @@ Serverless :pay for what u use. Server based Solution: U need to pay for idle so
 Route 53: For custom domains and routing
 
 
-
+CloudFront does not support resource-based policies, but it does support resource-level policies. 
 
