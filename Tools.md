@@ -109,6 +109,8 @@ Schedule for weekly once or Run once. Takes 1 hr to run assessment.
 
 U can trigger assessment as response to an event ( someone changes SG).
 
+Rule packages: Security best practices, RunTime Bahaviour Analysis, Common vulnerabilities, CIS OS Security Configuration Bechnmarks.
+
 ### Network Firewalls and Route 53 Resolver DNS Firewall
 
 Block suspicious packages
