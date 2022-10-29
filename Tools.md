@@ -192,6 +192,8 @@ Analyze CloudTrail, VPC flow Logs and GuardDuty Findings. Integrates with GuardD
 
 Create behaviour Graph. Memeber accounts need to be invited.
 
+Search by IP address, Role
+
 ## AWS Trusted advisor
 
 Do Benchmarking. Global resource.
