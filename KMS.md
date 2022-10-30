@@ -149,6 +149,36 @@ Across Region:
 EBS Encryption by default: Regional level setting. Any new EBS volume is automatically encypted using configured master key.Snapshot copies are automatically encrypted.
 
 Note: By default for ebs encryption u can use AWS managed key aws\ebs. Or u can create a customer managed key.
+            
+When you configure a KMS key as the default key for EBS encryption, the default KMS key policy allows any IAM user with access to the required KMS actions to use this KMS key to encrypt or decrypt EBS resources. You must grant IAM users permission to call the following actions in order to use EBS encryption:
+
+kms:CreateGrant: To grant use of KMS key by a user or role. /
+kms:Decrypt
+kms:DescribeKey
+kms:GenerateDataKeyWithoutPlainText
+kms:ReEncrypt            
+ 
+           To follow the principle of least privilege, do not allow full access to kms:CreateGrant. Instead, allow the user to create grants on the KMS key only when the grant is created on the user's behalf by an AWS service, as shown in the following example.
+            
+```
+            {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "kms:CreateGrant",
+            "Resource": [
+                "arn:aws:kms:us-east-2:123456789012:key/abcd1234-a123-456d-a12b-a123b4cd56ef"
+            ],
+            "Condition": {
+                "Bool": {
+                    "kms:GrantIsForAWSResource": true
+                }
+            }
+        }
+    ]
+}
+            ```
 
 #### RDS Encryption
 
