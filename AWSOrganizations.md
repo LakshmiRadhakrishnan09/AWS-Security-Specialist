@@ -20,6 +20,8 @@ Only the actions permitted by both inherited policy and policy that is attached 
 
 SCPs can be applied at root, OU, or individual account. SCPs cannot be applied for parent account. ( Best practice is do not use parent account for production workloads. Use only for management).
 
+SCPs don't affect users or roles in the management account. They affect only the member accounts in your organization.
+
 
 ```
 “You can attach policies to organization entities (organization root, organizational unit (OU), or account) in your organization:
@@ -43,6 +45,27 @@ Master account is not affected by SCP. Even for Root user of child accounts poli
 Use case: Restrict some services to all accounts. Restrct regions to all accounts.
 
 Apply Trail to my organization: Will consolidate activities to a central bucket in master account.
+
+SCPs example:https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps_examples.html
+
+- Deny access to AWS based on the requested AWS Region
+- Prevent IAM users and roles from making certain changes
+- Prevent IAM users and roles from making specified changes, with an exception for a specified admin role
+- Require MFA to perform an API action
+- Block service access for the root user
+- Prevent member accounts from leaving the organization
+- Prevent users from disabling CloudWatch or altering its configuration
+- Prevent users from disabling AWS Config or changing its rules
+- Require Amazon EC2 instances to use a specific type
+- Prevent users from disabling GuardDuty or modifying its configuration
+- Preventing external sharing
+- Allowing specific accounts to share only specified resource types
+- Prevent sharing with organizations or organizational units (OUs)
+- Allow sharing with only specified IAM users and roles
+- Require a tag on specified created resources
+- Prevent tags from being modified except by authorized principals
+- Prevent users from deleting Amazon VPC flow logs
+- Prevent any VPC that doesn't already have internet access from getting it
 
 ## AWS Sigle Sign on ( AWS Identity Center - New )
 
@@ -107,7 +130,13 @@ AWS recommendation
 
 
 
+AWS organization has two features:
+- All features
+- Consolidated billing feature: Can enable all features. But cannot move back to billing feature alone later.
 
+- When you start the process to enable all features, AWS Organizations sends a request to every member account that you invited to join your organization. 
+- Every invited account must approve enabling all features by accepting the request. Only then can you complete the process to enable all features in your organization. 
+- AWS Organizations verifies that every member account has a service-linked role named AWSServiceRoleForOrganizations. 
 
 
 Note: In AWS no to accounts use same email Id.
