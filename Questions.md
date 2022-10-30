@@ -74,12 +74,19 @@ CloudTrail Console(less than 90 days), CloudWatch Log Insights, S3 Athena
 Threat description: A malicious actor could upload sensitive data from Server X by configuring credentials for an AWS account (Account 2) they control and uploading data to an Amazon S3 bucket within their control.
 Server X has outbound internet access configured via a proxy server. Legitimate access to S3 is required so that the application can upload encrypted files to an
 S3 bucket. Server X is currently using an IAM instance role. The proxy server is not able to inspect any of the server communication due to TLS encryption.
-Which of the following options will mitigate the threat? (Choose two.)
+22. Which of the following options will mitigate the threat? (Choose two.)
 
 ```
 Bypass the proxy and use an S3 VPC endpoint with a policy that whitelists only certain S3 buckets within Account 1.
 Block outbound access to public S3 endpoints on the proxy server.
 Configure Network ACLs on Server X to deny access to S3 endpoints.(Not ccorrect)
+```
+23. A company requires that IP packet data be inspected for invalid or malicious content.
+Which of the following approaches achieve this requirement? (Choose two.)
+
+```
+A. Configure a proxy solution on Amazon EC2 and route all outbound VPC traffic through it. Perform inspection within proxy software on the EC2 instance.
+B. Configure the host-based agent on each EC2 instance within the VPC. Perform inspection within the host-based agent.
 ```
 
 
