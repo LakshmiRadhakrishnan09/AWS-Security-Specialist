@@ -35,6 +35,11 @@ AWS managed keys are KMS keys in your account that are created, managed, and use
 - Server-Side Encryption with Customer-Provided Keys (SSE-C)
             - you manage the encryption keys and Amazon S3 manages the encryption, as it writes to disks, and decryption, when you access your objects.
             - Amazon S3 does not store the encryption key you provide. 
+            
+ SSE-S3: Rotation managed by AWS.  /
+ SSE-KMS( AWS Managed): aws/s3 : Mandatory rotation every year. You cannot change it /
+ SSE-KMS( Customer Managed) : Rotation is not enabled by default. But if you enable it, it will be automatically rotated every 1 year. /
+ SSE-KMS(Import Key Material) : No auotomatic key rotation /
 
 
 If you need server-side encryption for all of the objects that are stored in a bucket.
