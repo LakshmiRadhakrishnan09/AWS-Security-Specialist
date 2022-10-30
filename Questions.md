@@ -66,7 +66,13 @@ Store access credentials in Secrets Manager and configure Task Execution Role wi
 
 18. A distributed application uses many containers to process the pending work. The containers are short-lived, and after completing the work, they stop running. The container logs must be stored in CloudWatch logs to troubleshoot any issues. How would you send the logs to CloudWatch logs?
 ```Configure awslog driver in task definition. Docker containers use log drivers to collect containers' standard output and standard error streams and forward the log to the configured destination. The awslogs driver publishes the captured logs to the CloudWatch log group. This is a straightforward setup to consolidate logs from containers```
-20.
+20.How can I monitor the account activity of specific IAM users, roles, and AWS access keys?
+```
+CloudTrail Console(less than 90 days), CloudWatch Log Insights, S3 Athena
+```
+21.
+
+
 
 
 
