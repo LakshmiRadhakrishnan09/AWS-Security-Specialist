@@ -45,4 +45,10 @@ Different instances running on the same physical machine are isolated from each 
 
 How to Receive Notifications When Your AWS Account’s Root Access Keys Are Used
 
-- Turn on 
+- Turn on cloudTrail cloudWatch Integration
+- Create a metric in cloudwatch
+- Automatically create role for CreateLogStream and PutLogEvent
+- { $.userIdentity.type = "Root" && $.userIdentity.invokedBy NOT EXISTS && $.eventType != "AwsServiceEvent" }
+- Create Alarm and send SNS topic
+
+
