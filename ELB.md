@@ -30,9 +30,10 @@
 The ALB is like a fully-managed, scalable, and highly available version of NGINX, HAProxy, or Caddy.
 
 ### Security
+
 * Off load SSL/TLS encryption and decryption. Terminate SSL termination.
-*     Manage certificate at LB
-*     More compute power at EC2
+     *     Manage certificate at LB
+     *     More compute power at EC2
 * Offload Authentication
 * Connection Draining
 * Skicky sessions
@@ -103,6 +104,18 @@ Certificate is Regional. One certificate in each region.
 
 ### End to end encryption
 If you need end-end encryption, then you need to configure certificates in the webserver. Since load balancer to webserver/target is using the private IP, you can also use self-signed and expired certificates in the webserver. The load balancer does not check the validity of the certificates.
+
+HTTPS Listener: Uses SSL offload. This feature enables traffic encryption between your load balancer and the clients that initiate SSL or TLS sessions.
+
+**If you need to pass encrypted traffic to targets without the load balancer decrypting it, you can create a Network Load Balancer or Classic Load Balancer with a TCP listener on port 443. With a TCP listener, the load balancer passes encrypted traffic through to the targets without decrypting it.**
+
+ALB HTTPS Listener: Need one X509 certificate.\
+Uses security policy for cypher and protocols. \
+NLB TLS Listener: need certificate \
+NLB TCP Listener: no certificate. end to end encryption
+
+
+To use a TLS listener, you must deploy at least one server certificate on your load balancer. The load balancer uses a server certificate to terminate the front-end connection and then to decrypt requests from clients before sending them to the targets. **Note that if you need to pass encrypted traffic to the targets without the load balancer decrypting it, create a TCP listener on port 443 instead of creating a TLS listener. The load balancer passes the request to the target as is, without decrypting it.**
 
 ### Enabling SSL for CloudFront
 
