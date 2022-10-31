@@ -158,7 +158,7 @@ kms:DescribeKey
 kms:GenerateDataKeyWithoutPlainText
 kms:ReEncrypt            
  
-           To follow the principle of least privilege, do not allow full access to kms:CreateGrant. Instead, allow the user to create grants on the KMS key only when the grant is created on the user's behalf by an AWS service, as shown in the following example.
+To follow the principle of least privilege, do not allow full access to kms:CreateGrant. Instead, allow the user to create grants on the KMS key only when the grant is created on the user's behalf by an AWS service, as shown in the following example.
             
 ```
             {
@@ -178,7 +178,7 @@ kms:ReEncrypt
         }
     ]
 }
-            ```
+```
 
 #### RDS Encryption
 
