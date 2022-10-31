@@ -100,6 +100,7 @@ B. Using AWS Config, create a config rule that detects when AWS CloudTrail is di
 C. Using Amazon CloudWatch, create a CloudWatch event that detects AWS CloudTrail deactivation and a separate Amazon Trusted Advisor check to automatically detect the creation of root API keys. Then use a Lambda function to enable AWS CloudTrail and deactivate the root API keys.
 D. Using Amazon CloudTrail, create a new CloudTrail event that detects the deactivation of CloudTrail logs, and a separate CloudTrail event that detects the creation of root API keys. Then use a Lambda function to enable CloudTrail and deactivate the root API keys.
 
+AWS Config seems correct. But AWS config remediation works by SSM document. Not by Lambda. C may be correct
 
 
 
