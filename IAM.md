@@ -117,6 +117,29 @@ STS is a global service with a single endpoint https://sts.amazonaws.com. Howeve
 Revoking access to Temporary Credentials: You cannot delete temporary credentials. Revoke permission of creator , the identity that was used when calling STS APIs to generate temporary credentials. Revoke by user, or role ot by time. 
 You can attach a deny all policy that applies only if the temporary credential was issued before a specific time (using aws:TokenIssueTime variable).
 
+### Configure AWS to federate authentication using a third-party SAML 2.0 compliant identity providers(ADFS)
+
+ADFS: Identity Broker \
+AD: Identity Provider
+
+A SAML identify provider can be configured using the AWS console :
+- Access the “Identity Providers” section of the AWS IAM console
+- Select SAML for the provider type. Select a provider name of your choosing (this will become the logical name used in the identity provider ARN. Eg: idp1). Lastly, download the FederationMetadata.xml file from your ADFS server to your client system file (https://yourADFSserverFQDN/FederationMetadata/2007-06/FederationMetadata.xml). Click “Choose File” and upload it to AWS.
+- create the roles in AWS that federated users can assume via SAML 2.0.
+- SAML assertions to the AWS environment and the respective IAM role access will be managed through regular expression (regex) matching between your on-premises AD group name to an AWS IAM role.
+- ADFS federation occurs with the participation of two parties; the identity or claims provider (in this case the owner of the identity repository – Active Directory) and the relying party, which is another application that wishes to outsource authentication to the identity provider; in this case Amazon Secure Token Service (STS). The relying party is a federation partner that is represented by a claims provider trust in the federation service.
+
+<img width="755" alt="Screenshot 2022-10-31 at 4 30 12 PM" src="https://user-images.githubusercontent.com/33679023/198993264-01804f76-b9a2-4230-a826-26c72f178d89.png">
+
+- Corporate user accesses the corporate Active Directory Federation Services portal sign-in page and provides Active Directory authentication credentials.
+- AD FS authenticates the user against Active Directory.
+- Active Directory returns the user’s information, including AD group membership information.
+- AD FS dynamically builds ARNs by using Active Directory group memberships for the IAM roles and user attributes for the AWS account IDs, and sends a **signed assertion to the users browser with a redirect to post the assertion to AWS STS.**
+- Temporary credentials are returned using STS AssumeRoleWithSAML.
+- The user is authenticated and provided access to the AWS management console.
+
+https://aws.amazon.com/blogs/security/aws-federated-authentication-with-active-directory-federation-services-ad-fs/
+
 #### Permissions Boundary
 
 A permissions boundary set the maximum permissions that an identity-based policy can grant to an IAM entity. Apply only to identity-based policy. **Does not apply to the resource-based policy**.
