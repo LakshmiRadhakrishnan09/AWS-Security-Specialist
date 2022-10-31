@@ -216,4 +216,44 @@ CF access logs- CloudFront standard logs provide detailed records about every re
 
 VPC Flow Logs- VPC Flow Logs are made up of individual records that capture source and destination IP address, ports, protocol, start and end time, number of packets and number of bytes, action  They do not allow for full packet reconstruction, because they are abstracted records.
 
+### Amazon S3 bucket policy for CloudTrail
+- As a security best practice, add an aws:SourceArn condition key to the Amazon S3 bucket policy.
+- If CloudTrail is not delivering logs for a region, it's possible that your bucket has an older policy that specifies CloudTrail account IDs for each region. This policy gives CloudTrail permission to deliver logs only for the regions specified.
+- replace the account ID ARNs with the service principal name: "cloudtrail.amazonaws.com". This gives CloudTrail permission to deliver logs for current and new regions. 
+- A bucket policy with an incorrect prefix can prevent your trail from delivering logs to the bucket. To resolve this issue, use the Amazon S3 console to update the prefix in the bucket policy, and then use the CloudTrail console to specify the same prefix for the bucket in the trail.
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AWSCloudTrailAclCheck20150319",
+            "Effect": "Allow",
+            "Principal": {"Service": "cloudtrail.amazonaws.com"},
+            "Action": "s3:GetBucketAcl",
+            "Resource": "arn:aws:s3:::myBucketName",
+            "Condition": {
+                "StringEquals": {
+                    "aws:SourceArn": "arn:aws:cloudtrail:region:myAccountID:trail/trailName"
+                }
+            }
+        },
+        {
+            "Sid": "AWSCloudTrailWrite20150319",
+            "Effect": "Allow",
+            "Principal": {"Service": "cloudtrail.amazonaws.com"},
+            "Action": "s3:PutObject",
+            "Resource": "arn:aws:s3:::myBucketName/[optionalPrefix]/AWSLogs/myAccountID/*",
+            "Condition": {
+                "StringEquals": {
+                    "s3:x-amz-acl": "bucket-owner-full-control",
+                    "aws:SourceArn": "arn:aws:cloudtrail:region:myAccountID:trail/trailName"
+                }
+            }
+        }
+    ]
+}
+```
+
+https://docs.aws.amazon.com/awscloudtrail/latest/userguide/create-s3-bucket-policy-for-cloudtrail.html#cloudtrail-add-change-or-remove-a-bucket-prefix
 
