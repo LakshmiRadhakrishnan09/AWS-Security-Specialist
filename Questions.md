@@ -88,7 +88,18 @@ Which of the following approaches achieve this requirement? (Choose two.)
 A. Configure a proxy solution on Amazon EC2 and route all outbound VPC traffic through it. Perform inspection within proxy software on the EC2 instance.
 B. Configure the host-based agent on each EC2 instance within the VPC. Perform inspection within the host-based agent.
 ```
+24. A company plans to move most of its IT infrastructure to AWS. They want to leverage their existing on-premises Active Directory as an identity provider for AWS.
+Which combination of steps should a Security Engineer take to federate the company's on-premises Active Directory with AWS? (Choose two.)
+```
+A. Create IAM roles with permissions corresponding to each Active Directory group.
+B. Create IAM groups with permissions corresponding to each Active Directory group.
+C. Configure Amazon Cloud Directory to support a SAML provider.
+D. Configure Active Directory to add relying party trust between Active Directory and AWS.
+E. Configure Amazon Cognito to add relying party trust between Active Directory and AWS.
+```
 
+A and D
+24. 
 
 ### Not Sure
 
@@ -118,3 +129,86 @@ F - Should be Correct
 B - Should be Correct
 
 D or A
+
+
+An employee accidentally exposed an AWS access key and secret access key during a public presentation. The company Security Engineer immediately disabled the key.
+How can the Engineer assess the impact of the key exposure and ensure that the credentials were not misused? (Choose two.)
+
+A. Analyze AWS CloudTrail for activity. Most Voted
+B. Analyze Amazon CloudWatch Logs for activity.
+C. Download and analyze the IAM Use report from AWS Trusted Advisor.
+D. Analyze the resource inventory in AWS Config for IAM user activity.
+E. Download and analyze a credential report from IAM. 
+
+A - Sure
+E - Not sure. Should be correct as it helps in assessing if credentials are used or not.
+
+A distributed web application is installed across several EC2 instances in public subnets residing in two Availability Zones. Apache logs show several intermittent brute-force attacks from hundreds of IP addresses at the layer 7 level over the past six months.
+What would be the BEST way to reduce the potential impact of these attacks in the future?
+
+A. Use custom route tables to prevent malicious traffic from routing to the instances.
+B. Update security groups to deny traffic from the originating source IP addresses.
+C. Use network ACLs.
+D. Install intrusion prevention software (IPS) on each instance.
+
+D-??
+B- No as SG cant deny.
+C - A subnet can have only one NACL. you can have 20 inbound and 20 outbound rules per NACL.
+A Route table controls outgoing traffic
+
+A financial institution has the following security requirements:
+✑ Cloud-based users must be contained in a separate authentication domain.
+✑ Cloud-based users cannot access on-premises systems.
+As part of standing up a cloud environment, the financial institution is creating a number of Amazon managed databases and Amazon EC2 instances. An Active
+Directory service exists on-premises that has all the administrator accounts, and these must be able to access the databases and instances.
+How would the organization manage its resources in the MOST secure manner? (Choose two.)
+```
+A. Configure an AWS Managed Microsoft AD to manage the cloud resources. Most Voted Most Voted
+B. Configure an additional on-premises Active Directory service to manage the cloud resources.
+C. Establish a one-way trust relationship from the existing Active Directory to the new Active Directory service. Most Voted
+D. Establish a one-way trust relationship from the new Active Directory to the existing Active Directory service. Most Voted
+E. Establish a two-way trust between the new and existing Active Directory services.
+```
+A and D??
+
+A company has a forensic logging use case whereby several hundred applications running on Docker on EC2 need to send logs to a central location. The Security
+Engineer must create a logging solution that is able to perform real-time analytics on the log files, grants the ability to replay events, and persists data.
+Which AWS Services, together, can satisfy this use case? (Choose two.)
+```
+A. Amazon Elasticsearch
+B. Amazon Kinesis
+C. Amazon SQS
+D. Amazon CloudWatch
+E. Amazon Athena
+
+```
+
+A and B --?
+or
+A and D?? https://aws.amazon.com/blogs/big-data/implement-serverless-log-analytics-using-amazon-kinesis-analytics/
+
+Amazon Kinesis Streams streams data on AWS, which allows you to collect, store, and process TBs per hour at a low cost.
+
+Amazon Kinesis Firehose loads streaming data in to Amazon Kinesis Analytics, Amazon S3, Amazon Redshift, or Amazon OpenSearch Service.
+
+Amazon Kinesis Analytics helps you analyze streaming data by writing SQL queries and in turn overcoming the management and monitoring of streaming logs in near real time. Analytics allows you to reference metadata stored in S3 in SQL queries for real-time analytics.
+
+Application nodes run Apache applications and write Apache logs locally to disk. The Amazon Kinesis agent on the EC2 instance ingests the log stream in to the Amazon Kinesis stream.
+
+The Lambda function consumes the aggregated response from the destination stream, processes it, and publishes it to Amazon CloudWatch. It is event driven: as soon as new records are pushed to the destination stream, they are processed in batches of 200 records.
+
+An organization is using AWS CloudTrail, Amazon CloudWatch Logs, and Amazon CloudWatch to send alerts when new access keys are created. However, the alerts are no longer appearing in the Security Operations mail box.
+Which of the following actions would resolve this issue?
+```
+A. In CloudTrail, verify that the trail logging bucket has a log prefix configured.
+B. In Amazon SNS, determine whether the ג€Account spend limitג€ has been reached for this alert.
+C. In SNS, ensure that the subscription used by these alerts has not been deleted.
+D. In CloudWatch, verify that the alarm threshold ג€consecutive periodsג€ value is equal to, or greater than 1.
+```
+
+C or D
+
+May be D
+
+
+
