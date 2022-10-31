@@ -303,4 +303,66 @@ Authorization context
            
 authenticated encryption with associated data (AEAD): You can think of this as extending the signature over the ciphertext to cover additional data as well. In general, AAD should not contain any secret information, but should be contextual information used to understand the secret information.
             
-            EncryptionContext is KMS’s implementation of AAD.Data that is commonly used for AAD might include header information, unencrypted database fields in the same record, file names, or other metadata. It’s important to remember that EncryptionContext should contain only nonsensitive information because it is stored in plaintext JSON files in AWS CloudTrail and can be seen by anyone with access to the bucket containing the information.
+ EncryptionContext is KMS’s implementation of AAD.Data that is commonly used for AAD might include header information, unencrypted database fields in the same record, file names, or other metadata. It’s important to remember that EncryptionContext should contain only nonsensitive information because it is stored in plaintext JSON files in AWS CloudTrail and can be seen by anyone with access to the bucket containing the information.
+
+To control access to your KMS keys, you can use the following policy mechanisms.
+           - Key policy - Every KMS key has a key policy. Key policy can be configured for allowing key administrators, key users, services that can use key.(Same can be achieved by IAM policy or Grant)
+           - IAM policies. IAM policies are particularly useful for controlling access to operations, such as CreateKey, that can't be controlled by a key policy because they don't involve any particular KMS key.
+           - Grants . Grants are often used for temporary permissions because you can create one, use its permissions, and delete it without changing your key policies or IAM policies. Grant User and Grantee. We can revoke a Grant using GrandId.
+                        - Grant User is the one who generate the grant. GrantToken is like a secret token with certain permission.
+                        - Grantee. Who use the Grant. Dont have any KMS access.But can use GrantToken
+KMS keys belong to the AWS account in which they were created. However, no identity or principal, including the AWS account root user, has permission to use or manage a KMS key unless that permission is explicitly provided in a key policy, IAM policy or grant. 
+            
+Unless the key policy explicitly allows it, you cannot use IAM policies to allow access to a KMS key. Without permission from the key policy, IAM policies that allow permissions have no effect.
+            
+Allows access to the AWS account and enables IAM policies
+```            
+            {
+  "Sid": "Enable IAM policies",
+  "Effect": "Allow",
+  "Principal": {
+    "AWS": "arn:aws:iam::111122223333:root"
+   },
+  "Action": "kms:*",
+  "Resource": "*"
+}
+```            
+ Allows key administrators to administer the KMS key: Key administrators have permissions to manage the KMS key, but do not have permissions to use the KMS key in cryptographic operations. 
+ ```          
+           
+            {
+  "Sid": "Allow access for Key Administrators",
+  "Effect": "Allow",
+  "Principal": {"AWS": [
+    "arn:aws:iam::111122223333:user/KMSAdminUser",
+    "arn:aws:iam::111122223333:role/KMSAdminRole"
+  ]},
+  "Action": [
+    "kms:Create*",
+    "kms:Describe*",
+    "kms:Enable*",
+    "kms:List*",
+    "kms:Put*",
+    "kms:Update*",
+    "kms:Revoke*",
+    "kms:Disable*",
+    "kms:Get*",
+    "kms:Delete*",
+    "kms:TagResource",
+    "kms:UntagResource",
+    "kms:ScheduleKeyDeletion",
+    "kms:CancelKeyDeletion"
+  ],
+  "Resource": "*"
+}
+```
+            
+How AWS Services use KMS Key
+            
+AWS services that are integrated with AWS KMS use only symmetric encryption KMS keys to encrypt your data. These services do not support encryption with asymmetric KMS keys. 
+            
+Grants are commonly used by AWS services that integrate with AWS KMS to encrypt your data at rest. The service creates a grant on behalf of a user in the account, uses its permissions, and retires the grant as soon as its task is complete.            
+            
+ A key can have only one key policy. Can have multiple Grants.     \
+ Grant supports limited operations [CreateGrant, GenerateDataKey, RetireGrant, Encrypt, ReEncryptTo, Decrypt, GenerateDataKeyWithoutPlaintext, DescribeKey, Verify, ReEncryptFrom, Sign]           
+            
