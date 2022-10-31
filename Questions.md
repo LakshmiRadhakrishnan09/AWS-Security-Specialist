@@ -132,7 +132,7 @@ Port flooding
 Protocol flooding
 Request flooding (login request flooding, API request flooding)
 ```
-An AWS account includes two S3 buckets: bucket1 and bucket2. The bucket2 does not have a policy defined, but bucket1 has the following bucket policy:
+26. An AWS account includes two S3 buckets: bucket1 and bucket2. The bucket2 does not have a policy defined, but bucket1 has the following bucket policy:
 
 In addition, the same account has an IAM User named `alice`, with the following IAM policy.
 
@@ -148,6 +148,29 @@ D. Neither bucket1 nor bucket2
 
 Answer - C
 
+27. A company has two AWS accounts, each containing one VPC. The first VPC has a VPN connection with its corporate network. The second VPC, without a VPN, hosts an Amazon Aurora database cluster in private subnets. Developers manage the Aurora database from a bastion host in a public subnet as shown in the image.
+
+A security review has flagged this architecture as vulnerable, and a Security Engineer has been asked to make this design more secure. The company has a short deadline and a second VPN connection to the Aurora account is not possible.
+How can the Security Engineer securely set up the bastion host?
+```
+A. Move the bastion host to the VPC with VPN connectivity. Create a VPC peering relationship between the bastion host VPC and Aurora VPC.
+B. Create an SSH port forwarding tunnel on the Developer's workstation to the bastion host to ensure that only authorized SSH clients can access the bastion host.
+C. Move the bastion host to the VPC with VPN connectivity. Create a cross-account trust relationship between the bastion VPC and Aurora VPC, and update the Aurora security group for the relationship.
+D. Create an AWS Direct Connect connection between the corporate network and the Aurora account, and adjust the Aurora security group for this connection.
+```
+
+A. Bastion host can be in private network.
+```
+28. A Developer who is following AWS best practices for secure code development requires an application to encrypt sensitive data to be stored at rest, locally in the application, using AWS KMS. What is the simplest and MOST secure way to decrypt this data when required?
+
+A. Request KMS to provide the stored unencrypted data key and then use the retrieved data key to decrypt the data.
+B. Keep the plaintext data key stored in Amazon DynamoDB protected with IAM policies. Query DynamoDB to retrieve the data key to decrypt the data
+C. Use the Encrypt API to store an encrypted version of the data key with another customer managed key. Decrypt the data key and use it to decrypt the data when required.
+D. Store the encrypted data key alongside the encrypted data. Use the Decrypt API to retrieve the data key to decrypt the data when required.
+```
+D
+
+To encrypt data outside of AWS KMS:  1. Use the GenerateDataKey operation to get a data key. 2. Use the plaintext data key (in the Plaintext field of the response) to encrypt your data outside of AWS KMS. Then erase the plaintext data key from memory. 3. **** Store the encrypted data key (in the CiphertextBlob field of the response) with the encrypted data. ****  To decrypt data outside of AWS KMS:  1. **** Use the Decrypt operation to decrypt the encrypted data key. **** The operation returns a plaintext copy of the data key. 2. Use the plaintext data key to decrypt data outside of AWS KMS, then erase the plaintext data key from memory.
 
 ### Not Sure
 
