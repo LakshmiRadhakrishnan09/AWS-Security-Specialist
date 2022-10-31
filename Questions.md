@@ -99,7 +99,18 @@ E. Configure Amazon Cognito to add relying party trust between Active Directory 
 ```
 
 A and D
-24. 
+24. A company plans to move most of its IT infrastructure to AWS. The company wants to leverage its existing on-premises Active Directory as an identity provider for
+AWS.
+Which steps should be taken to authenticate to AWS services using the company's on-premises Active Directory? (Choose three.)
+```
+A. Create IAM roles with permissions corresponding to each Active Directory group.
+B. Create IAM groups with permissions corresponding to each Active Directory group.
+C. Create a SAML provider with IAM.
+D. Create a SAML provider with Amazon Cloud Directory.
+E. Configure AWS as a trusted relying party for the Active Directory
+F. Configure IAM as a trusted relying party for Amazon Cloud Directory.
+```
+ACE
 
 ### Not Sure
 
@@ -211,4 +222,64 @@ C or D
 May be D
 
 
+During a security event, it is discovered that some Amazon EC2 instances have not been sending Amazon CloudWatch logs.
+Which steps can the Security Engineer take to troubleshoot this issue? (Choose two.)
+
+```
+A. Connect to the EC2 instances that are not sending the appropriate logs and verify that the CloudWatch Logs agent is running.
+B. Log in to the AWS account and select CloudWatch Logs. Check for any monitored EC2 instances that are in the ג€Alertingג€ state and restart them using the EC2 console.
+C. Verify that the EC2 instances have a route to the public AWS API endpoints.
+D. Connect to the EC2 instances that are not sending logs. Use the command prompt to verify that the right permissions have been set for the Amazon SNS topic.
+E. Verify that the network access control lists and security groups of the EC2 instances have the access to send logs over SNMP.
+```
+
+A - Sure
+B or C?
+May be C
+
+You can query the CloudWatch agent to find whether it's running or stopped using Systems Manager Run command. 
+
+If you update your CloudWatch agent configuration file, the next time that you start the agent, you need to use the fetch-config option. 
+
+To connect your VPC to CloudWatch Logs, you define an interface VPC endpoint for CloudWatch Logs.
+
+A Security Engineer discovers that developers have been adding rules to security groups that allow SSH and RDP traffic from 0.0.0.0/0 instead of the organization firewall IP.
+What is the most efficient way to remediate the risk of this activity?
+```
+A. Delete the internet gateway associated with the VPC.
+B. Use network access control lists to block source IP addresses matching 0.0.0.0/0.
+C. Use a host-based firewall to prevent access from all but the organization's firewall IP.
+D. Use AWS Config rules to detect 0.0.0.0/0 and invoke an AWS Lambda function to update the security group with the organization's firewall IP.
+```
+
+B or D - Should be D
+
+How to Monitor AWS Account Configuration Changes and API Calls to Amazon EC2 Security Groups: \
+Method 1 uses AWS Config to monitor changes to a security group’s configuration as part of an organization’s overall compliance auditing program.  \
+Method 2 uses AWS CloudTrail and Amazon CloudWatch Events to identify AWS API calls that could change the configurations of VPC security groups. 
+
+A Security Analyst attempted to troubleshoot the monitoring of suspicious security group changes. The Analyst was told that there is an Amazon CloudWatch alarm in place for these AWS CloudTrail log events. The Analyst tested the monitoring setup by making a configuration change to the security group but did not receive any alerts.
+Which of the following troubleshooting steps should the Analyst perform?
+```
+A. Ensure that CloudTrail and S3 bucket access logging is enabled for the Analyst's AWS account. 
+B. Verify that a metric filter was created and then mapped to an alarm. Check the alarm notification action.
+C. Check the CloudWatch dashboards to ensure that there is a metric configured with an appropriate dimension for security group changes.
+D. Verify that the Analyst's account is mapped to an IAM policy that includes permissions for cloudwatch: GetMetricStatistics and Cloudwatch: ListMetrics.
+```
+B - Almost sure
+
+Create a metric filter and create an alarm
+- Example security group configuration changes
+- Example AWS Management Console sign-in failures
+- Example: IAM policy changes
+
+Example.com hosts its internal document repository on Amazon EC2 instances. The application runs on EC2 instances and previously stored the documents on encrypted Amazon EBS volumes. To optimize the application for scale, example.com has moved the files to Amazon S3. The security team has mandated that all the files are securely deleted from the EBS volume, and it must certify that the data is unreadable before releasing the underlying disks.
+Which of the following methods will ensure that the data is unreadable by anyone else?
+```
+A. Change the volume encryption on the EBS volume to use a different encryption mechanism. Then, release the EBS volumes back to AWS.
+B. Release the volumes back to AWS. AWS immediately wipes the disk after it is deprovisioned.
+C. Delete the encryption key used to encrypt the EBS volume. Then, release the EBS volumes back to AWS.
+D. Delete the data by using the operating system delete commands. Run Quick Format on the drive and then release the EBS volumes back to AWS.
+```
+C - Almost sure
 
