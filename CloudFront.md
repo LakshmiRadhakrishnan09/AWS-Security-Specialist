@@ -22,6 +22,7 @@ CloudFront - Distribution Types
 - rtmp( adobe media files)
 
 Encryption at Transit
+
 - HTTPS between viewer and CF
       - Update Viewer Protocol Policy( Redirect HTTP to HTTPS, HTTPS Only)
       - Redirect HTTP to HTTPS - charged two times
@@ -31,6 +32,34 @@ Encryption at Transit
       - For S3
            - If your Amazon S3 bucket is configured as a website endpoint, you can't configure CloudFront to use HTTPS to communicate with your origin because Amazon S3 doesn't support HTTPS connections in that configuration.
            - When your origin is an Amazon S3 bucket that supports HTTPS communication, CloudFront always forwards requests to S3 by using the protocol that viewers used to submit the requests. The default setting for the Protocol (custom origins only) setting is **Match Viewer and can't be changed.**. So if u want https betwwen CF and S3, then u need to configure https between viewer and CF.
+
+If you want your viewers to use HTTPS and to use alternate domain names for your files, choose one of the following options for how CloudFront serves HTTPS requests:
+
+- Use Server Name Indication (SNI) – Recommended
+- Use a dedicated IP address in each edge location( for old browsers)
+
+SNI with CloudFront: If you configure CloudFront to serve HTTPS requests using SNI, CloudFront associates your alternate domain name with an IP address for each edge location. When a viewer submits an HTTPS request for your content, DNS routes the request to the IP address for the correct edge location. The IP address to your domain name is determined during the SSL/TLS handshake negotiation; the IP address isn't dedicated to your distribution.
+
+The SSL/TLS negotiation occurs early in the process of establishing an HTTPS connection. If CloudFront can't immediately determine which domain the request is for, it drops the connection. When a viewer that supports SNI submits an HTTPS request for your content, here's what happens:
+
+- The viewer automatically gets the domain name from the request URL and adds it to a field in the request header.
+- **When CloudFront receives the request, it finds the domain name in the request header and responds to the request with the applicable SSL/TLS certificate.**
+- The viewer and CloudFront perform SSL/TLS negotiation.
+- CloudFront returns the requested content to the viewer.
+
+When you configure CloudFront to serve HTTPS requests using dedicated IP addresses, CloudFront associates your alternate domain name with a dedicated IP address in each CloudFront edge location. When a viewer submits an HTTPS request for your content, here's what happens:
+
+- DNS routes the request to the IP address for your distribution in the applicable edge location.
+- **CloudFront uses the IP address to identify your distribution and to determine which SSL/TLS certificate to return to the viewer.**
+- The viewer and CloudFront perform SSL/TLS negotiation using your SSL/TLS certificate.
+- CloudFront returns the requested content to the viewer.
+
+To require HTTPS between CloudFront and your origin, follow the procedures in this topic to do the following:
+
+- In your distribution, change the Origin Protocol Policy setting for the origin. HTTPS Only or Match Viewer
+- Install an SSL/TLS certificate on your origin server (this isn’t required when you use an Amazon S3 origin or certain other AWS origins).
+
+
 
 ### Origin
 
