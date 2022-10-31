@@ -160,3 +160,15 @@ SAML Provider Integration
 For Lambda to log to CloudWatch \
 Allow logs:CreateLogGroup(When function is first executed), logs:CreateLogStream( For each lambda execution), logs:PutLogEvents
  
+### External ID
+Scenario: Example Corp want to access ur account / 
+ 
+create an IAM role that gives Example Corp access to your resources. Like any IAM role, the role has two policies, a permission policy and a trust policy. The role's trust policy specifies who can assume the role. In our sample scenario, the policy specifies the AWS account number of Example Corp as the Principal. This allows identities from that account to assume the role. In addition, you add a **Condition element to the trust policy**. This Condition tests the ExternalId context key to ensure that it matches the unique customer ID from Example Corp. 
+ 
+For example: 
+ 
+     "Principal": {"AWS": "Example Corp's AWS Account ID"},
+    "Condition": {"StringEquals": {"sts:ExternalId": "Unique ID Assigned by Example Corp"}}
+ 
+ 
+ 
