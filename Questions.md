@@ -103,4 +103,18 @@ D. Using Amazon CloudTrail, create a new CloudTrail event that detects the deact
 AWS Config seems correct. But AWS config remediation works by SSM document. Not by Lambda. C may be correct
 
 
+A company has multiple production AWS accounts. Each account has AWS CloudTrail configured to log to a single Amazon S3 bucket in a central account. Two of the production accounts have trails that are not logging anything to the S3 bucket.
+Which steps should be taken to troubleshoot the issue? (Choose three.)
 
+A. Verify that the log file prefix is set to the name of the S3 bucket where the logs should go.
+B. Verify that the S3 bucket policy allows access for CloudTrail from the production AWS account IDs.
+C. Create a new CloudTrail configuration in the account, and configure it to log to the account's S3 bucket.
+D. Confirm in the CloudTrail Console that each trail is active and healthy.
+E. Open the global CloudTrail configuration in the master account, and verify that the storage location is set to the correct S3 bucket.
+F. Confirm in the CloudTrail Console that the S3 bucket name is set correctly.
+
+
+F - Should be Correct
+B - Should be Correct
+
+D or A
