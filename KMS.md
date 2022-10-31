@@ -294,3 +294,13 @@ Manual rotation scenarios
             - KMS key different schedule than supported 1 year
             - Asymettric keys
 
+### Encryption Context
+EncryptionContext provides three benefits:
+
+Additional authenticated data (AAD)
+Audit trail
+Authorization context
+           
+authenticated encryption with associated data (AEAD): You can think of this as extending the signature over the ciphertext to cover additional data as well. In general, AAD should not contain any secret information, but should be contextual information used to understand the secret information.
+            
+            EncryptionContext is KMS’s implementation of AAD.Data that is commonly used for AAD might include header information, unencrypted database fields in the same record, file names, or other metadata. It’s important to remember that EncryptionContext should contain only nonsensitive information because it is stored in plaintext JSON files in AWS CloudTrail and can be seen by anyone with access to the bucket containing the information.
