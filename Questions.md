@@ -112,6 +112,43 @@ F. Configure IAM as a trusted relying party for Amazon Cloud Directory.
 ```
 ACE
 
+25. Penetration Request not required for
+```
+Permitted Services
+Amazon EC2 instances, NAT Gateways, and Elastic Load Balancers
+Amazon RDS
+Amazon CloudFront
+Amazon Aurora
+Amazon API Gateways
+AWS Fargate
+AWS Lambda and Lambda Edge functions
+Amazon Lightsail resources
+Amazon Elastic Beanstalk environments
+
+Prohibited Activities
+DNS zone walking via Amazon Route 53 Hosted Zones
+Denial of Service (DoS), Distributed Denial of Service (DDoS), Simulated DoS, Simulated DDoS (These are subject to the DDoS Simulation Testing policy)
+Port flooding
+Protocol flooding
+Request flooding (login request flooding, API request flooding)
+```
+An AWS account includes two S3 buckets: bucket1 and bucket2. The bucket2 does not have a policy defined, but bucket1 has the following bucket policy:
+
+In addition, the same account has an IAM User named `alice`, with the following IAM policy.
+
+Bucket Policy for bucket 1 - allows alice \
+IAM Policy for alice - allows bucket2
+
+Which buckets can user `alice` access?
+
+A. Bucket1 only
+B. Bucket2 only
+C. Both bucket1 and bucket2
+D. Neither bucket1 nor bucket2
+
+Answer - C
+
+
 ### Not Sure
 
 During a recent internal investigation, it was discovered that all API logging was disabled in a production account, and the root user had created new API keys that appear to have been used several times.
@@ -283,3 +320,24 @@ D. Delete the data by using the operating system delete commands. Run Quick Form
 ```
 C - Almost sure
 
+For compliance reasons, an organization limits the use of resources to three specific AWS regions. It wants to be alerted when any resources are launched in unapproved regions.
+Which of the following approaches will provide alerts on any resources launched in an unapproved region?
+```
+A. Develop an alerting mechanism based on processing AWS CloudTrail logs.
+B. Monitor Amazon S3 Event Notifications for objects stored in buckets in unapproved regions.
+C. Analyze Amazon CloudWatch Logs for activities in unapproved regions.
+D. Use AWS Trusted Advisor to alert on all resources being created.
+```
+
+A - Almost Sure \
+C - Not sure
+
+An organization has three applications running on AWS, each accessing the same data on Amazon S3. The data on Amazon S3 is server-side encrypted by using an AWS KMS Customer Master Key (CMK).
+What is the recommended method to ensure that each application has its own programmatic access control permissions on the KMS CMK?
+```
+A. Change the key policy permissions associated with the KMS CMK for each application when it must access the data in Amazon S3.
+B. Have each application assume an IAM role that provides permissions to use the AWS Certificate Manager CMK.
+C. Have each application use a grant on the KMS CMK to add or remove specific access controls on the KMS CMK. Most Voted
+D. Have each application use an IAM policy in a user context to have specific access permissions on the KMS CMK.
+```
+C - As Grant allows programmatic access
