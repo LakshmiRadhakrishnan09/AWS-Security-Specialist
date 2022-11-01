@@ -59,7 +59,14 @@ To require HTTPS between CloudFront and your origin, follow the procedures in th
 - In your distribution, change the Origin Protocol Policy setting for the origin. HTTPS Only or Match Viewer
 - Install an SSL/TLS certificate on your origin server (this isn’t required when you use an Amazon S3 origin or certain other AWS origins).
 
+To assign an ACM certificate to a CloudFront distribution
+- The certificate must be imported in the US East (N. Virginia) Region.
+- The certificate must be 2048 bits or smaller.
+- The certificate must not be password-protected.
+- The certificate must be PEM encoded.
 
+If you're using a certificate imported to IAM, verify the CloudFront path
+- --path /cloudfront/DistributionName/
 
 ### Origin
 
