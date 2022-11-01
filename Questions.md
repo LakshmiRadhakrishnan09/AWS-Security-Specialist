@@ -172,6 +172,92 @@ D
 
 To encrypt data outside of AWS KMS:  1. Use the GenerateDataKey operation to get a data key. 2. Use the plaintext data key (in the Plaintext field of the response) to encrypt your data outside of AWS KMS. Then erase the plaintext data key from memory. 3. **** Store the encrypted data key (in the CiphertextBlob field of the response) with the encrypted data. ****  To decrypt data outside of AWS KMS:  1. **** Use the Decrypt operation to decrypt the encrypted data key. **** The operation returns a plaintext copy of the data key. 2. Use the plaintext data key to decrypt data outside of AWS KMS, then erase the plaintext data key from memory.
 
+29. A company has a few dozen application servers in private subnets behind an Elastic Load Balancer (ELB) in an AWS Auto Scaling group. The application is accessed from the web over HTTPS. The data must always be encrypted in transit. The Security Engineer is worried about potential key exposure due to vulnerabilities in the application software.
+Which approach will meet these requirements while protecting the external certificate during a breach?
+```
+A. Use a Network Load Balancer (NLB) to pass through traffic on port 443 from the internet to port 443 on the instances.
+B. Purchase an external certificate, and upload it to the AWS Certificate Manager (for use with the ELB) and to the instances. Have the ELB decrypt traffic, and route and re-encrypt with the same certificate.
+C. Generate an internal self-signed certificate and apply it to the instances. Use AWS Certificate Manager to generate a new external certificate for the ELB. Have the ELB decrypt traffic, and route and re-encrypt with the internal certificate.
+D. Upload a new external certificate to the load balancer. Have the ELB decrypt the traffic and forward it on port 80 to the instances.
+```
+
+C - Use two certificates.
+
+30. A company uses identity federation to authenticate users into an identity account (987654321987) where the users assume an IAM role named IdentityRole. The users then assume an IAM role named JobFunctionRole in the target AWS account (123456789123) to perform their job functions.
+A user is unable to assume the IAM role in the target account. The policy attached to the role in the identity account is:
+
+What should be done to enable the user to assume the appropriate role in the target account?
+
+
+Scenario: the source account want to access the destination account. 
+
+You can assume the IAM role from the source to destination account by providing your IAM user permission for the AssumeRole API. You must specify your IAM user in the trust relationship of the destination IAM role.
+
+1. Create an IAM policy in source account
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "sts:AssumeRole"
+      ],
+      "Resource": [
+        "arn:aws:iam::DESTINATION-ACCOUNT-ID:role/DESTINATION-ROLENAME"
+      ]
+    }
+  ]
+}
+```
+2. Create Role in Destination account with trust policy
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::SOURCE-ACCOUNT-ID:user/SOURCE-USERNAME"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+```
+
+31. A Security Engineer for a large company is managing a data processing application used by 1,500 subsidiary companies. The parent and subsidiary companies all use AWS. The application uses TCP port 443 and runs on Amazon EC2 behind a Network Load Balancer (NLB). For compliance reasons, the application should only be accessible to the subsidiaries and should not be available on the public internet. To meet the compliance requirements for restricted access, the Engineer has received the public and private CIDR block ranges for each subsidiary.
+What solution should the Engineer use to implement the appropriate access restrictions for the application?
+```
+A. Create a NACL to allow access on TCP port 443 from the 1,500 subsidiary CIDR block ranges. Associate the NACL to both the NLB and EC2 instances
+B. Create an AWS security group to allow access on TCP port 443 from the 1,500 subsidiary CIDR block ranges. Associate the security group to the NLB. Create a second security group for EC2 instances with access on TCP port 443 from the NLB security group.
+C. Create an AWS PrivateLink endpoint service in the parent company account attached to the NLB. Create an AWS security group for the instances to allow access on TCP port 443 from the AWS PrivateLink endpoint. Use AWS PrivateLink interface endpoints in the 1,500 subsidiary AWS accounts to connect to the data processing application.
+D. Create an AWS security group to allow access on TCP port 443 from the 1,500 subsidiary CIDR block ranges. Associate the security group with EC2 instances.
+```
+
+C
+
+32. To meet regulatory requirements, a Security Engineer needs to implement an IAM policy that restricts the use of AWS services to the us-east-1 Region.
+What policy should the Engineer implement?
+
+It should be "DENY" policy . StringNotEquals aws:RequestedRegion = use-east-1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### Not Sure
 
 During a recent internal investigation, it was discovered that all API logging was disabled in a production account, and the root user had created new API keys that appear to have been used several times.
