@@ -374,3 +374,31 @@ Deleting KMS Key
 - AWS KMS requires you to set a waiting period of 7 – 30 days. The default waiting period is 30 days.
 - You can configure an Amazon CloudWatch alarm to warn you if a person or application attempts to use the KMS key during the waiting period. 
 - You can delete the imported key material from a KMS key at any time. AWS KMS deletes the key material immediately, the key state of the KMS key changes to pending import, and the KMS key can't be used in any cryptographic operations.  However, these actions do not delete the KMS key. To use the KMS key again, you must reimport the same key material into the KMS key. In contrast, deleting a KMS key is irreversible.           
+            
+To Limit Key by Service
+```
+            {
+  "Effect": "Allow",
+  "Principal": {
+    "AWS": "arn:aws:iam::111122223333:user/ExampleUser"
+  },
+  "Action": [
+    "kms:Encrypt",
+    "kms:Decrypt",
+    "kms:ReEncrypt*",
+    "kms:GenerateDataKey*",
+    "kms:CreateGrant",
+    "kms:ListGrants",
+    "kms:DescribeKey"
+  ],
+  "Resource": "*",
+  "Condition": {
+    "StringEquals": {
+      "kms:ViaService": [
+        "ec2.us-west-2.amazonaws.com",
+        "rds.us-west-2.amazonaws.com"
+      ]
+    }
+  }
+}
+```           
