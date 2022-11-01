@@ -141,7 +141,22 @@ Use awsvpc mode networking and specify task level security group. With the awsvp
 3. CloudMap. Service Domains mapped in CloudMap. Can cause DNS cache issues.
 4. AppMesh. Each container use an envoy side-car container. So a container only talks to its envoy. Envoy fwds request to another service's envoy. Envoys are controlled by App Mesh. Service Discovery + Load Balancing. Extremely low latency.
   
-  
+Maintaining Transport Layer Security All the Way to Your Container: Using the Network Load Balancer with Amazon ECS .
+
+How to use certificates
+
+1. Storing the certificate and private key in the Docker image
+2. Storing the certificates in AWS Systems Manager Parameter Store and Amazon S3
+3. Storing the certificates in AWS Secrets Manager
+4. Using self-signed certificates, generated as the Docker container is created
+5. Building and managing a private certificate authority
+6. Using the new ACM Private CA to issue private certificates
+    - The private key for any private CA that you create with ACM Private CA is created and stored in a FIPS 140-2 Level 3 Hardware Security Module (HSM) managed by AWS. 
+    - Add OpenSSL to the Docker image (if it is not already included).
+    - Generate a key-value pair (a cryptographically related private and public key).
+    - Use that private key to make a CSR.
+    - Call the ACM Private CA API or CLI issue-certificate operation, which issues a certificate based on the CSR.
+    - Call the ACM Private CA API or CLI get-certificate operation, which returns an issued certificate.
 
 Notes:
 
