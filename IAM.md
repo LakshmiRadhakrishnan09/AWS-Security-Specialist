@@ -194,4 +194,48 @@ For example:
     "Condition": {"StringEquals": {"sts:ExternalId": "Unique ID Assigned by Example Corp"}}
  
  
+ ###  A IAM role assuming another role
  
+ #### In same account
+ 
+ Let’s say we have two roles, Role_A and Role_B. If we want to allow Role_A to assume Role_B, we need to modify the **trust relationship of Role_B** with the following:
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::111111111111:role/Role_A"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+``
+ 
+ Principal elemnt : used i resource policies and in trust policies. you’ll get errors if you try to use the Principal element in an IAM Role policy
+ 
+ #### In another account
+ 
+ - Role_B needs to have its trust relationship modified to allow Role_A to assume it.(same as above)
+ - The difference here is that Role_A will need an additional policy with sts:AssumeRole permissions.
+ 
+ And Role_A needs the following attached as a policy:
+```
+{
+  "Version": "2012-10-17",
+  "Statement": {
+    "Effect": "Allow",
+    "Action": "sts:AssumeRole",
+    "Resource": "arn:aws:iam::222222222222:role/Role_B"
+  }
+}
+ ```
+ 
+ Role chaining: Through console always use the logger in user. Otherwise when u switch a role, if role a has permisssion to assume role b then that is sufficient.
+ 
+ When you switch roles in the AWS Management Console, the console always uses your original credentials to authorize the switch. This applies whether you sign in as an IAM user, as a SAML-federated role, or as a web-identity federated role. For example, if you switch to RoleA, IAM uses your original user or federated role credentials to determine whether you are allowed to assume RoleA. If you then switch to RoleB while you are using RoleA, AWS still uses your original user or federated role credentials to authorize the switch, not the credentials for RoleA.
+ 
+ 
+    
