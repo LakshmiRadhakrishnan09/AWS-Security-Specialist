@@ -366,3 +366,11 @@ Grants are commonly used by AWS services that integrate with AWS KMS to encrypt 
  A key can have only one key policy. Can have multiple Grants.     \
  Grant supports limited operations [CreateGrant, GenerateDataKey, RetireGrant, Encrypt, ReEncryptTo, Decrypt, GenerateDataKeyWithoutPlaintext, DescribeKey, Verify, ReEncryptFrom, Sign]           
             
+Deleting KMS Key
+- Once u delete the key, it is irreversible. So better disable the key
+- You can only schedule the deletion of a customer managed key. You cannot delete AWS managed keys or AWS owned keys.  
+- You cannot enable or disable AWS managed keys or AWS owned keys. 
+- To determine who uses key - Examining AWS CloudTrail logs to determine actual usage            
+- AWS KMS requires you to set a waiting period of 7 – 30 days. The default waiting period is 30 days.
+- You can configure an Amazon CloudWatch alarm to warn you if a person or application attempts to use the KMS key during the waiting period. 
+- You can delete the imported key material from a KMS key at any time. AWS KMS deletes the key material immediately, the key state of the KMS key changes to pending import, and the KMS key can't be used in any cryptographic operations.  However, these actions do not delete the KMS key. To use the KMS key again, you must reimport the same key material into the KMS key. In contrast, deleting a KMS key is irreversible.           
