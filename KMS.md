@@ -463,4 +463,7 @@ Step2: Then, from the account that you want to create the Auto Scaling group in,
             
 For this command to succeed, the user making the request must have permissions for the CreateGrant action.           
             
-https://aws.amazon.com/blogs/security/managing-permissions-with-grants-in-aws-key-management-service/            
+https://aws.amazon.com/blogs/security/managing-permissions-with-grants-in-aws-key-management-service/        
+            
+Each time you import key material to a CMK, you need to download and use a new wrapping key and import token for the CMK. The wrapping procedure does not affect the content of the key material, so you can use different wrapping keys (and different import tokens) to import the same key material.
+            
