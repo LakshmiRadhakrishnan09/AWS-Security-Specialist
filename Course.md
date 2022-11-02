@@ -63,5 +63,62 @@ How to Receive Notifications When Your AWS Account’s Root Access Keys Are Used
   - KMS: com.amazonaws.region.kms (Optional. This endpoint is required only if you want to use AWS Key Management Service (AWS KMS) encryption for Session Manager.)
   - Amazon CloudWatch Logs (Optional. This endpoint is required only if you want to use Amazon CloudWatch Logs for Session Manager, Run Command).
  - The security group must allow inbound HTTPS (port 443) traffic from the resources in your VPC that communicate with the service.
+ - Attach Role to EC2 Instance or to instance profile
+ - AmazonSSMManagedInstanceCore, (Optional AmazonSSMDirectoryServiceAccess, CloudWatchAgentServerPolicy)
+ - Enable CloudWatch Logging to log session activity. Sample Custom Role(
+ ```
+ {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ssmmessages:CreateControlChannel",
+                "ssmmessages:CreateDataChannel",
+                "ssmmessages:OpenControlChannel",
+                "ssmmessages:OpenDataChannel",
+                "ssm:UpdateInstanceInformation"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents",
+                "logs:DescribeLogGroups",
+                "logs:DescribeLogStreams"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:PutObject"
+            ],
+            "Resource": "arn:aws:s3:::DOC-EXAMPLE-BUCKET/s3-bucket-prefix/*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetEncryptionConfiguration"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "kms:Decrypt"
+            ],
+            "Resource": "key-name"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "kms:GenerateDataKey",
+            "Resource": "*"
+        }
+    ]
+}
+```
 
 
