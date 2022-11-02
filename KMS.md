@@ -458,6 +458,7 @@ Example 1: Key policy sections that allow access to the customer managed key
 Example 2: Key policy sections that allow cross-account access to the customer managed key        
             
 Step1: key policy should allow IAM of another account role and give Grant permission
+            
 Step2: Then, from the account that you want to create the Auto Scaling group in, create a grant that delegates the relevant permissions to the appropriate service-linked role. The Grantee Principal element of the grant is the ARN of the appropriate service-linked role of asg in second account. The key-id is the ARN of the key in source account.
             
             
