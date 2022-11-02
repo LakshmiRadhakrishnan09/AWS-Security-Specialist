@@ -402,3 +402,64 @@ To Limit Key by Service
   }
 }
 ```           
+
+#### Key policy with ALB
+         
+Amazon EC2 Auto Scaling uses service-linked roles for the permissions that it requires to call other AWS services on your behalf. A service-linked role is a unique type of IAM role that is linked directly to an AWS service.
+            
+The predefined permissions also include access to your AWS managed keys. However, they do not include access to your customer managed keys, allowing you to maintain full control over these keys.
+            
+Your KMS keys must have a key policy that allows Amazon EC2 Auto Scaling to launch instances with Amazon EBS volumes encrypted with a customer managed key.
+            
+You must, at minimum, **add two policy statements to your key policy** for it to work with Amazon EC2 Auto Scaling.
+
+1. The first statement **allows the IAM identity specified in the Principal element** to use the customer managed key directly. It includes permissions to perform the AWS KMS Encrypt, Decrypt, ReEncrypt*, GenerateDataKey*, and DescribeKey operations on the key.
+2. The second statement **allows the IAM identity specified in the Principal element to use grants** to delegate a subset of its own permissions to AWS services that are integrated with AWS KMS or another principal. This allows them to use the key to create encrypted resources on your behalf.
+            
+Example 1: Key policy sections that allow access to the customer managed key
+```
+ {
+   "Sid": "Allow service-linked role use of the customer managed key",
+   "Effect": "Allow",
+   "Principal": {
+       "AWS": [
+           "arn:aws:iam::123456789012:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
+       ]
+   },
+   "Action": [
+       "kms:Encrypt",
+       "kms:Decrypt",
+       "kms:ReEncrypt*",
+       "kms:GenerateDataKey*",
+       "kms:DescribeKey"
+   ],
+   "Resource": "*"
+}
+            
+{
+   "Sid": "Allow attachment of persistent resources",
+   "Effect": "Allow",
+   "Principal": {
+       "AWS": [
+           "arn:aws:iam::123456789012:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
+       ]
+   },
+   "Action": [
+       "kms:CreateGrant"
+   ],
+   "Resource": "*",
+   "Condition": {
+       "Bool": {
+           "kms:GrantIsForAWSResource": true
+       }
+    }
+}            
+```    
+Example 2: Key policy sections that allow cross-account access to the customer managed key        
+            
+Step1: key policy should allow IAM of another account role and give Grant permission
+Step2: Then, from the account that you want to create the Auto Scaling group in, create a grant that delegates the relevant permissions to the appropriate service-linked role. The Grantee Principal element of the grant is the ARN of the appropriate service-linked role of asg in second account. The key-id is the ARN of the key in source account.
+            
+            
+            
+https://aws.amazon.com/blogs/security/managing-permissions-with-grants-in-aws-key-management-service/            
