@@ -48,7 +48,20 @@ How to Receive Notifications When Your AWS Account’s Root Access Keys Are Used
 - Turn on cloudTrail cloudWatch Integration
 - Create a metric in cloudwatch
 - Automatically create role for CreateLogStream and PutLogEvent
-- { $.userIdentity.type = "Root" && $.userIdentity.invokedBy NOT EXISTS && $.eventType != "AwsServiceEvent" }
+```
+{ $.userIdentity.type = "Root" && $.userIdentity.invokedBy NOT EXISTS && $.eventType != "AwsServiceEvent" }
+```
 - Create Alarm and send SNS topic
+
+#### SSSM Session Manager
+
+- Verify that SSM Agent is installed on the instance.
+- Create the following VPC endpoints:
+  - System Manager: com.amazonaws.region.ssm
+  - Session Manager: com.amazonaws.region.ssmmessages
+  - com.amazonaws.[region].ec2messages
+  - KMS: com.amazonaws.region.kms (Optional. This endpoint is required only if you want to use AWS Key Management Service (AWS KMS) encryption for Session Manager.)
+  - Amazon CloudWatch Logs (Optional. This endpoint is required only if you want to use Amazon CloudWatch Logs for Session Manager, Run Command).
+ - The security group must allow inbound HTTPS (port 443) traffic from the resources in your VPC that communicate with the service.
 
 
