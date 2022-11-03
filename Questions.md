@@ -262,7 +262,14 @@ or C - Not sure
 
 Create a customer-managed CMK in the centralized account. Allow other applicable accounts to use that key for cryptographical operations by applying proper cross-account permissions in the key policy. Create an IAM role in all applicable accounts and configure its access policy with permissions to create grants for the centrally managed CMK. Use this IAM role to create a grant for the centrally managed CMK with permissions to perform cryptographical operations and with the EC2 Auto Scaling service-linked role defined as the grantee principal.
 
-36. 
+36. A company wants to deploy a distributed web application on a fleet of EC2 instances. The fleet will be fronted by a Classic Load Balancer that will be configured to terminate the TLS connection. The company wants to make sure that all past and current TLS traffic to the Classic Load Balancer stays secure, even if the certificate private key is leaked.
+To ensure the company meets these requirements, a Security Engineer can configure a Classic Load Balancer with:
+
+An HTTPS listener that uses a custom security policy that allows only perfect forward secrecy cipher suites.
+or
+An HTTPS listener that uses the latest AWS predefined ELBSecurityPolicy-TLS-1-2-2017-01 security policy.
+
+37.
 
 
 
