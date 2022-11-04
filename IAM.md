@@ -239,3 +239,40 @@ For example:
  
  
     
+### Session polcies
+ 
+Session policies are advanced policies that you pass as parameters when you programmatically create a temporary session for a role or federated user.
+Used along with AssumeRole API.
+When you pass session policies with AssumeRole API, the resulting session's permissions are the intersection of the IAM entity's identity-based policy and the session policies.  
+A resource-based policy has a different effect on the evaluation of session policy permissions. The difference depends on whether the user or role's ARN or the session's ARN is listed as the principal in the resource-based policy. 
+ 
+A resource-based policy can specify the ARN of the user or role as a principal. In that case, the permissions from the resource-based policy are added to the role or user's identity-based policy **before the session is created**. The session policy limits the total permissions granted by the resource-based policy and the identity-based policy. The resulting session's permissions are **the intersection of the session policies and the resource-based policies plus the intersection of the session policies and identity-based policies**.
+ 
+A resource-based policy can specify the ARN of the session as a principal. In that case, the permissions from the resource-based policy are added **after the session is created**. The resource-based policy permissions are not limited by the session policy. **The resulting session has all the permissions of the resource-based policy plus the intersection of the identity-based policy and the session policy. **
+ 
+ ### Policies and root user
+ 
+**You cannot attach identity-based policies to the root user, and you cannot set the permissions boundary for the root user.** However, you can specify the root user as the principal in a resource-based policy or an ACL. A root user is still the member of an account. If that account is a member of an organization in AWS Organizations, the root user is affected by any SCPs for the account.
+ 
+ To immediately deny all permissions to any current user of role credentials
+ 
+ - choose the Revoke sessions tab. IAM immediately attaches a policy named AWSRevokeOlderSessions to the role. The policy denies all access to users who assumed the role before the moment you choose Revoke active sessions. Any user who assumes the role after you choose Revoke active sessions is not affected.
+ 
+ To revoke temporary credentials
+ 
+ - Temporary security credentials are valid until they expire, and they cannot be revoked. 
+ - To change or remove the permissions assigned to temporary security credentials, you can **change or remove the permissions** that are associated with the creator of the credentials. 
+ - You can deny access to temporary security credentials without affecting the permissions of the IAM user or role that created the credentials. You do this by specifying the (ARN) of the temporary security credentials in the Principal element of a resource-based policy.
+ - It is possible to deny access only to temporary security credentials that were created before a specific time and date. You do this by specifying a value for the aws:TokenIssueTime key in the Condition element of a policy. Attach policy to the following example to the IAM user that created the temporary security credentials. 
+ 
+ ```
+ {
+  "Version": "2012-10-17",
+  "Statement": {
+    "Effect": "Deny",
+    "Action": "*",
+    "Resource": "*",
+    "Condition": {"DateLessThan": {"aws:TokenIssueTime": "2014-05-07T23:47:00Z"}}
+  }
+}
+ ```
