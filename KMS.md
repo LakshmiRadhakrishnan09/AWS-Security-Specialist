@@ -463,7 +463,77 @@ Step2: Then, from the account that you want to create the Auto Scaling group in,
             
 For this command to succeed, the user making the request must have permissions for the CreateGrant action.           
             
-https://aws.amazon.com/blogs/security/managing-permissions-with-grants-in-aws-key-management-service/        
+https://aws.amazon.com/blogs/security/managing-permissions-with-grants-in-aws-key-management-service/   
+            
+User assumes role with permission to use a KMS key in a different AWS account
+            
+- The key policy for the KMS key in account 2 allows account 2 to use IAM policies to control access to the KMS key.
+- The key policy for the KMS key in account 2 allows account 1 to use the KMS key in cryptographic operations. However, account 1 must use IAM policies to give its principals access to the KMS key.
+- An IAM policy in account 1 allows the Engineering role to use the KMS key in account 2 for cryptographic operations.
+- Bob, a user in account 1, has permission to assume the Engineering role.
+- Bob can trust this KMS key, because even though it is not in his account, an IAM policy in his account gives him explicit permission to use this KMS key. 
+            
+Key Policy in Account 2 should allow accoun2 and account1(cross account)
+```
+            {
+    "Id": "key-policy-acct-2",
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Permission to use IAM policies",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::444455556666:root"
+            },
+            "Action": "kms:*",
+            "Resource": "*"
+        },
+        {
+            "Sid": "Allow account 1 to use this KMS key",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::111122223333:root"
+            },
+            "Action": [
+                "kms:Encrypt",
+                "kms:Decrypt",
+                "kms:ReEncryptFrom",
+                "kms:ReEncryptTo",
+                "kms:GenerateDataKey",
+                "kms:GenerateDataKeyWithoutPlaintext",
+                "kms:DescribeKey"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+IAM Policy in Account 1 which allows to perform cryptographic operation on key in account2
+```
+ {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "kms:Encrypt",
+                "kms:Decrypt",
+                "kms:ReEncryptFrom",
+                "kms:ReEncryptTo",
+                "kms:GenerateDataKey",
+                "kms:GenerateDataKeyWithoutPlaintext",
+                "kms:DescribeKey"
+            ],
+            "Resource": [
+                "arn:aws:kms:us-west-2:444455556666:key/1234abcd-12ab-34cd-56ef-1234567890ab"
+            ]
+        }
+    ]
+}
+```            
+            
+            
+            
             
 Each time you import key material to a CMK, you need to download and use a new wrapping key and import token for the CMK. The wrapping procedure does not affect the content of the key material, so you can use different wrapping keys (and different import tokens) to import the same key material.
             
