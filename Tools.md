@@ -187,6 +187,13 @@ All these tools are regional. No global-view.
 
 **Security Hub and Amazon Detective attempt to do samething -> Consolidate View**
 
+Security Hub requires that AWS Config is enabled in all accounts that have Security Hub enabled. Security Hub controls use AWS Config rules to complete security checks.
+
+You need to enable Security Hub . Security standards lists the security standards that Security Hub supports. You can select the Standads to enable. AWS Config must be configured to record at a minimum the resources that are required for the standards that you have enabled.
+
+- AWS Config resources required for CIS controls
+- AWS Config resources required for PCI DSS controls
+- AWS Config resources required for AWS Foundational Security Best Practices controls
 
 ### Amazon Detective
 
@@ -377,3 +384,24 @@ Data Classification
 * Tier1 : Information for Internal use only
 * Tier2: Restrcited Data
 * Tier3: Highly Strategic ( IP, Tradesecrets)
+
+
+Amazon EventBridge
+
+- One Default event bus in created when u create AWS account. You can create other event bus if required
+- Serverless event bus
+- to build event driven applications at scale
+- U can set up rules. These rules are evaluated against events. Remain in event bus and evaluated by other rules.
+- Decouple applications ( Difference from SQS : Event remains event after successful consumption)
+- to Automate response and remediation
+- respond automatically to system events such as application availability issues or resource changes.
+- Security Hub automatically sends all new findings and all updates to existing findings to EventBridge as EventBridge events. 
+- Events from AWS services are delivered to EventBridge in near-real time and on a guaranteed basis. You can write simple rules to indicate which events you are interested in and what automated actions to take when an event matches a rule. We can trigger lambda, EC2 run command, SNS.
+- When an event occurs in EventBridge, CloudTrail records the event in Event history. ( Similar to other AWS services)
+- Configuring an EventBridge rule for automatically sent findings. You can create a rule in EventBridge, that defines an action to take when a Security Hub Findings - Imported event is received. Security Hub Findings - Imported events are triggered by updates from both BatchImportFindings and BatchUpdateFindings.
+- Findings fron Security Hub automatically send to EventBridge. U write rules in EventBridge
+- U can create custom actions in EventBridge.
+
+
+
+
