@@ -40,7 +40,7 @@ Deny list strategy – here FullAWSAccess policy is attached to the root – so,
 
 Allow list strategy – here, the FullAWSAccess policy is removed from the root. So, no API actions are permitted anywhere unless you explicitly allow them. You must create SCPs that allow access to specific services and actions. You need to attach the SCP to the entire hierarchy all the way to the root.
 
-Master account is not affected by SCP. Even for Root user of child accounts policies will be applied.
+**Master account is not affected by SCP.** Even for Root user of child accounts policies will be applied.
 
 Use case: Restrict some services to all accounts. Restrct regions to all accounts.
 
@@ -69,7 +69,7 @@ SCPs example:https://docs.aws.amazon.com/organizations/latest/userguide/orgs_man
 
 ## AWS Sigle Sign on ( AWS Identity Center - New )
 
-Single Sign on is available only if u allow AWS organisations
+**Single Sign on is available only if u allow AWS organisations**
 
 - Configure Sigle Sign on for AWS organisation from master account
     - Specify Identity source ( Can be AWS SSO, on premise Active Directory, External identity provider)
@@ -120,9 +120,9 @@ AWS recommendation
 
 ### Resource Sharing across accounts
 
-- Resource Access Manager : Share with any AWS account or organizations
-       - App Mesh, Aurora, VPC subnets, EC2 images
-- Transit Gateway : for network resources
+- Resource Access Manager : Share with any AWS account or organizations \
+       - App Mesh, Aurora, **VPC subnets**, EC2 images
+- Transit Gateway : for network resources \
         - Routes IP traffic(layer3)
         - Attach VPCs, VPN, Direct Gateway, Transit Gateway in another region
         - Route traffic through security products(proxies)
