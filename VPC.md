@@ -249,15 +249,21 @@ If there are multiple VPCs, lot of connections to maintain. Instead of using Vir
 Cloud Hub can also use Transit Gateway. 
 
 How to set up Direct Connect? \
-Multiple Direct Connect locations around the world. Work with ISP to set up connection to one of this DX location. For ctitical workloads use 2 Direct connect locations. \
+Multiple Direct Connect locations around the world. Work with ISP to set up connection to one of this DX location. For critical workloads use 2 Direct connect locations.\
 Add Virtual Private Gateway(VGW) to VPC. Configure it to use direct connect link. Work for only single VPC. \
-For multiple VPC, use Direct Connect Gateway.Multiple VPCs across regions to share direct connect link. \
+For multiple VPC, use Direct Connect Gateway. Multiple VPCs across regions to share direct connect link. \
 Better option. Use Transit Gateway also. \
 
 VPC1, VPC2, VPC3 (in same region) -- TGW1 , VPC1, VPC2, VPC3 (in another region) -- TGW2 \
 Connect both to Direct Connect Gateway.
 
 To connect to AWS Services( S3) from onpremise - Direct Connect with Public virtual interface.  
+
+Direct Connect Resiliency - (https://aws.amazon.com/directconnect/resiliency-recommendation/) 
+- For High Resiliency(provides resilience to connectivity failure due to a fiber cut or a device failure as well as a complete location failure. ) - two direct connection for two customer data center
+- For Maximum Resiliency(provides resilience to device failure, connectivity failure, and complete location failure.) - two direct connection for per data center( 2 data center)
+- Non critical workloads - at least two direct connect connections terminating on different devices at a single location. helps in the case of the device failure at a location but does not help in the event of a total location failure.
+
 
 **VPN over Direct Connect** : Encryption over consistent network. \
 USe VPN as backup for Direct Connect. 
