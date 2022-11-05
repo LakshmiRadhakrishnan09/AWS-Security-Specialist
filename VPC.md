@@ -38,15 +38,15 @@ VPC :
 * Security Group
    * Allow rules only
    * Both inbound and outbound
-   * Default SG: Allow all outbounds
+   * Default SG: **Allow all outbounds**
    * Statefull firewall : **If inbound is allowed, outbound is allowed**
    * Outbound rule: When server need to talk to external services
 * Network ACL
    * At subnet level
    * Both allow and deny
    * Stateless : Allow both request and response
-   * Ordered: First rule that matches will allow or deny. From lowest number. "1" has highest order. Starts evaluating from "1".
-   * Default NACL: Allow all inbound and outbound traffic
+   * **Ordered**: First rule that matches will allow or deny. From lowest number. "1" has highest order. Starts evaluating from "1".
+   * Default NACL: **Allow all inbound and outbound traffic**
    * Response traffic is send to an ephemeral port. Servers listen on well known ports for requests that server process. But listenes on ephemeral ports for reciving response. Solution: only allow epheral port for VPC ports only.
    * Tricky to configure
 
@@ -70,15 +70,16 @@ Public IP address is organized by country, organization and device( as a hierarc
 
 Question: How organizatio manage IPv4 private address in VPC? Can subnets in different accounts share same IP blocks? : Results in conflict if we do VPC peering??
 Can we use same private IP in **different VPC** in same AWS account? : Should be yes. Because private ip should be unique only within a VPC. But for an organization with VPC peering, conflicts can happen if we use same private ip even across different VPC.
+
 Do ALBs have public ip? It has public Ip. But it will change. Use public DNS name instead.
 Within same VPC we cannot share private IP. \
 Your VPC can interact with internet using Public IP assigned to instances. \
-When we create a VPC why we cant give the largest set? Why we should restrict the number of IPs in a VPC? \ 
+When we create a VPC why we cant give the largest set? Why we should restrict the number of IPs in a VPC? - To avoid conflict\ 
 
-Scenario: A Vpc with ip range : 193.239.32.0/20. If you want to create 4 subnets , then 2 bits are used for subnet identification. If u want to create 16(2 ^ 4) subnets, then 4 bits are used for subnet identification. \
-Assuming we need 4 subnets, then we have 193.239.32.0/22, 193.239.36.0/22, 193.239.40.0/22, 193.239.44.0/22 allocate to each subnet. \
+Scenario: A Vpc with ip range : 193.239.32.0/20. If you want to create 4 subnets , then **2 bits are used for subnet identification**. If u want to create 16(2 ^ 4) subnets, then 4 bits are used for subnet identification. \
+Assuming we need 4 subnets, then we have ( **/22 only**) i.e  193.239.32.0/22, 193.239.36.0/22, 193.239.40.0/22, 193.239.44.0/22 allocate to each subnet. \
 /22 means 2 ^ (32-22) = 2 ^ 10 = 1024 IPs .\
-5 address are reserved for each subnet. \
+**5 address are reserved for each subnet.** \
 So only 1019 address.
 
 Question: What is difference between public and private subnet. \
