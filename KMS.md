@@ -80,7 +80,25 @@ If you need server-side encryption for all of the objects that are stored in a b
                 }
             }
  ```
+AWS KMS supports automatic key rotation only for symmetric encryption KMS keys with key material that AWS KMS creates. Automatic rotation is optional for customer managed KMS keys. AWS KMS always rotates the key material for AWS managed KMS keys every year. Rotation of AWS owned KMS keys varies.
+            
+Using alias - We can reuse the same code in different AWS Regions. Generate different key in different region. Associate same alias. Application code use alias of a key.
+            
+Automatic key rotation is not supported on the following types of KMS keys, but you can rotate these KMS keys manually.
 
+Asymmetric KMS keys,
+HMAC KMS keys,
+KMS keys in custom key stores,
+KMS keys with imported key material,
+
+Can KMS imported key rotated automatically?What will happen when you import new key material to existing CMK? 
+            
+You can delete imported key material from a KMS key, immediately rendering the KMS key unusable. Also, when you import key material into a KMS key, you can determine whether the key expires and **set its expiration date.** When the expiration date arrives, AWS KMS deletes the key material. Without key material, the KMS key cannot be used in any cryptographic operation. **To restore the key, you must reimport the same key material into the key. **           
+            
+When you import key material into a KMS key, the KMS key is permanently associated with that key material. You can reimport the same key material, but you cannot import different key material into that KMS key. Also, you cannot enable automatic key rotation for a KMS key with imported key material. However, you can manually rotate a KMS key with imported key material.
+            
+When you encrypt data under a KMS key, the ciphertext is permanently associated with the KMS key and its key material. **It cannot be decrypted with any other KMS key, including a different KMS key with the same key material.** This is a security feature of KMS keys.            
+            
 **Amazon S3 Bucket Keys**
 
 When you configure server-side encryption using AWS KMS (SSE-KMS), you can configure your bucket to use **S3 Bucket Keys for SSE-KMS**. Using a bucket-level key for SSE-KMS can reduce your AWS KMS request costs by up to 99 percent by decreasing the request traffic from Amazon S3 to AWS KMS.
@@ -111,7 +129,7 @@ Compromise of one data key will not result in compromise of other data.
 - Master key never leaves KMS
 - S3 used data key for AES 256 encryption
 
-Master key is identified by keyId, Key arun, alias, alias arn. **Alias** is used for rotating and it points to current master key. \
+Master key is identified by keyId, Key arn, alias, alias arn. **Alias** is used for rotating and it points to current master key. \
 Encrypted data key has reference to master key ID. So even in case master key is rotated, it refers to old master key. \
 Application code use alias. So no need to update application even if key is rotated.
 
@@ -537,3 +555,4 @@ IAM Policy in Account 1 which allows to perform cryptographic operation on key i
             
 Each time you import key material to a CMK, you need to download and use a new wrapping key and import token for the CMK. The wrapping procedure does not affect the content of the key material, so you can use different wrapping keys (and different import tokens) to import the same key material.
             
+           
