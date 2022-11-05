@@ -93,9 +93,19 @@ Need to be delegated for each region. Repeat for every region. \
 
 ### Amazon IAM Access Analyzer
 
+AM Access Analyzer helps you identify the resources in your organization and accounts, such as Amazon S3 buckets or IAM roles, **shared with an external entity.** This lets you identify unintended access to your resources and data, which is a security risk.
+
+For each instance of a resource shared outside of your account, IAM Access Analyzer generates a finding. 
+
 Resources shared to another account outside of AWS organizations generates a finding.
 
-Only for services that support Resource based policy - S3 bucket, IAM roles, KMS keys, Lambda functions, SQS queus, Secret Manager
+Only for services that support Resource based policy - S3 bucket, IAM roles, KMS keys, Lambda functions, SQS queus, Secret Manager.
+
+You enable IAM access analyzer for your entire organization or your account. The organization or account you choose is known as the zone of trust for the analyzer. The analyzer monitors all of the supported resources within your zone of trust.f you add a new policy , or change an existing policy, IAM Access Analyzer analyzes the new or updated policy within about 30 minutes.
+
+Each finding includes details about the resource, the external entity with access to it, and the permissions granted so that you can take appropriate action.
+
+IAM Access Analyzer analyzes only policies applied to resources in the same AWS Region where it's enabled. To monitor all resources in your AWS environment, you must create an analyzer to **enable IAM Access Analyzer in each Region** where you're using supported AWS resources.
 
 ### AWS Inspector
 
