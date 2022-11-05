@@ -119,6 +119,7 @@ NAT Gateway
 * Deploy NAT in multiple AZ
 
 EndPoints
+While creating interface endpoint, you should specify the service(eg: s3). 
 * Gateway Endpoints
   * S3, DynamoDb
   * Create endpoint in your VPC
@@ -133,6 +134,14 @@ EndPoints
   * One Interface Endpoint per AZ. 
   * Interface Endpoints are also called PrivateLinks
   * Interface EndPoint can be used not only for interacting with AWS resources but also for interacting with your own services.
+
+Interface - Create an interface endpoint to send traffic to endpoint services that use a Network Load Balancer to distribute traffic. Traffic destined for the endpoint service is resolved using DNS.
+
+GatewayLoadBalancer - Create a Gateway Load Balancer endpoint to send traffic to a fleet of virtual appliances using private IP addresses. You route traffic from your VPC to the Gateway Load Balancer endpoint using route tables. The Gateway Load Balancer distributes traffic to the virtual appliances and can scale with demand.
+
+Gateway - Create a gateway endpoint to send traffic to Amazon S3 or DynamoDB using private IP addresses. You route traffic from your VPC to the gateway endpoint using route tables. Gateway endpoints do not enable AWS PrivateLink.
+
+With a DNS public hosted zone, the records specify how to route traffic on the internet. With a DNS private hosted zone, the records specify how to route traffic in your VPCs.
 
 Availability Zone and Availability Zone ID \
 Scenario: SQS in AZ us-east-1. Interface Endpoint in us-east1 and use-east-2 to map to SQS. But us-east-1 used by SQS(AWS account) may logically map to a different zone. Use Availability Zone ID instead.
