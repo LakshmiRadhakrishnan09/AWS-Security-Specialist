@@ -269,8 +269,13 @@ An HTTPS listener that uses a custom security policy that allows only perfect fo
 or
 An HTTPS listener that uses the latest AWS predefined ELBSecurityPolicy-TLS-1-2-2017-01 security policy.
 
-37.
+37. A company policy requires that no insecure server protocols are used on its Amazon EC2 instances. These protocols include FTP, Telnet, and HTTP. The company’s security team wants to evaluate compliance with this requirement by using a scheduled Amazon EventBridge (Amazon CloudWatch Events) event to review the current infrastructure and create a regular report about the EC2 instances.
 
+Which process will check the compliance of the company's EC2 instances? ( AWS Config, Trusted Advisor, GuardDuty, Amazon Inspector)
+
+```
+Amazon Inspector tests the network accessibility of your EC2 instances and the security state of your applications that run on those instances. Amazon Inspector assesses applications for exposure, vulnerabilities, and deviations from best practices. The rules in the Network Reachability package analyze your network configurations to find security vulnerabilities of your EC2 instances.
+```
 
 
 
