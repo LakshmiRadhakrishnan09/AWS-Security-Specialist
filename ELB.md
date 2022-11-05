@@ -140,4 +140,33 @@ Note:
 Certificates in ACM is regional.
 
 For certificate in cloudFront -> Only in N.virgiia. Not in all edge regions.
+
+Security for ALB
+
+- SG for instance with port for application and health check( 2 SG)
+- ALB do not support mutual TLS authentication
+- HTTPS Listener - Use certificate betwwen client and LB. Decrypt at LB.
     
+Security Policies
+
+- You can choose the security policy that is used for front-end connections. 
+- The ELBSecurityPolicy-2016-08 security policy is always used for backend connections. 
+- Application Load Balancers do not support custom security policies.
+- You can use one of the ELBSecurityPolicy-TLS policies to meet compliance and security standards that require disabling certain TLS protocol versions, or to support legacy clients that require deprecated ciphers.
+
+
+Logging
+
+- CloudWatch Metrics
+- Access Logs
+- CloudTrail Logs
+- Request Tracing
+
+
+ELB CloudWatch Metric: Metrics are collected Only when requests are flowing thr ALB. If there are no requests flowing through the load balancer or no data for a metric, the metric is not reported. ActiveConnectionCount, ConsumedLCUs, ProcessedBytes, ClientTLSNegotiationErrorCount, HealthHostCount, RequestCountPerTarget, TargetResponseTime
+
+Access Logs - Optional feature. Elastic Load Balancing captures the logs and stores them in the Amazon S3 bucket that you specify as compressed files. You can disable access logs at any time. Each log contains information such as the time the request was received, the client's IP address, latencies, request paths, and server responses. 
+
+Elastic Load Balancing logs requests sent to the load balancer, including requests that never made it to the targets. For example, if a client sends a malformed request, or there are no healthy targets to respond to the request, the request is still logged. Elastic Load Balancing does not log health check requests.
+
+When the load balancer receives a request from a client, it adds or updates the X-Amzn-Trace-Id header before sending the request to the target. 
