@@ -8,7 +8,7 @@ Origin Response – This event is triggered after the origin returns a response 
 
 What are security headers?
 
-Security headers are a group of headers in the HTTP response from a server that tell your browser how to behave when handling your site’s content. For example, X-XSS-Protection is a header that Internet Explorer and Chrome respect to stop pages loading when they detect cross-site scripting (XSS) attacks. The following is a list of each header we’ll be implementing with a link to more information.
+Security headers are a group of headers in the HTTP response from a server that tell your browser how to behave when handling your site’s content. For example, X-XSS-Protection is a header that Internet Explorer and Chrome respect to stop pages loading when they detect cross-site scripting (XSS) attacks. The following is a list of  header :
 
 - Strict Transport Security
 - Content-Security-Policy
@@ -31,4 +31,12 @@ Lambda automatically records a variety of standard metrics that are always publi
 - kms:CreateGrant, kms:Encrypt – To configure a customer managed CMK on a function. 
 - kms:Decrypt – To view and manage environment variables that are encrypted with a customer managed CMK. 
   
- 
+ ### Lambda Execution role and resource policies
+
+Execution Role: a policy that defines the permissions that your lambda function needs to access other AWS services and resources. 
+
+To give other accounts and AWS services permission to use your Lambda resources, use a resource-based policy.
+
+When an AWS service such as Amazon Simple Storage Service (Amazon S3) calls your Lambda function, Lambda considers only the resource-based policy.
+
+To restrict which lambda functions can access other resources, include the lambda:SourceFunctionArn condition key in a resource-based policy for the target resource. 

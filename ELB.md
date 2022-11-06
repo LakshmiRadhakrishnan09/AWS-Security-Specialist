@@ -1,12 +1,12 @@
 
-## Elastic Load Balancer ##
+## Elastic Load Balancer
 
 * Classic
 * Application
 * Network
 
 
-* Target poll of services
+* Target pool of services
 * Health check of services
 * ELB is managed. Auto scale. No single point of failure.
 * Client has a single well known ip
@@ -43,7 +43,7 @@ The ALB is like a fully-managed, scalable, and highly available version of NGINX
 
 Classic: HTTP(layer 7) and TCP(layer 4). \
 Application: 
-    * Can be used for distributing traffic across ec2, lambda, on premise and containers
+    * Can be used for distributing traffic across ec2, lambda, on-premise and containers
     * Layer 7
     * Can route based on content
     * We can have multiple services( micro services) under an ALB.
@@ -64,8 +64,8 @@ Application:
  Option2: VPC peering. Exposes all resources. \
  Option3: NLB in shared service. Create a private link powered service. VPC end point at consumer side.\
   
-  What if we need the capability to perform an inline inspection of all inbound and outbound traffic from our VPC?
- Gateway Load Balnacer   \
+What if we need the capability to perform an inline inspection of all inbound and outbound traffic from our VPC?
+ Gateway Load Balanacer   \
  Gateway Load Balancer and network appliances are kept in a separate VPC.
 
 You attach the gateway load balancer endpoint to your VPC.
@@ -96,7 +96,7 @@ Used by
 - Register Domain using Route53Eg. www.example.com
 - Certificate for Domain using Certificate Manager
 - Attach certificate to LB
-- Alias Record to route traffic to LB in Route53. Eg site1.example.com -> elb.us-west-1.amazon.com
+- **Alias Record** to route traffic to LB in Route53. Eg site1.example.com -> elb.us-west-1.amazon.com
 
 ALB need to be configured with Security Cyphers. List of cyphers that will be used with client. 
 
@@ -146,7 +146,7 @@ Amazon S3 website endpoints do not support HTTPS. http://bucket-name.s3-website-
 1. Use REST API endpoint. Will not support custom domian
 2. Use CloudFront
 
-
+**If u want to use SSL with S3 , u need to use cloudfront.**
 
 Note:
 
@@ -156,15 +156,15 @@ For certificate in cloudFront -> Only in N.virgiia. Not in all edge regions.
 
 Security for ALB
 
-- SG for instance with port for application and health check( 2 SG)
+- SG for instance with port for application port and health check port( 2 SG)
 - ALB do not support mutual TLS authentication
-- HTTPS Listener - Use certificate betwwen client and LB. Decrypt at LB.
+- HTTPS Listener - Use certificate between client and LB. Decrypt at LB.
     
 Security Policies
 
 - You can choose the security policy that is used for front-end connections. 
 - The ELBSecurityPolicy-2016-08 security policy is always used for backend connections. 
-- Application Load Balancers do not support custom security policies.
+- **Application Load Balancers do not support custom security policies.**
 - You can use one of the ELBSecurityPolicy-TLS policies to meet compliance and security standards that require disabling certain TLS protocol versions, or to support legacy clients that require deprecated ciphers.
 
 
@@ -180,6 +180,6 @@ ELB CloudWatch Metric: Metrics are collected Only when requests are flowing thr 
 
 Access Logs - Optional feature. Elastic Load Balancing captures the logs and stores them in the Amazon S3 bucket that you specify as compressed files. You can disable access logs at any time. Each log contains information such as the time the request was received, the client's IP address, latencies, request paths, and server responses. 
 
-Elastic Load Balancing logs requests sent to the load balancer, including requests that never made it to the targets. For example, if a client sends a malformed request, or there are no healthy targets to respond to the request, the request is still logged. Elastic Load Balancing does not log health check requests.
+Elastic Load Balancing access logs requests sent to the load balancer, **including requests that never made it to the targets.** For example, if a client sends a malformed request, or there are no healthy targets to respond to the request, the request is still logged. Elastic Load Balancing does not log health check requests.
 
 When the load balancer receives a request from a client, it adds or updates the X-Amzn-Trace-Id header before sending the request to the target. 

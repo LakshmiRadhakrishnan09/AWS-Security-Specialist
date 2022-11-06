@@ -42,6 +42,8 @@ Domain needs to be registered either with Route 53 domain registrar or any other
 When u create a hosted zone, Route 53 assign 4 name servers. There are Authoritive name server that answers DNS queries for your domain.
 Uses a Global anycast network. DNS queries are answered by optimal name server based on network condition.
 
+Global Anycast: a collection of servers share the same IP address and send data from a source computer to the server that is topographically the closest. 
+
 - Simple
 - Failover
 - Weighted

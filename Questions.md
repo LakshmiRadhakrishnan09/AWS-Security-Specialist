@@ -276,9 +276,14 @@ Which process will check the compliance of the company's EC2 instances? ( AWS Co
 ```
 Amazon Inspector tests the network accessibility of your EC2 instances and the security state of your applications that run on those instances. Amazon Inspector assesses applications for exposure, vulnerabilities, and deviations from best practices. The rules in the Network Reachability package analyze your network configurations to find security vulnerabilities of your EC2 instances.
 ```
-
-
-
+38. What if we need the capability to perform an inline inspection of all inbound and outbound traffic from our VPC?
+```
+Gateway Load Balanacer(network appliance in another VPC and vpc end point to connect to gateway LB)
+```
+39. If u want to capture packet content
+```
+VPC traffic mirroring for EC2 instances, Third-party AMIs in the marketplace approved for packet capture
+```
 
 
 

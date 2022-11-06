@@ -81,7 +81,7 @@ Assume role is better, because, it is more centralized. If multiple Buckets are 
   Each Region has Availability Zones. VPC Network spans AZ.
   Each AZ has one public subnet and one private subnet.
   Each subnet is non-overlapping ip range.
-  Application Load Balancers will be in Public subnet. One ALB in each AZ.
+  Application Load Balancers will be in Public subnet. One ALB in each AZ(??)
   VPCs are normally for one account. You can share VPC between accounts.
   Ec2 instances and RDS in private subnet.
   
@@ -112,7 +112,7 @@ Assume role is better, because, it is more centralized. If multiple Buckets are 
   ### Identity and Credential Management
   
   - Create Individual Users
-  - Do not use root account. Reduce or Remove root user(Delete access keys).
+  - Do not use root account. Reduce or Remove root user access(Delete access keys).
   - Configure a strong password policy
   - Rotate credentials regularly. Use **Credentail Report** to audit rotation
   - Enable MFA for priviledged users.( Virtual MFA or Hardware MFA)
@@ -124,7 +124,7 @@ Assume role is better, because, it is more centralized. If multiple Buckets are 
   - IAM roles: Short lived credentials
   - IAM role: What it can access, Who can assume it. Permission should be given for resource to assume role
   - Use IAM roles for EC2 instances.
-  - Enable CloudTrails to get logs of all API calls. Enable all all regions even in regions u dont operate. Logs are stored in S3. This S3 should not be publicaly accessible.
+  - Enable CloudTrails to get logs of all API calls. Enable all  regions even in regions u dont operate. Logs are stored in S3. This S3 should not be publicaly accessible.
   - Centralize CloudTrail logs
   - Do not store secrets in code
   
