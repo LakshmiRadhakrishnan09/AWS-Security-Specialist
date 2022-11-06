@@ -23,7 +23,7 @@ Systems manager - for applying patch
 Monitoring - CloudWatch \
 Auditing - CloudTrail
 
-Serverless implementation: API Gateway - Quque - Lambda - RDS \
+Serverless implementation: API Gateway - Queue - Lambda - RDS \
 Step FUnctions to orchestrate workflows.
 WAF at API Gateway
 
@@ -53,7 +53,7 @@ How to Receive Notifications When Your AWS Account’s Root Access Keys Are Used
 ```
 - Create Alarm and send SNS topic
 
-#### SSSM Session Manager
+#### SSM Session Manager
 
 - Verify that SSM Agent is installed on the instance.
 - Create the following VPC endpoints:

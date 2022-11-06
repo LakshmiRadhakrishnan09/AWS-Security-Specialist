@@ -1,8 +1,20 @@
 
+computer-network-osi-model-layers.png
+
+https://s7280.pcdn.co/wp-content/uploads/2018/06/osi-model-7-layers-1.png
+
+1. Application : HTTP
+2. Presentation: SSL
+3. Session
+4. Transport: TCP/UDP
+5. Network: IP
+6. Data Link
+7. Physical
+
 Layer 3,4 -> Network and Transport Layer -> infrastructure layer attacks -User Datagram Protocol (UDP) reflection attacks and synchronize (SYN) floods. \
         -> Easy to Identify. To mitigate resources need to scale up the capacity.\
 Layer 6,7 -> Presentation and Application layers -> application layer attacks . HTTP floods, DNS query floods, TLS abuse \
-        -> looks like a valid request. Deifficult to identify and mitigate
+        -> looks like a valid request. Difficult to identify and mitigate
 
 UDP reflection attack -> Spoof Target IP. Large Package Size. \
 SYN Flood ->a malicious client sends a large number of SYN packets, but never sends the final ACK packets to complete the handshakes. \
