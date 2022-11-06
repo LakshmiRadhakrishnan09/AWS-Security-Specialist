@@ -1,5 +1,3 @@
-
-
 ## CloudFront
 
 Content Delivery Network. CloudFront is a globally distrbuted infrastructure. Cache Content at Edge Locations. Edge Cache and Regional Edge Cache.
@@ -21,10 +19,18 @@ CloudFront - Distribution Types
 - web( for live straming
 - rtmp( adobe media files)
 
-Encryption at Transit
+### Cloudfront Encryption at Transit
+
+Viewer protocol policy and Origin protocol policy.
+
+CloudFront HTTPS for viewers(Viewer protocol policy) \
+      CloudFront Domain \
+      Custom Domian \
+            SNI \
+            Dedicated IP \
 
 - HTTPS between viewer and CF
-      - Update Viewer Protocol Policy( Redirect HTTP to HTTPS, HTTPS Only)
+      - Update "Viewer Protocol Policy"( Redirect HTTP to HTTPS, HTTPS Only)
       - Redirect HTTP to HTTPS - charged two times
       - Can use SSL provided by AWS
       - Or using Custom Domian
@@ -56,7 +62,7 @@ When you configure CloudFront to serve HTTPS requests using dedicated IP address
 
 To require HTTPS between CloudFront and your origin, follow the procedures in this topic to do the following:
 
-- In your distribution, change the Origin Protocol Policy setting for the origin. HTTPS Only or Match Viewer
+- In your distribution, change the "Origin Protocol Policy" setting for the origin. HTTPS Only or Match Viewer
 - Install an SSL/TLS certificate on your origin server (this isn’t required when you use an Amazon S3 origin or certain other AWS origins).
 
 To assign an ACM certificate to a CloudFront distribution
@@ -85,7 +91,6 @@ Use signed cookies in the following cases:
 - You want to provide access to multiple restricted files, for example, all of the files for a video in HLS format or all of the files in the subscribers' area of website.
 - You don't want to change your current URLs.
       
-
 GeoRestriction : can configure approved countried or block banned countries. CloudFront determines the location of your users by using a third-party database.
 
 Invalidation Option
@@ -162,19 +167,19 @@ Route 53 allows global applications. Limitation:
 
 Global Accelerator -> Single Entry point for your global applications. **Two Static anycast IPs**. Route 53 for your domain will have only these 2 static IPs.\
 
-Client example.com -> Route 53 -> Returns Static IP og GA. \
+Client example.com -> Route 53 -> Returns Static IP of GA. \
 Client connect to GA in nearest Edge location -> GA decides how to route request to web server( to nearest server). **All requests use AWS network**.\
 GA monitor health of app servers. 
 
-In case of Route 53 , one DNS is resolved, client to web server request goes via Internet.
+In case of Route 53 , once DNS is resolved, client to web server request goes via Internet. In case of GA, once DNS is resolved, client to GA request goes to Edge location.
 
-End point can be private. Eg: ALB is private. GA takes to endpoint using private IP address
+End point can be private. Eg: ALB is private. GA talks to endpoint using private IP address
 
 Client affinity : Request send to same end point. like sticky sessions
 
 DDos protection at edge.
 
-AWS Shield Integration. **No WAF integartion**
+GA -> AWS Shield Integration. No WAF integration.
 
 Traffic Dial : Percentage of requests routed between regions.  \
 Weight: Traffic to end point. Blue Green Deployment.
