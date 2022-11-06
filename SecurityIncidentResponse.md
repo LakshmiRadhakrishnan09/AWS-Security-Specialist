@@ -13,16 +13,16 @@ The Security Perspective includes four components:
 
 • Directive controls : establish the governance,risk,and compliance models within which the environment operates.
 • Preventive controls: protect your workloads and mitigate threats and vulnerabilities.
-• Detectivecontrols: provide full visibility and transparency over the operation of your deployments in AWS.
-• Responsivecontrolsdriveremediationofpotentialdeviationsfromyoursecuritybaselines.
+• Detective controls: provide full visibility and transparency over the operation of your deployments in AWS.
+• Responsive controls: drive remediation of potential deviations from your security baselines.
 
 Incident Domain
 
 Domains where security incidents may occur
 
 - Service Domain : Affect AWS Account. Issue with configuration or resource permissions
-- Infrastrcuture Domain: dataornetwork-related activity
-- Application Domain
+- Infrastrcuture Domain: data or network-related activity
+- Application Domain: Ur application
 
 In these domains, you must consider the actors who might act against your account, resources, or data. 
 Whether internal or external, use a risk framework to determine what the specific risks are to your organization and prepare accordingly.
@@ -34,7 +34,7 @@ In this example, your investigation is unlikely to involve data forensic tools o
 In the infrastructure domain, you can use a combination of AWS APIs and familiar digital forensics/ incident response (DFIR) software within the operating system of a workstation, such as an Amazon EC2 instance that you've prepared for IR work. 
 Infrastructure domain incidents might involve analyzing network packet captures, disk blocks on an Amazon Elastic Block Store (Amazon EBS) volume, or volatile memory acquired from an instance.
 
-To detect security-related events in your AWS Cloud environmen
+To detect security-related events in your AWS Cloud environment
 
 - Logs and Monitors
 - Billing Activity
@@ -48,7 +48,7 @@ Prepare access to AWS Account during an incident
 Identify and discuss the AWS account strategy and cloud identity strategy with your organization's cloud architects to understand what authentication and authorization methods are configured, for example:
 
 - Federation– A user assumes an IAM role in an AWS account from an IdentityProvider.
-- Cross-accountaccess– A user assumes an IAM role between multiple AWS accounts.
+- Cross-account access– A user assumes an IAM role between multiple AWS accounts.
 - Authentication– A user authenticates as an AWS IAMuser created with in a single AWSaccount.
 
 - IndirectAccess: appl team perform steps under guidance from security team
@@ -71,11 +71,10 @@ To enable appropriate access, you might consider some pre-built AWS Managed Poli
 - Sharing Amazon EBS Snapshots (p. 19)
 - SharingAmazonCloudWatchLogs: Logs that are recorded in Amazon CloudWatch Logs, such as Amazon VPC flow logs, can be shared with another account (such as your centralized security account) through a CloudWatch Logs subscription.
 - Use Immutable Storage : Using the native features of Amazon S3, you can configure an Amazon S3 bucket to protect the integrity of your data. For example, by using S3 Object Lock, you can prevent an object from being deleted or overwritten for a fixed amount of time or indefinitely. 
-Managing access permissions with S3 bucket policies, configuring S3 versioning, and enabling MFA Delete are other ways to restrict how data can
-be written or read. This type of configuration is useful for storing investigation logs and evidence, and is often referred to as write once, read many (WORM). You can also protect the data by using server- side encryption with AWS Key Management Service (AWS KMS) and verifying that only appropriate IAM principals are authorized to decrypt the data.
+Managing access permissions with S3 bucket policies, configuring S3 versioning, and enabling MFA Delete are other ways to restrict how data can be written or read. This type of configuration is useful for storing investigation logs and evidence, and is often referred to as write once, read many (WORM). You can also protect the data by using server- side encryption with AWS Key Management Service (AWS KMS) and verifying that only appropriate IAM principals are authorized to decrypt the data.
 - Launch Resources Near the Event: The best practice is to perform investigations and forensics in the cloud, where the data is, rather than attempting to transfer the data to a data center before you investigate.
 It is also a best practice to perform the investigation in the same AWS Region where the event occurred, rather than replicating the data to another Region.
-- IsolateResources: 
+- Isolate Resources: 
 - Launch Forensic Workstations: Create a AMI with all preconfigured and required tools that are required for analysis.
 
 
@@ -86,7 +85,7 @@ Options for automated response
 
 * AWS Lambda : System using AWS Lambda only, using your organizations enterprise language. Speed Flexibility Maintenance Skillset
 * AWS Step Functions : System using AWS Step Speed Functions, Lambda, and SSM Agent.Speed Flexibility Maintenance Skillset 
-* Auto Remediation with AWS Config Rules:Maintenance & Skillset Speed & Flexibility
+* Auto Remediation with AWS Config Rules: Maintenance & Skillset Speed & Flexibility
 * SSM Agent : Maintenance & Skillset Speed Flexibility
 * AWS Fargate: Flexibility Speed Maintenance & Skillset
 * Amazon EC2: Flexibility Speed Maintenance Skillset
@@ -106,7 +105,7 @@ In many cases, a combination of both scanning approaches is most likely the best
 IR for EC2 instance 
 
 1. Capture the metadata from the Amazon EC2 instance, before you make any changes to your environment.
-2. Protect the Amazon EC2 instance from accidental termination by enabling termination protection for the instance.
+2. Protect the Amazon EC2 instance from accidental termination by **enabling termination protection** for the instance.
 3. Isolate the Amazon EC2 instance by switching the VPC Security Group. However, be aware of VPC connection tracking and other containment techniques.
 4. Detach the Amazon EC2 instance from any AWS Auto Scaling groups.
 5. Deregister the Amazon EC2 instance from any related Elastic Load Balancing service.
