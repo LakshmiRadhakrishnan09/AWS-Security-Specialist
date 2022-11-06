@@ -117,6 +117,19 @@ NLB TCP Listener: no certificate. end to end encryption
 
 To use a TLS listener, you must deploy at least one server certificate on your load balancer. The load balancer uses a server certificate to terminate the front-end connection and then to decrypt requests from clients before sending them to the targets. **Note that if you need to pass encrypted traffic to the targets without the load balancer decrypting it, create a TCP listener on port 443 instead of creating a TLS listener. The load balancer passes the request to the target as is, without decrypting it.**
 
+### ALB and SNI
+
+You can host multiple TLS secured applications, each with its own TLS certificate, behind a single load balancer. In order to use SNI, all you need to do is **bind multiple certificates to the same secure listener on your load balancer.** ALB will automatically choose the optimal TLS certificate for each client. These new features are provided at no additional charge.
+
+The most common reason you might want to use multiple certificates is to handle different domains with the same load balancer. With SNI support we’re making it easy to use more than one certificate with the same ALB. 
+
+#### SSL/TLS 
+
+SSL technically refers to a predecessor of the TLS protocol. SSL/TLS can be used interchangebly. TLS is a protocol for secure transmission. TLS uses certificate based authentication.
+
+**HTTP - TLS - TCP - IP**
+
+
 ### Enabling SSL for CloudFront
 
 - Certificate in N.Virginia
