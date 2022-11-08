@@ -55,3 +55,13 @@ Establish trust between EC2 and AWS Managed Microsoft AD.
 A company is migrating to the cloud with employee credentials managed on-premises.  They need a simple setup to manage identities and grant required access in AWS.  There are two thousand employees in the organization.  Which option should they use?
 
 Active Directory Connector is a proxy service that is easy to set up and eliminates the need for complex hosting infrastructure.  It forwards all AD requests to the on-premises Active Directory.  AD Connector Small supports up to 500 users, and Large supports up to 5000 users. Simple AD is a standalone directory and is not suitable for federation. AWS Managed Microsoft Active Directory is a full-featured Microsoft Active Directory, and this will also meet the needs. However, it is a more complex solution than the AD Connector.
+
+
+Note:
+
+AD Connector cannot be shared with other AWS accounts. If this is a requirement, consider using AWS Managed Microsoft AD to Share your directory. AD Connector is also not multi-VPC aware, which means that AWS applications like WorkSpaces are required to be provisioned into the same VPC as your AD Connector.
+
+Simple Active Directory
+
+Small - Supports up to 500 users (approximately 2,000 objects including users, groups, and computers).
+Large - Supports up to 5,000 users (approximately 20,000 objects including users, groups, and computers).
