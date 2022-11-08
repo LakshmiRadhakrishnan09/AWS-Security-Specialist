@@ -402,6 +402,17 @@ Amazon EventBridge
 - Findings fron Security Hub automatically send to EventBridge. U write rules in EventBridge
 - U can create custom actions in EventBridge.
 
+AWS Config
 
+An AWS Config rule represents your desired configuration settings for specific AWS resources or for an entire AWS account. If a resource does not pass a rule check, AWS Config flags the resource and the rule as noncompliant, and AWS Config notifies you through Amazon SNS.
+
+Confiig evaluation is triggered When: \
+Configuration changes – AWS Config triggers the evaluation when any resource that matches the rule's scope changes in configuration. The evaluation runs after AWS Config sends a configuration item change notification.
+Periodic – AWS Config runs evaluations for the rule at a frequency that you choose (for example, every 24 hours).
+
+
+An aggregator is a new resource type in AWS Config that collects AWS Config configuration and compliance data from **multiple source accounts and regions.** Create an aggregator in the region where you want to see the aggregated AWS Config configuration and compliance data.
+
+Aggregators provide a read-only view into the source accounts and regions that the aggregator is authorized to view. 
 
 
