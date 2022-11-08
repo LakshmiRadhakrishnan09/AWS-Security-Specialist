@@ -147,3 +147,20 @@ Cloud Services for various activities
 * SecureStorage
     - S3
 * Custom(p.44)
+
+
+Compromised EC2 - https://www.youtube.com/watch?v=pPCuCYrhIyI
+
+Isolation by Security Group may not be sufficient due to "Untracked connections". For eg: SSH allowed from a specific ip/port will not be terminated, even if existing SG is removed. 
+
+Solution: Create quad 0 all port. Add this SG. Then remove this and add No rules. ( Need two steps).
+
+You cannot change the subnet of a running instance without shutting down the instance.
+
+NACL cannot deny or allow based on private IP.(It should be external IP). We can block only external IP.
+
+RouteTable : Custom route table and associate tp subnet
+
+We cant dettach Internet Gateway - You will get Dependency errors.
+
+Isolation VPC
