@@ -129,10 +129,10 @@ Use awsvpc mode networking and specify **task level security group**. With the a
   
 ### Service to Service Communication
 
-1. Internal Load Balancer for each service
-2. Shared Internal Load Balancer
-3. CloudMap. Service Domains mapped in CloudMap. Can cause DNS cache issues.
-4. AppMesh. Each container use an envoy side-car container. So a container only talks to its envoy. Envoy fwds request to another service's envoy. Envoys are controlled by App Mesh. Service Discovery + Load Balancing. Extremely low latency.
+1. Internal Load Balancer for each service: Health checks handled by LB. Simple and easy. But cost is more
+2. Shared Internal Load Balancer; Seperate Traget Groups and use path based routing
+3. CloudMap. Service Domains mapped in CloudMap. Maintain end point information in cloudMap. Map domain names. Suitable in aws vpc mode. Can cause DNS cache/stale issues. No Health checks.Application need to handle connection failures. 
+4. AppMesh. Dont use a LB. Each container use an envoy side-car container. So a container only talks to its envoy. Envoy fwds request to another service's envoy. Envoys are controlled by App Mesh. Service Discovery + Load Balancing. Extremely low latency. AppMesh use CloudMap and delivers mapping to services. SideCar perform health checks. Service Discovery + LB functionalities. Extremely low latency. Allows mTLS auth.
   
 Maintaining Transport Layer Security All the Way to Your Container: Using the Network Load Balancer with Amazon ECS .
 
