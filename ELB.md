@@ -164,7 +164,7 @@ Security for ALB
 Security for NLB
 
 - **NLB does not support Security Group**
-- Instance SG should allow client IP
+- Instance SG should allow client IP(from outside)
 - For health check should allow NLB private ip or VPC CIDR range
 - Instance subnet NACL should allow inboud and outbound for client ips and ports. ( For an ALB integrated intance, only LB  needs to be allowed)
 
@@ -196,3 +196,10 @@ Access Logs - Optional feature. Elastic Load Balancing captures the logs and sto
 Elastic Load Balancing access logs requests sent to the load balancer, **including requests that never made it to the targets.** For example, if a client sends a malformed request, or there are no healthy targets to respond to the request, the request is still logged. Elastic Load Balancing does not log health check requests.
 
 When the load balancer receives a request from a client, it adds or updates the X-Amzn-Trace-Id header before sending the request to the target. 
+
+Which LB allows distributing traffic to onpremise and AWS?
+
+Both Application and Network Load Balancers allow you to add targets by IP address. You can use this capability to register instances located on-premises and VPC to the same load balancer. You need to register private IP of the server for a hybrid load balancer, and on-premises data center should have a VPN connection or a Direct Connect link to AWS (to communicate using private IP).
+
+- On-premise connect by VPN .
+- Register by private IP with LB
