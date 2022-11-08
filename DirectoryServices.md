@@ -65,3 +65,8 @@ Simple Active Directory
 
 Small - Supports up to 500 users (approximately 2,000 objects including users, groups, and computers).
 Large - Supports up to 5,000 users (approximately 20,000 objects including users, groups, and computers).
+
+AWS Directory Service
+
+Standard Edition supports up to 5,000 users. 
+You can use the enterprise edition when you need to support more than 5,000 users.
