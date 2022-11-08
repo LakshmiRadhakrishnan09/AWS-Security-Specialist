@@ -285,3 +285,5 @@ If you follow the steps above, all users with current sessions created by assumi
   }
 }
  ```
+ 
+ Specifing aws account or root is same. They will give access to root and administrator user. They can grant permission to other IAM users and roles.
