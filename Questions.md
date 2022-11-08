@@ -284,10 +284,17 @@ Gateway Load Balanacer(network appliance in another VPC and vpc end point to con
 ```
 VPC traffic mirroring for EC2 instances, Third-party AMIs in the marketplace approved for packet capture
 ```
+40. How can I be notified when an AWS resource is non-compliant using AWS Config? How can I receive custom email notifications when a resource is created in my AWS account using AWS Config service?How can I receive custom email notifications when a resource is deleted in my AWS account using AWS Config service?
 
+Use an EventBridge rule with a custom event pattern and an input transformer to match an AWS Config evaluation rule output as NON_COMPLIANT. Then, route the response to an Amazon Simple Notification Service (Amazon SNS) topic.
 
-
-
+```
+For Rule type, choose Rule with an event pattern. 
+For Event source, choose AWS events or EventBridge partner events.
+In the Event pattern pane, choose Custom patterns (JSON editor)
+Choose Configure input transformer. Under Target input transformer, for the Input Path text box, copy and paste the transformer logic.(Mapping fromjson to variables)
+In the Template text box, copy and paste the the template. Enter the time, rule, resource type, resource ID, AWS account ID and AWS Region, compliance, and resource information as required by your use case. Eg: <rule> evaluated the <resourceType> with Id <resourceId> in the account <awsAccountId> region <awsRegion> 
+```
 
 
 
