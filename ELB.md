@@ -157,8 +157,21 @@ For certificate in cloudFront -> Only in N.virgiia. Not in all edge regions.
 Security for ALB
 
 - SG for instance with port for application port and health check port( 2 SG)
+- SG and NACL should allow emphmeral ports
 - ALB do not support mutual TLS authentication
 - HTTPS Listener - Use certificate between client and LB. Decrypt at LB.
+
+Security for NLB
+
+- **NLB does not support Security Group**
+- Instance SG should allow client IP
+- For health check should allow NLB private ip or VPC CIDR range
+- Instance subnet NACL should allow inboud and outbound for client ips and ports. ( For an ALB integrated intance, only LB  needs to be allowed)
+
+
+<img width="925" alt="Screenshot 2022-11-08 at 4 12 01 PM" src="https://user-images.githubusercontent.com/33679023/200544090-43098222-006f-4907-a70c-3fd8e116ac39.png">
+
+ 
     
 Security Policies
 
