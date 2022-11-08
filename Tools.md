@@ -416,3 +416,16 @@ An aggregator is a new resource type in AWS Config that collects AWS Config conf
 Aggregators provide a read-only view into the source accounts and regions that the aggregator is authorized to view. 
 
 
+AWS GuardDuty
+
+GuardDuty can be configured to use the following types of lists.
+
+Trusted IP list:Trusted IP lists consist of IP addresses that you have trusted for secure communication with your AWS infrastructure and applications. GuardDuty does not generate VPC flow log or CloudTrail findings for IP addresses on trusted IP lists. You can include a maximum of 2000 IP addresses and CIDR ranges in a single trusted IP list. At any given time, you can have **only one uploaded trusted IP list per AWS account per Region.**
+
+
+Threat IP list: Threat lists consist of known malicious IP addresses. This list can be supplied by third-party threat intelligence or created specifically for your organization. In addition to generating findings because of a potentially suspicious activity, GuardDuty also generates findings based on these threat lists. You can include a maximum of 250,000 IP addresses and CIDR ranges in a single threat list. GuardDuty only generates findings based on activity that involves IP addresses and CIDR ranges in your threat lists, findings will not be generated based of domain names. At any given time, you can have up to **six uploaded threat lists per AWS account per Region.**
+
+Note
+If you include the same IP on both a trusted IP list and threat list it will be **processed by the trusted IP list first**, and will not generate a finding.
+
+Security Group supports a maximum of 1000 IP entries, whereas NACL allows only 40 entries.  WAF supports 10,000 entries per IP set, and you can use multiple IP sets.
