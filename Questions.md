@@ -282,7 +282,7 @@ Gateway Load Balanacer(network appliance in another VPC and vpc end point to con
 ```
 39. If u want to capture packet content
 ```
-VPC traffic mirroring for EC2 instances, Third-party AMIs in the marketplace approved for packet capture
+VPC traffic MIRRORing for EC2 instances, Third-party AMIs in the marketplace approved for packet capture
 ```
 40. How can I be notified when an AWS resource is non-compliant using AWS Config? How can I receive custom email notifications when a resource is created in my AWS account using AWS Config service?How can I receive custom email notifications when a resource is deleted in my AWS account using AWS Config service?
 
@@ -295,9 +295,33 @@ In the Event pattern pane, choose Custom patterns (JSON editor)
 Choose Configure input transformer. Under Target input transformer, for the Input Path text box, copy and paste the transformer logic.(Mapping fromjson to variables)
 In the Template text box, copy and paste the the template. Enter the time, rule, resource type, resource ID, AWS account ID and AWS Region, compliance, and resource information as required by your use case. Eg: <rule> evaluated the <resourceType> with Id <resourceId> in the account <awsAccountId> region <awsRegion> 
 ```
+41.You are a security professional for a large organization, and you need to come up with an incident response plan to handle accidental credential disclosure.  You need a solution that automatically monitors for possible misuse of credentials.  Which service can meet this requirement?
+```
+GuardDuty
+```
+42. I need to be immediately alerted when someone is using the root identity in my aws environment. Which of these mechanisms should I use? 
+```
+Enable Trail and use CloudWatch Events(EventBridge). CloudWatchLog Metric Filter has delay of 15 minutes.
+```
+43. Your organization has subscribed to third-party threat intelligence feeds.  As part of the service, you receive a known list of suspicious IPs from various locations.  Your CISO wants to monitor activities to your resources from these IP addresses. What service can you use for this?
 
+```
+Use GuardDuty and specify suspicious IPs as part of the threat list. 
+```
+44. The security engineer must implement a complex set of firewall rules for an EC2 instance. The security group and NACL firewall only meet part of the requirement. What options can the engineer use? 
 
+```
+You can use host-based firewalls such as iptables and windows firewalls for complex requirements that cannot be met using NACL and Security groups.  WAF is useful for web application traffic, and this service integrates with Application Load Balancer, CloudFront, API Gateway, and so forth. It cannot be used as a firewall for EC2 instances.  Shield Advanced offers automatic DDoS protection.  Inspector only inspects for vulnerabilities and network reachability. It is not a firewall.
+```
+45. We need a tool to monitor and alert if services like FTP are running on our servers. Besides, if someone changes the security group or network ACL that allows FTP access from the internet, the tool needs to pinpoint the impacted servers and any process listening on the port.  What service can I use for this purpose?
+```
+Amazon Inspector can inspect an instance and find out if a process is listening on the ports.You can also trigger an inspector assessment from CloudWatch Events in response to a resource change. For example, monitor for security group or NACL changes using CloudWatch Events and trigger an inspector assessment for new exposures. 
+```
+46. our application is receiving several requests with malformed payload, and you would like to capture the network packets for analysis. What options do you have?
 
+```
+With VPC Traffic mirroring, you can capture and send the packets to a configured destination. For example, you can capture packets in different VPCs and send them to a central VPC for inspection and analysis.  You can also use an approved third-party marketplace AMI for packet capture. 
+```
 
 ### Not Sure
 
