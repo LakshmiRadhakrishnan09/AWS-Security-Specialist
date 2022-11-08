@@ -284,6 +284,28 @@ If you follow the steps above, all users with current sessions created by assumi
     "Condition": {"DateLessThan": {"aws:TokenIssueTime": "2014-05-07T23:47:00Z"}}
   }
 }
+
+Deleting access key
+
+You can't recover an access key after you delete it. Any users or applications that are using the access key won't be able to programmatically access your account and resources after you delete the key. Be sure to check that the access key is no longer in use before you delete it. 
+
+
  ```
  
  Specifing aws account or root is same. They will give access to root and administrator user. They can grant permission to other IAM users and roles.
+
+ IAM doesnt allow nesting of groups. You cannod add a group as child of another group.
+
+ You cannot use groups in resource based policy.
+
+ If u want to deny access to S3 for one group: Create a policy that denied access to S3 and add policy to the group.
+ You cannot use groups in resource based policy.
+
+
+ Lost password
+
+ AWS account root user password : Choose Forgot your password?. \
+ AWS account access keys : you can create new access keys  \
+ IAM user password : ask your administrator to reset your password. \
+ IAM user access keys : need new access keys. 
+
