@@ -122,6 +122,9 @@ AWS recommendation
 
 - Resource Access Manager : Share with any AWS account or organizations \
        - App Mesh, Aurora, **VPC subnets**, EC2 images
+       - Capacity Reservations, Dedicated Hosts, Placement Groups
+       - Traffic mirror targets, Transit gateways, Subnets
+       - Route 53 Resolver DNS Firewall rule groups, Forwarding rules, Query logs
 - Transit Gateway : for network resources \
         - Routes IP traffic(layer3)
         - Attach VPCs, VPN, Direct Gateway, Transit Gateway in another region

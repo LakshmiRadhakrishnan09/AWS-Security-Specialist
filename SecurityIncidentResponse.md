@@ -151,7 +151,7 @@ Cloud Services for various activities
 
 Compromised EC2 - https://www.youtube.com/watch?v=pPCuCYrhIyI
 
-Isolation by Security Group may not be sufficient due to "Untracked connections". For eg: SSH allowed from a specific ip/port will not be terminated, even if existing SG is removed. 
+Isolation by Security Group may not be sufficient for "Tracked connection" due to "Connection tracking". For eg: SSH allowed from a specific ip/port will not be terminated, even if existing SG is removed. 
 
 Solution: Create quad 0 all port. Add this SG. Then remove this and add No rules. ( Need two steps).
 
@@ -164,3 +164,12 @@ RouteTable : Custom route table and associate tp subnet
 We cant dettach Internet Gateway - You will get Dependency errors.
 
 Isolation VPC
+
+Tracked Connections: 
+
+Untracked Connections: 
+
+- An untracked flow of traffic is immediately interrupted if the rule that enables the flow is removed or modified. 
+- When you change a security group rule, its tracked connections are not immediately interrupted.
+- If a security group rule permits TCP or UDP flows for all traffic (0.0.0.0/0 or ::/0) and there is a corresponding rule in the other direction that permits all response traffic (0.0.0.0/0 or ::/0) for all ports (0-65535), then that flow of traffic is **not tracked**, unless it is part of an automatically tracked connection. 
+- All ICMP connections are automatically tracked.

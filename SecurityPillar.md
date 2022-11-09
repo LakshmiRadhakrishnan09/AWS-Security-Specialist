@@ -17,3 +17,4 @@ Use Session Manager of AWS Systems Manager. Do not use Bastion Host.
 
 Use Secret Manager.
 
+We strongly recommend that you never put confidential or sensitive information, such as your customers' email addresses, into tags or free-form fields such as a Name field. Any data that you enter into tags or free-form fields used for names may be used for billing or diagnostic logs.

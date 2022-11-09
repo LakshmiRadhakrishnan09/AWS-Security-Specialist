@@ -429,3 +429,10 @@ Note
 If you include the same IP on both a trusted IP list and threat list it will be **processed by the trusted IP list first**, and will not generate a finding.
 
 Security Group supports a maximum of 1000 IP entries, whereas NACL allows only 40 entries.  WAF supports 10,000 entries per IP set, and you can use multiple IP sets.
+
+GuardDuty Findings
+
+- Unusual Amazon Simple Storage Service (Amazon S3) discovery API calls along with various levels of access permission modifications.
+- Unauthorized creation of new Amazon Identity and Access Management (IAM) users, roles, or access keys to persist access.
+- Resource hijacking of Amazon Elastic Compute Cloud (Amazon EC2) instances for use in cryptocurrency mining.
+- Generating Amazon Relational Database Service (Amazon RDS) snapshots as part of data exfiltration attempts.

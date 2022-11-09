@@ -106,6 +106,12 @@ Assume role is better, because, it is more centralized. If multiple Buckets are 
   IAM : Controls who can do what in AWS account.
   
   Security -> Deny by default
+
+An endpoint policy specifies the following information:
+
+- The principals that can perform actions.
+- The actions that can be performed.
+- The resource on which the actions can be performed.
   
   ## IAM Best Practices
   
