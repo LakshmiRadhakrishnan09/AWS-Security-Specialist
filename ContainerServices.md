@@ -131,7 +131,7 @@ Use awsvpc mode networking and specify **task level security group**. With the a
 
 1. Internal Load Balancer for each service: Health checks handled by LB. Simple and easy. But cost is more
 2. Shared Internal Load Balancer; Seperate Traget Groups and use path based routing
-3. CloudMap. Service Domains mapped in CloudMap. Maintain end point information in cloudMap. Map domain names. Suitable in aws vpc mode. Can cause DNS cache/stale issues. No Health checks.Application need to handle connection failures. 
+3. CloudMap. Service Domains mapped in CloudMap. Maintain end point information in cloudMap. Map domain names. Suitable in aws vpc mode. Can cause DNS cache/stale issues. No Health checks. Application need to handle connection failures. 
 4. AppMesh. Dont use a LB. Each container use an envoy side-car container. So a container only talks to its envoy. Envoy fwds request to another service's envoy. Envoys are controlled by App Mesh. Service Discovery + Load Balancing. Extremely low latency. AppMesh use CloudMap and delivers mapping to services. SideCar perform health checks. Service Discovery + LB functionalities. Extremely low latency. Allows mTLS auth.
   
 Maintaining Transport Layer Security All the Way to Your Container: Using the Network Load Balancer with Amazon ECS .
@@ -159,3 +159,17 @@ Why should we use EKS/ECS over EC2?
 - If u run containers in EC2, management is difficult.
 - If its a monolith, then EC2 is fine.
 - Even if we run as containers in EC2, we cannot run multiple instace of same application in a Ec2 due to port issues. See networking section above for details.
+
+
+There are two ways to deploy certificates:
+
+1. AWS Private CA : private use within an organization
+2. ACM : publicly trusted 
+
+AWS Private CA—This service is for enterprise customers building a public key infrastructure (PKI) inside the AWS cloud and intended for private use within an organization. With AWS Private CA, you can create your own CA hierarchy and issue certificates with it for authenticating internal users, computers, applications, services, servers, and other devices, and for signing computer code. Certificates issued by a private CA are trusted only within your organization, not on the internet.
+
+AWS Certificate Manager (ACM)—This service manages certificates for enterprise customers who need a publicly trusted secure web presence using TLS. You can deploy ACM certificates into AWS Elastic Load Balancing, Amazon CloudFront, Amazon API Gateway, and other integrated services. The most common application of this kind is a secure public website with significant traffic requirements.
+
+If you use AWS Certificate Manager to request a private certificate, you can associate that certificate with any service that is integrated with ACM. You can also integrate private CAs into Amazon Elastic Kubernetes Service to provide certificate issuance inside a Kubernetes cluster. 
+
+Private CA Audit Report: You can create an audit report to list all of the certificates that your private CA has issued or revoked. The report is saved in a new or existing S3 bucket that you specify on input.

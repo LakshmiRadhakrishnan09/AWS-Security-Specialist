@@ -149,4 +149,22 @@ An endpoint policy specifies the following information:
   - AWS Sheild:
   - AWS WAF:
 
+GuardDuty finding Naming Convention
+
+https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_finding-format.html
+
+ThreatPurpose: BackDoor, Behaviour, Cryptocurrency, Exfiltration, Impact, Persistence, Policy, Trojan, UnAuthorized Access.
+
+KMS Extras
+
+KMS use HSM modules and is FIPS compliant. Key never leave AWS.
+
+AWS Endpoints:
+
+Regional endpoints
+Global endpoints
+FIPS endpoint: use a TLS software library that complies with FIPS 140-2
+
+
+
 

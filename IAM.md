@@ -309,3 +309,6 @@ You can't recover an access key after you delete it. Any users or applications t
  IAM user password : ask your administrator to reset your password. \
  IAM user access keys : need new access keys. 
 
+ SCP : Deny access to AWS based on the requested AWS Region
+
+ Deny if "aws:RequestedRegion" is not from eu-west-1. But inorder to allow global services u need to add global service to exclusion list.  IAM, CF, GA should be excluded using "NotAction". Global applications use KMS and ACM with global end point. So add that also.

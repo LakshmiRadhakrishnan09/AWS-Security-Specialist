@@ -436,3 +436,27 @@ GuardDuty Findings
 - Unauthorized creation of new Amazon Identity and Access Management (IAM) users, roles, or access keys to persist access.
 - Resource hijacking of Amazon Elastic Compute Cloud (Amazon EC2) instances for use in cryptocurrency mining.
 - Generating Amazon Relational Database Service (Amazon RDS) snapshots as part of data exfiltration attempts.
+
+Trusted Advisor Security Checks (  End of support versions, Public Storages, SG risks, exposed access key, CloudTrail tunred off, CF certificates expired, key rotation, password policy, mfa on root account)
+
+- Amazon EC2 instances with Microsoft SQL Server end of support
+- Amazon EC2 instances with Microsoft Windows Server end of support
+- Amazon EBS Public Snapshots
+- Amazon RDS Public Snapshots
+- Amazon RDS Security Group Access Risk
+- Amazon Route 53 MX Resource Record Sets and Sender Policy Framework
+- Amazon S3 Bucket Permissions
+- AWS CloudTrail Logging
+- AWS Lambda Functions Using Deprecated Runtimes
+- AWS Well-Architected high risk issues for security
+- CloudFront Custom SSL Certificates in the IAM Certificate Store
+- CloudFront SSL Certificate on the Origin Server
+- ELB Listener Security
+- ELB Security Groups
+- Exposed Access Keys
+- IAM Access Key Rotation
+- IAM Password Policy
+- IAM Use
+- MFA on Root Account
+- Security Groups – Specific Ports Unrestricted
+- Security Groups – Unrestricted Access

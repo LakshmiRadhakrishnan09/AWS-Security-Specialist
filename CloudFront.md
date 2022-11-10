@@ -190,6 +190,16 @@ GA is a global resource, but service is configured in Oregon region.
 
 You can hit GA using static IPs or DNS name.
 
+For IPv4, Global Accelerator provides two static IPv4 addresses. 
+For dual-stack, Global Accelerator provides a total of four addresses: two static IPv4 addresses and two static IPv6 addresses. 
+For IPv4, instead of using the addresses that Global Accelerator provides, you can configure these entry points to be IPv4 addresses from your own IP address ranges that you bring to Global Accelerator (BYOIP).
+
+- standard accelerator
+- custom routing accelerator
+
+Endpoints for standard accelerators can be Network Load Balancers, Application Load Balancers, Amazon EC2 instances, or Elastic IP addresses that are located in one AWS Region or multiple Regions. VPC must have internet gateway. However, you don't need public IP addresses on the load balancer or EC2 instance. When you use Global Accelerator for internet traffic, Global Accelerator overrides the typical internet route and all logical connections that arrive through the Global Accelerator also return through Global Accelerator rather than through the internet gateway.
+
+Custom routing accelerators only support virtual private cloud (VPC) subnet endpoint types and route traffic to private IP addresses in that subnet.
 
 #### Resource Ownership
 

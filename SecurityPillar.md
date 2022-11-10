@@ -18,3 +18,12 @@ Use Session Manager of AWS Systems Manager. Do not use Bastion Host.
 Use Secret Manager.
 
 We strongly recommend that you never put confidential or sensitive information, such as your customers' email addresses, into tags or free-form fields such as a Name field. Any data that you enter into tags or free-form fields used for names may be used for billing or diagnostic logs.
+
+Resource Groups & Tag Editor: Helps to perform bulk actions.
+
+Examples of bulk actions include:
+
+Applying updates or security patches.
+Upgrading applications.
+Opening or closing ports to network traffic.
+Collecting specific log and monitoring data from your fleet of instances.

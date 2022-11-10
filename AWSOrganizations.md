@@ -141,5 +141,35 @@ AWS organization has two features:
 - Every invited account must approve enabling all features by accepting the request. Only then can you complete the process to enable all features in your organization. 
 - AWS Organizations verifies that every member account has a service-linked role named AWSServiceRoleForOrganizations. 
 
+Services that Integrate with AWS Organization
+
+You can use trusted access to enable a supported AWS service that you specify, called the trusted service, to perform tasks in your organization and its accounts on your behalf. When you enable access, the trusted service can create an IAM role called a service-linked role in every account in your organization whenever that role is needed.
+
+- organizations:EnableAWSServiceAccess
+- organizations:ListAWSServiceAccessForOrganization 
+
+https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services_list.html
+
+AWS Account Management: Manage the details and metadata for all of the AWS accounts for your organization.
+AWS CloudTrail : Can be managed centally
+AWS Config: 
+GuardDuty
+Detective
+Firewall Manager
+Access Analyzer
+Inspector
+Macie
+Network Manager
+RAM
+Trusted Advisor
+
+
+Services Not Integrated
+
+Amazon CloudWatch Events: You can share Amazon CloudWatch Events across accounts
+IAM
+
 
 Note: In AWS no to accounts use same email Id.
+
+

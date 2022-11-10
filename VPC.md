@@ -268,6 +268,20 @@ Direct Connect Resiliency - (https://aws.amazon.com/directconnect/resiliency-rec
 **VPN over Direct Connect** : Encryption over consistent network. \
 USe VPN as backup for Direct Connect. 
 
+Private IP VPN over AWS Direct Connect ensures that traffic between AWS and on-premises networks is both secure and private, allowing customers to comply with their regulatory and security mandates.
+
+Direct Connect + VPN
+
+You can create a transit virtual interface to connect to a transit gateway, a public virtual interface to connect to public resources (non-VPC services), or a private virtual interface to connect to a VPC.
+
+AWS Direct Connect **public VIF** establishes a dedicated network connection between your network to public AWS resources, such as an Amazon virtual private gateway IPsec endpoint. 
+
+This solution combines the benefits of the end-to-end secure IPSec connection with low latency and increased bandwidth of the AWS Direct Connect to provide a more consistent network experience than internet-based VPN connections. 
+
+A BGP connection is established between the AWS Direct Connect and your router on the public VIF. Another BGP session or a static router will be established between the virtual private gateway and your router on the IPSec VPN tunnel.
+
+
+
 ## VPC Flow Log
 
 Once configured appear in CloudWatch Log Groups.

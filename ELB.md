@@ -20,6 +20,14 @@
       * Configure SG of instances and LB.
 * internal: LB in private.
 
+- two EC2 instances in private subnet of two AZ.
+- create two public subnets in two AZ
+- u add target groups
+- u add listeners
+   - forward to target group
+
+For IP address type, choose IPv4 or Dualstack. Use IPv4 if your clients use IPv4 addresses to communicate with the load balancer. Choose Dualstack if your clients use both IPv4 and IPv6 addresses to communicate with the load balancer.   
+
 ### ALB vs NLB
 
 - ALB supports only HTTP/1.1, HTTP/2, or gRPC. 
@@ -197,9 +205,17 @@ Elastic Load Balancing access logs requests sent to the load balancer, **includi
 
 When the load balancer receives a request from a client, it adds or updates the X-Amzn-Trace-Id header before sending the request to the target. 
 
+When you create an HTTPS listener, you must specify exactly one certificate. This certificate is known as the default certificate. 
+
+If you specify additional certificates in a certificate list, the default certificate is used only if a client connects without using the Server Name Indication (SNI) protocol to specify a hostname or if there are no matching certificates in the certificate list.
+
+If you do not specify additional certificates but need to host multiple secure applications through a single load balancer, you can use a wildcard certificate or add a Subject Alternative Name (SAN) for each additional domain to your certificate.
+
 Which LB allows distributing traffic to onpremise and AWS?
 
 Both Application and Network Load Balancers allow you to add targets by IP address. You can use this capability to register instances located on-premises and VPC to the same load balancer. You need to register private IP of the server for a hybrid load balancer, and on-premises data center should have a VPN connection or a Direct Connect link to AWS (to communicate using private IP).
 
 - On-premise connect by VPN .
 - Register by private IP with LB
+
+Application Load Balancers do not support mutual TLS authentication (mTLS). For mTLS support, create a TCP listener using a Network Load Balancer or a Classic Load Balancer and implement mTLS on the target.
