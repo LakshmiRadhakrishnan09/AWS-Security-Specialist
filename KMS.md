@@ -10,14 +10,14 @@
 
 Customer Managed Keys: **Customer managed keys are KMS keys in your AWS account that you create, own, and manage. You have full control over these KMS keys**, including establishing and maintaining their key policies, IAM policies, and grants, enabling and disabling them, rotating their cryptographic material, adding tags, creating aliases that refer to the KMS keys, and scheduling the KMS keys for deletion.
 
-For customer managed key, u can decide how key is generated. 3 options : KMS, External, Custome Key Store(CloudHSM). 
+For customer managed key, u can decide how key is generated. 3 options : KMS, External, Custom Key Store(CloudHSM). 
             - KMS - KMS will create key. Optional 1 year key rotation. Only master key is rotated.
             - External - Onpremise key generation. Need to rotate the keys manually.
             - CloudHSM- Cluster of server. Need to rotate the keys manually.
 
 AWS managed keys are KMS keys in your account that are created, managed, and used on your behalf by an AWS service integrated with AWS KMS to protect your resources in the service.**You don't have to create or maintain the key or its key policy**.You have permission to view the AWS managed keys in your account, view their key policies, and audit their use in AWS CloudTrail logs. However, **you cannot change any properties of AWS managed keys, rotate them, change their key policies, or schedule them for deletion.** And, you cannot use AWS managed keys in cryptographic operations directly; the service that creates them uses them on your behalf.**All AWS managed keys are automatically rotated every year. You cannot change this rotation schedule.** In general, unless you are required to control the encryption key that protects your resources, an AWS managed key is a good choice. Starts with aws/<service>. Eg: aws/ebs, aws/dynamodb. One key per service. 
             
- AWS owned keys. You don't need to create or maintain the key or its key policy.AWS owned keys are not in your AWS account. The rotation of AWS owned keys varies across services. In general, unless you are required to audit or control the encryption key that protects your resources, an AWS owned key is a good choice.The rotation of AWS owned keys varies across services. Default DynamoDB key cannot be seen by customer. These keys are shared among multiple customers.
+ AWS owned keys. You don't need to create or maintain the key or its key policy. AWS owned keys are not in your AWS account. The rotation of AWS owned keys varies across services. In general, unless you are required to audit or control the encryption key that protects your resources, an AWS owned key is a good choice.The rotation of AWS owned keys varies across services. Default DynamoDB key cannot be seen by customer. These keys are shared among multiple customers.
 
  KMS will not rotate data key.
 
@@ -39,6 +39,12 @@ AWS managed keys are KMS keys in your account that are created, managed, and use
 - Server-Side Encryption with Customer-Provided Keys (SSE-C)
             - you manage the encryption keys and Amazon S3 manages the encryption, as it writes to disks, and decryption, when you access your objects.
             - Amazon S3 does not store the encryption key you provide. 
+            - Amazon S3 rejects any requests made over HTTP when using SSE-C. 
+            - If you encrypt an object by using server-side encryption with customer-provided encryption keys (SSE-C) when you store the object in Amazon S3, then when you retrieve the metadata from the object, you must use the following headers:
+
+                  x-amz-server-side-encryption-customer-algorithm
+                  x-amz-server-side-encryption-customer-key
+                  x-amz-server-side-encryption-customer-key-MD5
             
  SSE-S3: Rotation managed by AWS.  /
  SSE-KMS( AWS Managed): aws/s3 : Mandatory rotation every year. You cannot change it /
@@ -89,11 +95,10 @@ AWS KMS supports automatic key rotation only for symmetric encryption KMS keys w
 Using alias - We can reuse the same code in different AWS Regions. Generate different key in different region. Associate same alias. Application code use alias of a key.
             
 Automatic key rotation is not supported on the following types of KMS keys, but you can rotate these KMS keys manually.
-
-Asymmetric KMS keys,
-HMAC KMS keys,
-KMS keys in custom key stores,
-KMS keys with imported key material,
+  - Asymmetric KMS keys,
+  - HMAC KMS keys,
+  - KMS keys in custom key stores,
+  - KMS keys with imported key material,
 
 Can KMS imported key rotated automatically?What will happen when you import new key material to existing CMK? 
             
@@ -104,6 +109,7 @@ When you import key material into a KMS key, the KMS key is permanently associat
 When you encrypt data under a KMS key, the ciphertext is permanently associated with the KMS key and its key material. **It cannot be decrypted with any other KMS key, including a different KMS key with the same key material.** This is a security feature of KMS keys.  
 
 Keys generated by AWS KMS do not have an expiration time and cannot be deleted immediately; there is a mandatory 7 to 30 day wait period. All customer managed KMS keys, irrespective of whether the key material was imported, can be manually disabled or scheduled for deletion. In this case the KMS key itself is deleted, not just the underlying key material.
+
             
 **Amazon S3 Bucket Keys**
 
@@ -127,6 +133,7 @@ Master Key is stored in KMS Service.
 Benefits: If you use data key only, then u can use same data key for all data. If you use master key, u can use different data key for each data. 
 Compromise of one data key will not result in compromise of other data.
 
+The KeyId parameter is not required when decrypting with symmetric encryption KMS keys. AWS KMS can get the KMS key that was used to encrypt the data from the metadata in the ciphertext blob. 
 
 #### S3-Server side encryption
 - KMS will have master key
@@ -136,14 +143,14 @@ Compromise of one data key will not result in compromise of other data.
 - S3 used data key for AES 256 encryption
 
 Master key is identified by keyId, Key arn, alias, alias arn. **Alias** is used for rotating and it points to current master key. \
-Encrypted data key has reference to master key ID. So even in case master key is rotated, it refers to old master key. \
+Encrypted data key has reference to master key ID( Check if this correct!!) So even in case master key is rotated, it refers to old master key. \
 Application code use alias. So no need to update application even if key is rotated.
 
 Each object has different data key.
 
 #### EBS Encryption
 
-Optional feature u can enable when u create a volume. An unencrypted volume cannot be enabled with encryption directly. U need to create snapshot first.U can enable encryption while **copying** snapshot or while **creatig new volume from snapshot**. Inorder to change encryption also same. (Note: While taking snapshot u cannot specify encryption)
+Optional feature u can enable when u create a volume. An unencrypted volume cannot be enabled with encryption directly. U need to create snapshot first.U can enable encryption while **copying** snapshot or while **creating new volume from snapshot**. Inorder to change encryption also same. (Note: While taking snapshot u cannot specify encryption. Only after taking snapshot.)
 
 - EBS calls KMS service to get data key.
 - The encrypted data key is stored in the volume.
@@ -154,7 +161,7 @@ Optional feature u can enable when u create a volume. An unencrypted volume cann
 - data at rest is encrypted
 
 Unencrypted Volume --- Snapshot is Unencrypted --- Restored Volume is Unencrypted \
-Encrypted Volume by key A---- Snapshot is Unencrypted by Key A--- Restored Volume is Unencrypted by Key A\
+Encrypted Volume by key A---- Snapshot is Encrypted by Key A--- Restored Volume is Encrypted by Key A\
 
 To change encryption: 
    - Unencrypted Volume --- Unencrypted SnapShot --- Enable Encryption while Restoring --- encrypted volume
@@ -182,6 +189,8 @@ kms:DescribeKey
 kms:GenerateDataKeyWithoutPlainText
 kms:ReEncrypt            
  
+GenerateDataKeyWithoutPlaintext is identical to the GenerateDataKey operation except that it does not return a plaintext copy of the data key. This operation is useful for systems that need to encrypt data at some point, but not immediately. When you need to encrypt the data, you call the Decrypt operation on the encrypted copy of the key.
+
 To follow the principle of least privilege, do not allow full access to kms:CreateGrant. Instead, allow the user to create grants on the KMS key only when the grant is created on the user's behalf by an AWS service, as shown in the following example.
             
 ```
@@ -204,6 +213,20 @@ To follow the principle of least privilege, do not allow full access to kms:Crea
 }
 ```
 
+How EBS encryption works?
+
+EC2 needs the plain text data key to encrypt and decrypt data. 
+Encrypted data key is stored in EBS volume.This happens when u create volume. using GenerateDataKeyWithoutPlaintext 
+When u attach volume to EC2, Amazon EC2 sends a CreateGrant request to AWS KMS so that it can decrypt the data key.
+AWS KMS decrypts the encrypted data key and sends the decrypted data key to Amazon EC2. Using  Decrypt.
+
+In its GenerateDataKeyWithoutPlaintext and Decrypt requests to AWS KMS, Amazon EBS uses an encryption context with a name-value pair that identifies the volume or snapshot in the request. 
+```
+"encryptionContext": {
+  "aws:ebs:id": "vol-0cfb133e847d28be9"
+}
+
+```
 #### RDS Encryption
 
 Optional feature
@@ -250,9 +273,7 @@ Normal hash algorithms are susceptible to brute-force attacks. Normal hash algor
 They work like digital signatures but use the same key for both signing and verification.
 
 ·  The max message size is 4KB for GenerateMAC, VerifyMAC
-
 · HMAC Keys do not support automatic key rotation or imported key material
-
 · HMAC keys are currently not supported in CloudHSM (custom key store)
 
 #### KMS Multi Key Region
@@ -302,9 +323,9 @@ SSE-S3: Key is generated and managed by AWS. Data is encrypted before saving and
 
 SSE-KMS: Customer Managed Keys(CMKs) stored in AWS KMS. There are two types of CMKs.
 
-- Awazon managed CMK : Key generated by AWS. Stored in AWS account of customer
+- Awazon managed CMK : Key generated by AWS. Stored in AWS account of customer(read-only)
 
-- Customer managed CMK: Key is genereted by customer. But stored in AWS account of customer.
+- Customer managed CMK: Key is genereted by customer. Stored in AWS account of customer.
 
 SSE with Customer-Provided Keys (SSE-C): Key is generated by customer and stored by customer. A client has to send the encryption key along with the object to be uploaded in a request. S3 then encrypts the object using the provided key and the object is stored in S3. Note that the encryption key is deleted from the system.When the user wants to download or retrieve the object it has to supply the encryption key in the request. S3 first verifies that it is the correct encryption key, after the successful match it decrypts the object and returns it to the Client.
 
@@ -312,8 +333,8 @@ Note:
 AWS KMS is replacing the term customer master key (CMK) with AWS KMS key and KMS key. The concept has not changed. To prevent breaking changes, AWS KMS is keeping some variations of this term.
 The KMS keys that you create are customer managed keys. AWS services that use KMS keys to encrypt your service resources often create keys for you. KMS keys that AWS services create in your AWS account are AWS managed keys. KMS keys that AWS services create in a service account are AWS owned keys.
             
-Manual rotation scenarios
-            - External Key
+Manual rotation is needed for folowing scenarios
+            - External Key(Imported keys)
             - CloudHSM Keys
             - KMS key different schedule than supported 1 year
             - Asymettric keys
@@ -333,6 +354,7 @@ authenticated encryption with associated data (AEAD): You can think of this as e
 
  We can fix this by including the unencrypted email address associated with the encrypted physical address as EncryptionContext. Now, when the system attempts to decrypt the record that has been tampered with, an InvalidCiphertextException is thrown and the threat is mitigated. This is because the EncryptionContext parameter that was provided at encryption (in this case, Alice’s email address) does not match the EncryptionContext provided at decryption (in this case, Mallory’s email address).
 
+### Key Policy
 
 To control access to your KMS keys, you can use the following policy mechanisms.
            - Key policy - Every KMS key has a key policy. Key policy can be configured for allowing key administrators, key users, services that can use key.(Same can be achieved by IAM policy or Grant)
@@ -356,7 +378,7 @@ Allows access to the AWS account and enables IAM policies
   "Resource": "*"
 }
 ```            
- Allows key administrators to administer the KMS key: Key administrators have permissions to manage the KMS key, but do not have permissions to use the KMS key in cryptographic operations. 
+ Allows key administrators to administer the KMS key: Key administrators have permissions to manage the KMS key, but do not have permissions to use the KMS key in cryptographic operations. ( Added throuh Console)
  ```          
            
             {
@@ -392,7 +414,9 @@ AWS services that are integrated with AWS KMS use only symmetric encryption KMS 
 
 Grants are attached to a KMS key, and each grant contains the principal who receives permission to use the KMS key and a list of operations that are allowed.    
             
-Grants are commonly used by AWS services that integrate with AWS KMS to encrypt your data at rest. The service creates a grant on behalf of a user in the account, uses its permissions, and retires the grant as soon as its task is complete.            
+Grants are commonly used by AWS services that integrate with AWS KMS to encrypt your data at rest. The service creates a grant on behalf of a user in the account, uses its permissions, and retires the grant as soon as its task is complete.   
+
+(Sample scenario to explain use of Grant(Confirm if this correct!!) - A user creating DynamoDB. DynamoDB Create A Grant on behalf of user to generate KMS data key for encryption. So that DynamoD can use it for encrypting and decrypting data. While Creation of DynamoDb, Grant is created. Later Service use the Grant for encryption and decryption. Attach GrantIsForAWSResource so that only DynamoDb can use it)
             
  A key can have only one key policy. Can have multiple Grants.     \
  Grant supports limited operations [CreateGrant, GenerateDataKey, RetireGrant, Encrypt, ReEncryptTo, Decrypt, GenerateDataKeyWithoutPlaintext, DescribeKey, Verify, ReEncryptFrom, Sign]      
@@ -403,7 +427,7 @@ Grants are commonly used by AWS services that integrate with AWS KMS to encrypt 
 
 Deleting KMS Key
 - Once u delete the key, it is irreversible. So better disable the key
-- You can only schedule the deletion of a customer managed key. You cannot delete AWS managed keys or AWS owned keys.  
+- **You can only schedule the deletion of a customer managed key. You cannot delete AWS managed keys or AWS owned keys.**  
 - You cannot enable or disable AWS managed keys or AWS owned keys. 
 - To determine who uses key - Examining AWS CloudTrail logs to determine actual usage            
 - AWS KMS requires you to set a waiting period of 7 – 30 days. The default waiting period is 30 days.
@@ -438,13 +462,15 @@ To Limit Key by Service
 }
 ```           
 
-#### Key policy with ALB
+#### Key policy with ASG
          
 Amazon EC2 Auto Scaling uses service-linked roles for the permissions that it requires to call other AWS services on your behalf. A service-linked role is a unique type of IAM role that is linked directly to an AWS service.
             
 The predefined permissions also include access to your AWS managed keys. However, they do not include access to your customer managed keys, allowing you to maintain full control over these keys.
             
 Your KMS keys must have a key policy that allows Amazon EC2 Auto Scaling to launch instances with Amazon EBS volumes encrypted with a customer managed key.
+
+Assumption(confirm this is correct): When a ASG is configured. It creates a Grant on key for grantee 'service-liked-role'. When instances are created, this Grant allows service-linked-role to encrypt and decrypt the key. ServiceLinkedRole should be allowed for key operations and should be allowed to createAGrant.
             
 You must, at minimum, **add two policy statements to your key policy** for it to work with Amazon EC2 Auto Scaling.
 
@@ -492,15 +518,32 @@ Example 1: Key policy sections that allow access to the customer managed key
 ```    
 Example 2: Key policy sections that allow cross-account access to the customer managed key        
             
-Step1: key policy should allow IAM of another account role and give Grant permission
+Step1: key policy should allow IAM of another account role and give Grant permission(same as above, but Principal will be account root user.)
             
 Step2: Then, from the account that you want to create the Auto Scaling group in, create a grant that delegates the relevant permissions to the appropriate service-linked role. The Grantee Principal element of the grant is the ARN of the appropriate service-linked role of asg in second account. The key-id is the ARN of the key in source account.
             
-For this command to succeed, the user making the request must have permissions for the CreateGrant action.           
+For this command to succeed, the user making the request must have permissions for the CreateGrant action.  
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowCreationOfGrantForTheKMSKeyinExternalAccount444455556666",
+      "Effect": "Allow",
+      "Action": "kms:CreateGrant",
+      "Resource": "arn:aws:kms:us-west-2:444455556666:key/1a2b3c4d-5e6f-1a2b-3c4d-5e6f1a2b3c4d"
+    }
+  ]
+}
+```         
             
 https://aws.amazon.com/blogs/security/managing-permissions-with-grants-in-aws-key-management-service/   
-            
+
+### Key Policy Cross account
+
 User assumes role with permission to use a KMS key in a different AWS account
+
+Key in Account2
             
 - The key policy for the KMS key in account 2 allows account 2 to use IAM policies to control access to the KMS key.
 - The key policy for the KMS key in account 2 allows account 1 to use the KMS key in cryptographic operations. However, account 1 must use IAM policies to give its principals access to the KMS key.
@@ -590,5 +633,20 @@ kms:Decrypt : key Id not required for symmetric keys.
 
 The KeyId parameter is required when calling "Decrypt" or "Verify" with an asymmetric KMS key, or calling "VerifyMac" with an HMAC KMS key. 
             
-USe wildCard "Resource": "*" element only needed. It is needed for CreateKey, ListAliases, ListKeys.            
+USe wildCard "Resource": "*" element only needed. It is needed for CreateKey, ListAliases, ListKeys.       
+
+
+
+Key Policy Evaluation
+
+In same account
+              : Either Key policy allows or Grant allows 
+              : Or Key policy allows IAM and IAM policy allows
+
+In Cross account :
+                Above +
+                callers account should give a grant  or Iam policy that permits to use this key
+
+https://docs.aws.amazon.com/images/kms/latest/developerguide/images/kms-auth-flow-2020.png
+
            
