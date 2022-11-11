@@ -81,16 +81,16 @@ Policy Simulator: Select Role. Select Service and action.
 * Identity based policies: Permissions on an IAM identity. Have "Resource" field to mention to which resource access is given.
 * Resource based policies: 
 
-** NEVER USER ROOT USER**. Use admin user with admin priveldges(proxy root user). If admin user is compromised, u can use root user to recover. \
+** NEVER USE ROOT USER**. Use admin user with admin priveldges(proxy root user). If admin user is compromised, u can use root user to recover. \
 
-AWS Managed Microsoft AD: Users of your organization
+AWS Managed Microsoft AD: Users of your organization(for federation)
 Cognito: For external users. Users who are not part of ur organization.Ur web amd mobile users. Sign up and create an identity pool. \
 AWS Single Sign on: \
 AWS Organizations: Master Account( Service Control Policies : limit what child accounts can do), Org Units, Accounts. \
 
 
 S3:
-* Object ACL od bucket ACL : Old way
+* Object ACL or bucket ACL : Old way
 * Bucket Policy(Recommended): Permissions allowed on that bucket. Cross account access. 
 
 Identity and Resource based permission: If there is a DENY, then it will be denied. If there is no DENY but allow at buckey policy, then it is allowed. There should be atleast **ONE EXPLICIT ALLOW**. There **SHOULD NOT BE ANY EXPLICIT DENY**.
@@ -209,7 +209,7 @@ AWS Shield: Free with AWS Account. Advanced -> 24/7 DDos experts. Repay on DDos 
 * AWS Firewall Manager
 
 Points to remember
-AMI must be hardened. Think how they are secured. Everyone when AWS release a new AMI, it sends a notification. Make lambda to listen it and trigger Ec2 Image Builder can build a new one and next time when asg create a new instance this new AMi can be used.
+AMI must be hardened. Think how they are secured. Everytime when AWS release a new AMI, it sends a notification. Make lambda to listen it and trigger Ec2 Image Builder can build a new one and next time when asg create a new instance this new AMi can be used.
 
 Amazon Inspector. Send events to SNS. Use Lambda to listen and take action. If any non-compliant issue found create a workflow to remediate it.
 
@@ -246,11 +246,11 @@ Router: Single IP address provided by ISP. Maps this to multiple local IPs. Many
 
 Internet Gateway is like a router. Without IG nothing in VPC can access Internet. 
 
-The internet gateway logically provides the one-to-one NAT on behalf of your instance, so that when traffic leaves your VPC subnet and goes to the internet, **the reply address field is set to the public IPv4 address or Elastic IP address of your instance**, and not its private IP address. Conversely, traffic that's destined for the public IPv4 address or Elastic IP address of your instance has its destination address translated into the instance's private IPv4 address before the traffic is delivered to the VPC.
+The internet gateway logically provides the one-to-one NAT on behalf of your instance, so that when traffic leaves your VPC subnet and goes to the internet, **the reply address field is set to the public IPv4 address or Elastic IP address of your instance**, and not its private IP address. Conversely, traffic that's destined for the public IPv4 address or Elastic IP address of your instance has its **destination address translated into the instance's private IPv4 address** before the traffic is delivered to the VPC.
 
-The NAT device replaces the source IPv4 address of the instances with the address of the NAT device. When sending response traffic to the instances, the NAT device translates the addresses back to the original source IPv4 addresses.
+The NAT device **replaces the source IPv4 address of the instances with the address of the NAT device.** When sending response traffic to the instances, the **NAT device translates the addresses back to the original source IPv4 addresses.**
 
-IG supports both Ipv4 and Ipv6. NAT devices are not supported for IPv6 traffic—use an egress-only internet gateway instead. 
+**IG supports both Ipv4 and Ipv6. NAT devices are not supported for IPv6 traffic—use an egress-only internet gateway instead.**
 
 
 

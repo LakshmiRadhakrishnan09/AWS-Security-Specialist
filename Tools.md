@@ -1,6 +1,6 @@
 ### Web Application Firewall (WAF)
 
-Protects from web application vulnerabilities(OWASP 20, CVV). WAF can block requests with suspicious content( Injection attacks, Server Side Request Forgery). Application Layer Protection(**layer7**). **Protect web application from common exploits.** Monitors https, https. WAF can be integrated with **ALB, CloudFront, API Gateway**.**AWS WAF does not support NLB.** 
+Protects from web application vulnerabilities(OWASP 20, CVV). WAF can block requests with suspicious content( Injection attacks, Server Side Request Forgery). Application Layer Protection(**layer7**). **Protect web application from common exploits.** Monitors http, https. WAF can be integrated with **ALB, CloudFront, API Gateway**.**AWS WAF does not support NLB.** 
 
 WAF + CloudFront -> block cache bursting attacks
 
@@ -23,7 +23,7 @@ Centally maintain Firewall rules.
 
 Findings are send to Security Hub
 
-### AWS System Manager(SSM) and Patch Manager
+### AWS System Manager(SSM) : Session Manager,  Patch Manager and Inventory Manager
 
 For parching systems at scale. Centrally manage all servers. Need to install a agent in each server. **OS and software patches**. Run commands on a fleat of instances without login into server. **Session Manager**. IAM based access to servers. No need to use SSH, Bastion Hosts, RDP. AWS Config Integration.
 
@@ -39,12 +39,12 @@ Need two roles.One role for SSM. One role for EC2 to communicate with SSM. \
 
 AmazonSSMManagedInstanceCore, CloudWatchAgentServerPolicy
 
-Collect Inventory. OS used. applications running. You can find out how many instances are using a particular version of software. \
-Instances that are compliant
+**Collect Inventory.** OS used. applications running. You can find out how many instances are using a particular version of software. \
+Instances that are compliant/Not complaint
 
 Chhose all instances, or specific instances by tags. 
 
-SSM can manage on-premise servers. On-premise need to have a certificate(instaed of IAM role) + Activation ID
+**SSM can manage on-premise servers. On-premise need to have a certificate(instaed of IAM role) + Activation ID**
 
 Session Manager : to connect
 
@@ -63,15 +63,15 @@ Discover sensitive Data -  PII data , protected health data, IP(Intellectual Pro
 
 ### Amazon GuardDuty
 
-Threat Detection Service: detect malicious and abnormal activities. unusual activities
+Threat Detection Service: detect malicious and abnormal activities. unusual activities(is ur aws resources user for bitcoin mining or any tojan attcks happening)
 
 It is difficult to monitor log trials and events manually. Guarduty automatically monitors it for you. GuardDuty monitors CloudTrail(Event Logs, Management events, S3 Data Events), VPC flow logs, DNS Logs.
 
-GuardDuty is regional. Need to be enabled in each region.
+GuardDuty is regional. Need to be enabled in each region(even in regions u dont deploy).
 
 GuardDuty in N.Virgia for Global resources.
 
-Report suspicious activity in reions u do not use.
+Report suspicious activity in regions u do not use.
 
 Currently GuardDuty generate findings for **EC2, IAM and S3**.
 
@@ -80,11 +80,11 @@ HIGH -> Immediate Action \
 MEDIUM -> Investigate \
 LOW -> Indication
 
-Can configure Trusted IPs. Known Malicious IPs.
+Can configure Trusted IPs. Known Malicious IPs.If ur resources intercat with these suspicious Ips, then findings are generated.
 
 Supression Findings -> Exfilteration reported due to on-premiese AWS connectivity for gateway. Bastion Host.
 
-GuardDuty -> EventBridge Integration. GuarDuty just report findings. You need to take action.
+GuardDuty -> EventBridge Integration. GuardDuty just report findings. You need to take action. Each finding is a event in EventBridge.
 
 GuarDuty and AWS Organization for multi account. \
 Nominate one of the member as GuardDuty admin account. This Admin account can manage configuration for all accounts. \
@@ -93,7 +93,7 @@ Need to be delegated for each region. Repeat for every region. \
 
 ### Amazon IAM Access Analyzer
 
-AM Access Analyzer helps you identify the resources in your organization and accounts, such as Amazon S3 buckets or IAM roles, **shared with an external entity.** This lets you identify unintended access to your resources and data, which is a security risk.
+IAM Access Analyzer helps you identify the resources in your organization and accounts, such as Amazon S3 buckets or IAM roles, **shared/used with an external entity.** This lets you identify unintended access to your resources and data, which is a security risk.
 
 For each instance of a resource shared outside of your account, IAM Access Analyzer generates a finding. 
 
@@ -113,7 +113,7 @@ Security vulnerabilities of EC2 instance
 
 Host assessment: Compare installed OS and software against CVE list. Also evaluate against CIS benchmark. Evaluate against AWS best practices. Need an agent(If instance is managed by SSM, Inspector can run commands). 
 
-Network assessment : Network reachability assessment. Identify Ports that are reachable. Processes listening of port. Agent not required.Optional agent.
+Network assessment : Network reachability assessment. Identify Ports that are reachable. Processes listening of port. Agent not required. Optional agent.
 
 Schedule for weekly once or Run once. Takes 1 hr to run assessment. 
 
@@ -134,7 +134,7 @@ Block DNS queries
 
 ## AWS Shield
 
-Standard: Infrastructure layer protection(layer 3 and 4). For all customers. Free
+Standard: Infrastructure layer protection(layer 3 and 4). For all customers. Free. No visibility.
 
 Advanced: 24/7 DDos response team. Visibility and repoting. DDos auto scaling cost protection.Support plan. Includes WAF
 
@@ -199,7 +199,7 @@ You need to enable Security Hub . Security standards lists the security standard
 
 Amazon Detective collects log data from your AWS resources and uses machine learning, statistical analysis, and graph theory to help you **identify the root cause of potential security issues or suspicious activities**
 
-Visualize interation.
+Visualize interaction.
 
 **Security Hub reports. Detective to find root cause.** 
 
@@ -230,7 +230,7 @@ The AWS Trusted Advisor service provides four checks at no additional charge to 
 
 ### AWS Managed Services
 
-AWS Managed Services offers two operations plans to meet your needs: 1) AWS Managed Services Accelerate for your new and existing AWS accounts via detective controls, giving you full control and flexibility to use AWS as you always have, and 2) AWS Managed Services Advanced with preventative controls via a change management system within an AWS managed landing zone, which provides a full operational solution and trades some flexibility for increased operational rigor to protect your critical business applications. Customers can select either operations plan on an account by account basis.
+AWS Managed Services offers two operations plans to meet your needs: 1) AWS Managed Services **Accelerate** for your new and existing AWS accounts via detective controls, giving you full control and flexibility to use AWS as you always have, and 2) AWS Managed Services **Advanced** with preventative controls via a change management system within an AWS managed landing zone, which provides a full operational solution and trades some flexibility for increased operational rigor to protect your critical business applications. Customers can select either operations plan on an account by account basis.
 
 AWS Managed Services (AMS) specializes in managing AWS infrastructure and services. AMS **automates common activities such as change requests, monitoring, patch management, security, and backup services, and provides full-lifecycle services to provision, run, and support your infrastructure.**
 
@@ -248,10 +248,6 @@ Monitoring:
 - Performance degradation
 - Application health down
 
-
-
-
-
 ### AWS Support
 
 AWS Support offers a range of plans that provide access to tools and expertise that support the success and operational health of your AWS solutions. All support plans provide 24/7 access to customer service, AWS documentation, whitepapers, and support forums. If you need technical support and more resources to help plan, deploy, and optimize your AWS environment, you can select a support plan that best aligns with your AWS use case.
@@ -267,7 +263,7 @@ AWS Managed Services (AMS) helps enterprises adopt **AWS at scale and operate mo
 
 Alerts are generated by AWS Config, AWS Security Hub Fundational Security Best Practices, AWS Trusted Advisor
 
-Amazon GuardDuty and Access Analyzer -> Application findings??
+Amazon GuardDuty and Access Analyzer -> threats
 
 Amazon Inspector and Amazon Macie -> data and end point concerns
 
@@ -301,6 +297,8 @@ By default, the log files delivered by CloudTrail to your bucket are encrypted b
 **Amazon S3 Access Logs** – If you store sensitive information in an Amazon S3 bucket, you can enable S3 access logs to record every upload, download, and modification to that data. This log is separate from, and in addition to, the CloudTrail logs that record changes to the bucket itself (such as changing access policies and lifecycle policies).
 
 **Amazon CloudWatch Logs** – You can use Amazon CloudWatch Logs to monitor, store, and access your log files (such as your operating system, application, and custom log files) from your Amazon Elastic Compute Cloud (Amazon EC2) instances using the CloudWatch Logs agent. Additionally, Amazon CloudWatch Logs can capture logs from AWS CloudTrail, Amazon Route 53 DNS Queries, VPC Flow Logs, Lambda functions, and other sources. You can then retrieve the associated log data from CloudWatch Logs.
+
+EventBridge can use CloudTrail data even if ClodWatch Logs are not enabled for trail(confirm this). ClodWatch Log Group is mostly for processing application logs , os logs, vpc logs
 
 **Amazon VPC Flow Logs** – VPC flow logs enable you to capture information about the IP traffic going
 to and from network interfaces in your VPC. After you've created a flow log, you can view and retrieve its data in Amazon CloudWatch Logs. VPC flow logs can help you with a number of tasks. For example, you can use flow logs to troubleshoot why specific traffic is not reaching an instance, which can help you diagnose overly restrictive security group rules. You can also use flow logs as a security tool to monitor the traffic to your instance.
@@ -374,7 +372,7 @@ Rotate credentials. Integrates with RDS and Redshift. Automatically rotate crede
 
 Note:
 
-With CloudFront whitlelist query paramater to prevent cache bursting attacks.
+**With CloudFront whitlelist query paramater to prevent cache bursting attacks.**
 
 To manage private instances using SSM : Create systems manager endpoints for three services: ssm, ssmmessages and ec2messages.  The endpoint security group must allow 443 https traffic from your instance to the endpoint.
 
@@ -388,25 +386,27 @@ Data Classification
 
 Amazon EventBridge
 
-- One Default event bus in created when u create AWS account. You can create other event bus if required
+- One Default event bus is created when u create AWS account. You can create other event bus if required
 - Serverless event bus
 - to build event driven applications at scale
 - U can set up rules. These rules are evaluated against events. Remain in event bus and evaluated by other rules.
-- Decouple applications ( Difference from SQS : Event remains event after successful consumption)
+- Decouple applications ( Difference from SQS : Event remains in event bus even after successful consumption till retension peruod expires)
 - to Automate response and remediation
 - respond automatically to system events such as application availability issues or resource changes.
 - Security Hub automatically sends all new findings and all updates to existing findings to EventBridge as EventBridge events. 
 - Events from AWS services are delivered to EventBridge in near-real time and on a guaranteed basis. You can write simple rules to indicate which events you are interested in and what automated actions to take when an event matches a rule. We can trigger lambda, EC2 run command, SNS.
-- When an event occurs in EventBridge, CloudTrail records the event in Event history. ( Similar to other AWS services)
+- When an event occurs in EventBridge(EnableRule, DisableRule, PutRule), CloudTrail records the event in Event history. ( Similar to other AWS services)
 - Configuring an EventBridge rule for automatically sent findings. You can create a rule in EventBridge, that defines an action to take when a Security Hub Findings - Imported event is received. Security Hub Findings - Imported events are triggered by updates from both BatchImportFindings and BatchUpdateFindings.
 - Findings fron Security Hub automatically send to EventBridge. U write rules in EventBridge
 - U can create custom actions in EventBridge.
+
+EventBridge and CloudTrail: API call is a event in CloudTail. This is an event in EventBridge. Any API executed against EventBridge is looged in CloudTrail(EnableRule, DisableRule, PutRule).
 
 AWS Config
 
 An AWS Config rule represents your desired configuration settings for specific AWS resources or for an entire AWS account. If a resource does not pass a rule check, AWS Config flags the resource and the rule as noncompliant, and AWS Config notifies you through Amazon SNS.
 
-Confiig evaluation is triggered When: \
+Config evaluation is triggered When: \
 Configuration changes – AWS Config triggers the evaluation when any resource that matches the rule's scope changes in configuration. The evaluation runs after AWS Config sends a configuration item change notification.
 Periodic – AWS Config runs evaluations for the rule at a frequency that you choose (for example, every 24 hours).
 
@@ -423,7 +423,7 @@ GuardDuty can be configured to use the following types of lists.
 Trusted IP list:Trusted IP lists consist of IP addresses that you have trusted for secure communication with your AWS infrastructure and applications. GuardDuty does not generate VPC flow log or CloudTrail findings for IP addresses on trusted IP lists. You can include a maximum of 2000 IP addresses and CIDR ranges in a single trusted IP list. At any given time, you can have **only one uploaded trusted IP list per AWS account per Region.**
 
 
-Threat IP list: Threat lists consist of known malicious IP addresses. This list can be supplied by third-party threat intelligence or created specifically for your organization. In addition to generating findings because of a potentially suspicious activity, GuardDuty also generates findings based on these threat lists. You can include a maximum of 250,000 IP addresses and CIDR ranges in a single threat list. GuardDuty only generates findings based on activity that involves IP addresses and CIDR ranges in your threat lists, findings will not be generated based of domain names. At any given time, you can have up to **six uploaded threat lists per AWS account per Region.**
+Threat IP list: Threat lists consist of known malicious IP addresses. **This list can be supplied by third-party threat intelligence or created specifically for your organization.** In addition to generating findings because of a potentially suspicious activity, GuardDuty also generates findings based on these threat lists. You can include a maximum of 250,000 IP addresses and CIDR ranges in a single threat list. GuardDuty only generates findings based on activity that involves IP addresses and CIDR ranges in your threat lists, **findings will not be generated based of domain names.** At any given time, you can have up to **six uploaded threat lists per AWS account per Region.**
 
 Note
 If you include the same IP on both a trusted IP list and threat list it will be **processed by the trusted IP list first**, and will not generate a finding.

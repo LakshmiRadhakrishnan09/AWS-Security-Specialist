@@ -114,8 +114,8 @@ https://www.uturndata.com/2021/02/23/aws-quick-tips-internet-gateways-nat-gatewa
 NAT Gateway 
 * Managed Service- Automatically scale
 * Elastic IP
-* Is bound to a subnet(AZ)
-* Single point of failure
+* Is bound to a single subnet(AZ)
+* Single point of failure. Not highly available
 * Deploy NAT in multiple AZ
 
 EndPoints
@@ -165,7 +165,7 @@ https://docs.aws.amazon.com/images/vpc/latest/privatelink/images/endpoint-servic
 Scenario: EC2-1 in public subnet with Internet gateway. EC2-2 in private subnet. \
 AWS Session Manager. Outside VPC. A AWS Service. By default AWS Session Manager can connect to EC2-1. \
 For AWS SSM to connect to private subnet, need to create a interface end point. Create an interface end point and add it to private subnet. Add service as ssm in same region and AZ. \
-After this u can connect to rpivate EC2-2 using SSM. \
+After this u can connect to private EC2-2 using SSM. \
 
 Secanario: EC2-1 in public subnet with Internet gateway. EC2-2 in private subnet. \
 Public S3. \
@@ -191,7 +191,7 @@ Scenario: Is there a change in end point for S3 and SQS with and without VPC end
 Why should two applications in same organisation connect over intenet? \
 
 Use VPC Peering so that u can connect using AWS Global network( not internet)
-Two VPC into a single logical network: VPC peering. Once connected they can communicate with private IP. No Single point of failure. CIDR should not overlap. Need to update route table in both VPC. this-vpc-cidr-block -> local. other-voc-cidr-local -> peering-connection. Peering connection is bi-directional(both side traffic)  and both parties need to accept. Not transitive. 
+Two VPC into a single logical network: VPC peering. Once connected they can communicate with private IP. No Single point of failure. CIDR should not overlap. **Need to update route table in both VPC.** this-vpc-cidr-block -> local. other-voc-cidr-local -> peering-connection. Peering connection is bi-directional(both side traffic)  and both parties need to accept. Not transitive. 
 
 We can peer VPC
 * In same region
@@ -251,17 +251,17 @@ Cloud Hub can also use Transit Gateway.
 How to set up Direct Connect? \
 Multiple Direct Connect locations around the world. Work with ISP to set up connection to one of this DX location. For critical workloads use 2 Direct connect locations.\
 Add Virtual Private Gateway(VGW) to VPC. Configure it to use direct connect link. Work for only single VPC. \
-For multiple VPC, use Direct Connect Gateway. Multiple VPCs across regions to share direct connect link. \
+For multiple VPC, use **Direct Connect Gateway**.** Multiple VPCs across regions to share direct connect link. \
 Better option. Use Transit Gateway also. \
 
 VPC1, VPC2, VPC3 (in same region) -- TGW1 , VPC1, VPC2, VPC3 (in another region) -- TGW2 \
 Connect both to Direct Connect Gateway.
 
-To connect to AWS Services( S3) from onpremise - Direct Connect with Public virtual interface.  
+To connect to AWS Services( S3) from onpremise - Direct Connect with Public virtual interface(VIF).  
 
 Direct Connect Resiliency - (https://aws.amazon.com/directconnect/resiliency-recommendation/) 
-- For High Resiliency(provides resilience to connectivity failure due to a fiber cut or a device failure as well as a complete location failure. ) - two direct connection for two customer data center
-- For Maximum Resiliency(provides resilience to device failure, connectivity failure, and complete location failure.) - two direct connection for per data center( 2 data center)
+- For High Resiliency(provides resilience to connectivity failure due to a fiber cut or a device failure as well as a complete location failure. ) - two direct connection for two customer data center(one direct connection per data center)
+- For Maximum Resiliency(provides resilience to device failure, connectivity failure, and complete location failure.) - two direct connection  per data center( 2 data center)
 - Non critical workloads - at least two direct connect connections terminating on different devices at a single location. helps in the case of the device failure at a location but does not help in the event of a total location failure.
 
 
@@ -291,7 +291,7 @@ Once configured appear in CloudWatch Log Groups.
 - Protocol(ICMP for Ping)
 
 VPC flow log do not capture packet content. If u want to capture packet content:
-1. VPC traffic mirroring for EC2 instances: allowing customers to natively replicate their network traffic without having to install and run packet-forwarding agents on EC2 instances
+1. VPC traffic **mirroring** for EC2 instances: allowing customers to natively replicate their network traffic without having to install and run packet-forwarding agents on EC2 instances
 
 2. Third-party AMIs in the marketplace approved for packet capture
 
@@ -329,11 +329,17 @@ You can  share a transit gateway with another account using RAM. You can share s
 
 NAT Instance Source Destination Check: Check if source and destination is actually the correct EC2 instance that is sending and receiving the packet.
 This check protect ur instances. 
-But 
-In order to specify a **NAT instance as a target in the route table, you must disable Source and Destination Check on a NAT instance.**
+But In order to specify a **NAT instance as a target in the route table, you must disable Source and Destination Check on a NAT instance.**
 If the source/destination check is not disabled, you cannot specify a NAT instance as a target in the route table.
 This applies to any other security appliance that performs inline packet inspection before forwarding to the destination.
 
 NAT Gateway and NAT Instance does not support IPv6 traffic. For IPv6, you would need to use an **egress-only internet gateway**. This is a highly available, horizontally scaled, redundant, VPC component that allows outbound communication over IPv6 and blocks unsolicited inbound IPv6 requests to your instance.
 
+
+NAT Gateway - Availability
+
+- Public(For connecting to internet) : Instances in private subnets can connect to the internet through a public NAT gateway, but cannot receive unsolicited inbound connections from the internet. Replace IP in packets with Elastic IP of NAT gateway. 
+- Private(For connecting on on-premise) : Instances in private subnets can connect to other VPCs or your on-premises network through a private NAT gateway. You can route traffic from the NAT gateway through a transit gateway or a virtual private gateway. You cannot associate an elastic IP address with a private NAT gateway. You can attach an internet gateway to a VPC with a private NAT gateway, but if you route traffic from the private NAT gateway to the internet gateway, the internet gateway drops the traffic. Replace IP in packets with private IP of NAT Gateway.
+
+NAT Gateway is Highly Available in one Availability Zone, If you have resources in multiple Availability Zones and they share one NAT gateway, and if the NAT gateway’s Availability Zone is down, resources in the other Availability Zones lose Internet access. Create NAT Gateways in at least two Availability Zones.
 
