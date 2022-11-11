@@ -460,3 +460,5 @@ Trusted Advisor Security Checks (  End of support versions, Public Storages, SG 
 - MFA on Root Account
 - Security Groups – Specific Ports Unrestricted
 - Security Groups – Unrestricted Access
+
+AWS Config conformance packs, allows customers to create a collection of AWS Config rules and remediations in a single pack that can be deployed across an AWS Organization.

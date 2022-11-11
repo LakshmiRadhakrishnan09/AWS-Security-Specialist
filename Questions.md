@@ -333,7 +333,7 @@ B. Using AWS Config, create a config rule that detects when AWS CloudTrail is di
 C. Using Amazon CloudWatch, create a CloudWatch event that detects AWS CloudTrail deactivation and a separate Amazon Trusted Advisor check to automatically detect the creation of root API keys. Then use a Lambda function to enable AWS CloudTrail and deactivate the root API keys.
 D. Using Amazon CloudTrail, create a new CloudTrail event that detects the deactivation of CloudTrail logs, and a separate CloudTrail event that detects the creation of root API keys. Then use a Lambda function to enable CloudTrail and deactivate the root API keys.
 
-AWS Config seems correct. But AWS config remediation works by SSM document. Not by Lambda. C may be correct
+Option B AWS Config seems correct. But AWS config remediation works by SSM document. SSM automation document can call  remediation Lambda function that removes the non-compliants.
 
 
 A company has multiple production AWS accounts. Each account has AWS CloudTrail configured to log to a single Amazon S3 bucket in a central account. Two of the production accounts have trails that are not logging anything to the S3 bucket.
@@ -346,12 +346,14 @@ D. Confirm in the CloudTrail Console that each trail is active and healthy.
 E. Open the global CloudTrail configuration in the master account, and verify that the storage location is set to the correct S3 bucket.
 F. Confirm in the CloudTrail Console that the S3 bucket name is set correctly.
 
-
-F - Should be Correct
+A - ??
 B - Should be Correct
+F - Should be Correct
 
-D or A
 
+D or A ( Should be A)
+
+There is no CloudTrail console which shows trail is healthy. It shows if trail is enabled or not.
 
 An employee accidentally exposed an AWS access key and secret access key during a public presentation. The company Security Engineer immediately disabled the key.
 How can the Engineer assess the impact of the key exposure and ensure that the credentials were not misused? (Choose two.)
@@ -365,6 +367,8 @@ E. Download and analyze a credential report from IAM.
 A - Sure
 E - Not sure. Should be correct as it helps in assessing if credentials are used or not.
 
+Access Advisor - Helps to see what services a user/role accessed.
+
 A distributed web application is installed across several EC2 instances in public subnets residing in two Availability Zones. Apache logs show several intermittent brute-force attacks from hundreds of IP addresses at the layer 7 level over the past six months.
 What would be the BEST way to reduce the potential impact of these attacks in the future?
 
@@ -376,7 +380,12 @@ D. Install intrusion prevention software (IPS) on each instance.
 D-??
 B- No as SG cant deny.
 C - A subnet can have only one NACL. you can have 20 inbound and 20 outbound rules per NACL.
-A Route table controls outgoing traffic
+A Route table controls outgoing traffic from VPC
+
+Note: Packet Sniffing : promiscuous mode is not allowed
+Host Based Firewall – Forward Deployed IDS
+Host Based Firewall – Traffic Replication: Configure each host with an agent that collects all network traffic and sends that traffic to the IDS/IPS platform for inspection.
+In-Line Firewall – Inbound IDS Tier
 
 A financial institution has the following security requirements:
 ✑ Cloud-based users must be contained in a separate authentication domain.
@@ -409,6 +418,8 @@ A and B --?
 or
 A and D?? https://aws.amazon.com/blogs/big-data/implement-serverless-log-analytics-using-amazon-kinesis-analytics/
 
+Real-time Application Monitoring with Amazon Kinesis and Amazon CloudWatch
+
 Amazon Kinesis Streams streams data on AWS, which allows you to collect, store, and process TBs per hour at a low cost.
 
 Amazon Kinesis Firehose loads streaming data in to Amazon Kinesis Analytics, Amazon S3, Amazon Redshift, or Amazon OpenSearch Service.
@@ -431,6 +442,8 @@ D. In CloudWatch, verify that the alarm threshold ג€consecutive periodsג€ 
 C or D
 
 May be D
+
+https://aws.amazon.com/premiumsupport/knowledge-center/sns-sms-spending-limit-increase/ - is only foe sms ,not for email
 
 
 During a security event, it is discovered that some Amazon EC2 instances have not been sending Amazon CloudWatch logs.
