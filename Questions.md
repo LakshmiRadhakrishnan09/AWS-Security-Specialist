@@ -3,6 +3,25 @@ Which service can you use for this requirement?
 
  ``` AWS WAF has the option to allow or block based on the request originating countries. ```
  
+ WAF: Use the **Geographic match rule** statement to block access to your site from specific countries or to allow access only from specific countries. You can use the geo match statement for country and region matching, as follows:
+
+Country — Use a geo match rule by itself to manage requests based on their country of origin.
+Region — **Use a geo match rule followed by a label match rule** to manage requests based on their country and region of origin. 
+
+ Use the CloudFront geographic restrictions feature. Use this option to restrict access to all of the files that are associated with a distribution and to restrict access at the country level. If you need to prevent users in specific countries from accessing your content, you can use the CloudFront geographic restrictions feature to do one of the following:
+
+Allow your users to access your content only if they’re in one of the approved countries on your allow list.
+Prevent your users from accessing your content if they’re in one of the banned countries on your block list.
+
+Note: For CloudFront distributions, if you use the CloudFront geo restriction feature, the feature doesn't forward blocked requests to AWS WAF. The feature does forward allowed requests to AWS WAF. If you want to block requests based on geography(not by country) and other AWS WAF criteria, use the AWS WAF geo match statement and do not use the CloudFront geo restriction feature(if u use CF it block by country not region).
+
+If you have a use case for geographic restrictions where the restrictions don't follow country boundaries, or if you want to restrict access to only some of the files that you're serving by a given distribution, you can combine **CloudFront with a third-party geolocation service**. This can allow you to control access to your content based not only on country but also based on city, zip or postal code, or even latitude and longitude.
+```
+Summary:
+To block by country : CF geo restriction
+To block by region: WAF geographic match or CF third party geolocation service
+``` 
+
  2. Which two services can generate findings when an S3 bucket allows access to an external account [outside of an AWS Organizations]?
 
 ``` IAM Access Analyser and Macie ```
@@ -14,7 +33,9 @@ Which service can you use for this requirement?
 4. Can u attach EBS volume to another instance in same region?
 
 ```
-No. EBS volume is availability zone specific; so, you can attach an EBS volume to an instance in the same availability zone. To copy the volume to a different availability zone or a region, you need to first take a snapshot of the volume. Snapshot is stored in S3 in the same region and you can use the snapshot to create a new volume in any of the availability zones in that region. You can also copy snapshot to a different region and restore it – this is typically used for disaster recovery or for expansion to a new region.
+No. EBS volume is availability zone specific; so, you can attach an EBS volume to an instance in the same availability zone. 
+To copy the volume to a different availability zone or a region, you need to first take a snapshot of the volume. **Snapshot is stored in S3** in the same region and you can use the snapshot to create a new volume in any of the availability zones in that region. 
+You can also copy snapshot to a different region and restore it – this is typically used for disaster recovery or for expansion to a new region.
 ```
 
 5. File system that can be used for both Linux and Windows:
@@ -46,7 +67,9 @@ No. EBS volume is availability zone specific; so, you can attach an EBS volume t
 
 ``` Client to Edge Location is encrypted. If you need end-end encryption, you also need to configure CloudFront to use HTTPS when talking to Origin.```
 
-12. AWS Certificate Manager Certificates are: Free and can be used with AWS resources
+12. AWS Certificate Manager Certificates are: 
+
+Free and can be used with AWS resources
 
 13. The corporate requirement calls for a mandatory host intrusion detection system and hardening operating system parameters to secure the system. A containerized application developed by the company's application team needs to be deployed in AWS. Which of the following would you use that meets the requirements while minimizing the effort needed to maintain the system?
 
@@ -65,22 +88,28 @@ Store access credentials in Secrets Manager and configure Task Execution Role wi
 ``` ECR: traffic internal to AWS network ```
 
 18. A distributed application uses many containers to process the pending work. The containers are short-lived, and after completing the work, they stop running. The container logs must be stored in CloudWatch logs to troubleshoot any issues. How would you send the logs to CloudWatch logs?
+
 ```Configure awslog driver in task definition. Docker containers use log drivers to collect containers' standard output and standard error streams and forward the log to the configured destination. The awslogs driver publishes the captured logs to the CloudWatch log group. This is a straightforward setup to consolidate logs from containers```
+
 20.How can I monitor the account activity of specific IAM users, roles, and AWS access keys?
+
 ```
 CloudTrail Console(less than 90 days), CloudWatch Log Insights, S3 Athena
 ```
+
 21.A threat assessment has identified a risk whereby an internal employee could exfiltrate sensitive data from production host running inside AWS (Account 1). The threat was documented as follows:
 Threat description: A malicious actor could upload sensitive data from Server X by configuring credentials for an AWS account (Account 2) they control and uploading data to an Amazon S3 bucket within their control.
 Server X has outbound internet access configured via a proxy server. Legitimate access to S3 is required so that the application can upload encrypted files to an
 S3 bucket. Server X is currently using an IAM instance role. The proxy server is not able to inspect any of the server communication due to TLS encryption.
-22. Which of the following options will mitigate the threat? (Choose two.)
+
+Which of the following options will mitigate the threat? (Choose two.)
 
 ```
 Bypass the proxy and use an S3 VPC endpoint with a policy that whitelists only certain S3 buckets within Account 1.
 Block outbound access to public S3 endpoints on the proxy server.
 Configure Network ACLs on Server X to deny access to S3 endpoints.(Not ccorrect)
 ```
+
 23. A company requires that IP packet data be inspected for invalid or malicious content.
 Which of the following approaches achieve this requirement? (Choose two.)
 
@@ -88,6 +117,7 @@ Which of the following approaches achieve this requirement? (Choose two.)
 A. Configure a proxy solution on Amazon EC2 and route all outbound VPC traffic through it. Perform inspection within proxy software on the EC2 instance.
 B. Configure the host-based agent on each EC2 instance within the VPC. Perform inspection within the host-based agent.
 ```
+
 24. A company plans to move most of its IT infrastructure to AWS. They want to leverage their existing on-premises Active Directory as an identity provider for AWS.
 Which combination of steps should a Security Engineer take to federate the company's on-premises Active Directory with AWS? (Choose two.)
 ```
@@ -99,9 +129,11 @@ E. Configure Amazon Cognito to add relying party trust between Active Directory 
 ```
 
 A and D
+
 24. A company plans to move most of its IT infrastructure to AWS. The company wants to leverage its existing on-premises Active Directory as an identity provider for
 AWS.
 Which steps should be taken to authenticate to AWS services using the company's on-premises Active Directory? (Choose three.)
+
 ```
 A. Create IAM roles with permissions corresponding to each Active Directory group.
 B. Create IAM groups with permissions corresponding to each Active Directory group.
@@ -111,6 +143,7 @@ E. Configure AWS as a trusted relying party for the Active Directory
 F. Configure IAM as a trusted relying party for Amazon Cloud Directory.
 ```
 ACE
+
 
 25. Penetration Request not required for
 ```
@@ -265,9 +298,12 @@ Create a customer-managed CMK in the centralized account. Allow other applicable
 36. A company wants to deploy a distributed web application on a fleet of EC2 instances. The fleet will be fronted by a Classic Load Balancer that will be configured to terminate the TLS connection. The company wants to make sure that all past and current TLS traffic to the Classic Load Balancer stays secure, even if the certificate private key is leaked.
 To ensure the company meets these requirements, a Security Engineer can configure a Classic Load Balancer with:
 
-An HTTPS listener that uses a custom security policy that allows only perfect forward secrecy cipher suites.
-or
+An HTTPS listener that uses a custom security policy that allows only perfect forward secrecy cipher suites.(This should be correct)
 An HTTPS listener that uses the latest AWS predefined ELBSecurityPolicy-TLS-1-2-2017-01 security policy.
+
+ALB will not allow custom security policy. Classic LB allows custom security policy.
+
+ALB: You can use one of the ELBSecurityPolicy-FS policies if you require Forward Secrecy (FS).
 
 37. A company policy requires that no insecure server protocols are used on its Amazon EC2 instances. These protocols include FTP, Telnet, and HTTP. The company’s security team wants to evaluate compliance with this requirement by using a scheduled Amazon EventBridge (Amazon CloudWatch Events) event to review the current infrastructure and create a regular report about the EC2 instances.
 
@@ -276,14 +312,19 @@ Which process will check the compliance of the company's EC2 instances? ( AWS Co
 ```
 Amazon Inspector tests the network accessibility of your EC2 instances and the security state of your applications that run on those instances. Amazon Inspector assesses applications for exposure, vulnerabilities, and deviations from best practices. The rules in the Network Reachability package analyze your network configurations to find security vulnerabilities of your EC2 instances.
 ```
+
 38. What if we need the capability to perform an inline inspection of all inbound and outbound traffic from our VPC?
+
 ```
 Gateway Load Balanacer(network appliance in another VPC and vpc end point to connect to gateway LB)
 ```
+
 39. If u want to capture packet content
+
 ```
 VPC traffic MIRRORing for EC2 instances, Third-party AMIs in the marketplace approved for packet capture
 ```
+
 40. How can I be notified when an AWS resource is non-compliant using AWS Config? How can I receive custom email notifications when a resource is created in my AWS account using AWS Config service?How can I receive custom email notifications when a resource is deleted in my AWS account using AWS Config service?
 
 Use an EventBridge rule with a custom event pattern and an input transformer to match an AWS Config evaluation rule output as NON_COMPLIANT. Then, route the response to an Amazon Simple Notification Service (Amazon SNS) topic.
@@ -295,6 +336,7 @@ In the Event pattern pane, choose Custom patterns (JSON editor)
 Choose Configure input transformer. Under Target input transformer, for the Input Path text box, copy and paste the transformer logic.(Mapping fromjson to variables)
 In the Template text box, copy and paste the the template. Enter the time, rule, resource type, resource ID, AWS account ID and AWS Region, compliance, and resource information as required by your use case. Eg: <rule> evaluated the <resourceType> with Id <resourceId> in the account <awsAccountId> region <awsRegion> 
 ```
+
 41.You are a security professional for a large organization, and you need to come up with an incident response plan to handle accidental credential disclosure.  You need a solution that automatically monitors for possible misuse of credentials.  Which service can meet this requirement?
 ```
 GuardDuty
@@ -313,10 +355,12 @@ Use GuardDuty and specify suspicious IPs as part of the threat list.
 ```
 You can use host-based firewalls such as iptables and windows firewalls for complex requirements that cannot be met using NACL and Security groups.  WAF is useful for web application traffic, and this service integrates with Application Load Balancer, CloudFront, API Gateway, and so forth. It cannot be used as a firewall for EC2 instances.  Shield Advanced offers automatic DDoS protection.  Inspector only inspects for vulnerabilities and network reachability. It is not a firewall.
 ```
+
 45. We need a tool to monitor and alert if services like FTP are running on our servers. Besides, if someone changes the security group or network ACL that allows FTP access from the internet, the tool needs to pinpoint the impacted servers and any process listening on the port.  What service can I use for this purpose?
 ```
 Amazon Inspector can inspect an instance and find out if a process is listening on the ports.You can also trigger an inspector assessment from CloudWatch Events in response to a resource change. For example, monitor for security group or NACL changes using CloudWatch Events and trigger an inspector assessment for new exposures. 
 ```
+
 46. our application is receiving several requests with malformed payload, and you would like to capture the network packets for analysis. What options do you have?
 
 ```
@@ -367,7 +411,9 @@ E. Download and analyze a credential report from IAM.
 A - Sure
 E - Not sure. Should be correct as it helps in assessing if credentials are used or not.
 
-Access Advisor - Helps to see what services a user/role accessed.
+IAM Access Advisor - Helps to see what services a user/role accessed.
+
+You can generate and download a credential report that lists all users in your account and the status of their various credentials, including passwords, access keys, and MFA devices. Reports password_last_used, access_key_1_last_used_date, access_key_2_last_used_date
 
 A distributed web application is installed across several EC2 instances in public subnets residing in two Availability Zones. Apache logs show several intermittent brute-force attacks from hundreds of IP addresses at the layer 7 level over the past six months.
 What would be the BEST way to reduce the potential impact of these attacks in the future?
@@ -441,9 +487,18 @@ D. In CloudWatch, verify that the alarm threshold ג€consecutive periodsג€ 
 
 C or D
 
-May be D
+May be C (There is no configuration called consecutive periods. We configure - Period, Evaluation Period and dataPoints)
 
 https://aws.amazon.com/premiumsupport/knowledge-center/sns-sms-spending-limit-increase/ - is only foe sms ,not for email
+
+When you create an alarm, you specify three settings to enable CloudWatch to evaluate when to change the alarm state:
+
+**Period** is the length of time to evaluate the metric or expression to create each individual data point for an alarm. It is expressed in seconds. If you choose one minute as the period, the alarm evaluates the metric once per minute.
+**Evaluation Periods** is the number of the most recent periods, or data points, to evaluate when determining alarm state.
+**Datapoints to Alarm** is the number of data points within the Evaluation Periods that must be breaching to cause the alarm to go to the ALARM state. The breaching data points don't have to be consecutive, but they must all be within the last number of data points equal to Evaluation Period.
+
+
+When you configure Evaluation Periods and Datapoints to Alarm as different values, you're setting an "M out of N" alarm. Datapoints to Alarm is ("M") and Evaluation Periods is ("N"). The evaluation interval is the number of data points multiplied by the period. For example, if you configure 4 out of 5 data points with a period of 1 minute, the evaluation interval is 5 minutes. If you configure 3 out of 3 data points with a period of 10 minutes, the evaluation interval is 30 minutes.
 
 
 During a security event, it is discovered that some Amazon EC2 instances have not been sending Amazon CloudWatch logs.
@@ -489,8 +544,30 @@ A. Ensure that CloudTrail and S3 bucket access logging is enabled for the Analys
 B. Verify that a metric filter was created and then mapped to an alarm. Check the alarm notification action.
 C. Check the CloudWatch dashboards to ensure that there is a metric configured with an appropriate dimension for security group changes.
 D. Verify that the Analyst's account is mapped to an IAM policy that includes permissions for cloudwatch: GetMetricStatistics and Cloudwatch: ListMetrics.
-```
+
 B - Almost sure
+
+IAM policy required for CloudWatch
+
+{
+  "Version": "2012-10-17",
+  "Statement":[{
+      "Effect":"Allow",
+      "Action":["cloudwatch:GetMetricData","cloudwatch:ListMetrics"],
+      "Resource":"*",
+      "Condition":{
+         "Bool":{
+            "aws:SecureTransport":"true"
+            }
+         }
+      }
+   ]
+}
+GetMetricData: Required to graph metric data in the CloudWatch console, to retrieve large batches of metric data, and perform metric math on that data.
+GetMetricStatistics: Required to view graphs in other parts of the CloudWatch console and in dashboard widgets.
+cloudwatch:DescribeAlarmsForMetric : Required to view alarms for a metric.
+```
+
 
 Create a metric filter and create an alarm
 - Example security group configuration changes
@@ -499,12 +576,14 @@ Create a metric filter and create an alarm
 
 Example.com hosts its internal document repository on Amazon EC2 instances. The application runs on EC2 instances and previously stored the documents on encrypted Amazon EBS volumes. To optimize the application for scale, example.com has moved the files to Amazon S3. The security team has mandated that all the files are securely deleted from the EBS volume, and it must certify that the data is unreadable before releasing the underlying disks.
 Which of the following methods will ensure that the data is unreadable by anyone else?
+
 ```
 A. Change the volume encryption on the EBS volume to use a different encryption mechanism. Then, release the EBS volumes back to AWS.
 B. Release the volumes back to AWS. AWS immediately wipes the disk after it is deprovisioned.
 C. Delete the encryption key used to encrypt the EBS volume. Then, release the EBS volumes back to AWS.
 D. Delete the data by using the operating system delete commands. Run Quick Format on the drive and then release the EBS volumes back to AWS.
 ```
+
 C - Almost sure
 
 For compliance reasons, an organization limits the use of resources to three specific AWS regions. It wants to be alerted when any resources are launched in unapproved regions.

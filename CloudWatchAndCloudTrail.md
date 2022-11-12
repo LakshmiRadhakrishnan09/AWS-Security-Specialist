@@ -299,3 +299,7 @@ https://docs.aws.amazon.com/awscloudtrail/latest/userguide/create-s3-bucket-poli
 3. For Target types, choose Amazon service.
 4. For Select a target, choose EBS Create Snapshot from the drop-down list.
 5. For Volume ID, enter the volume ID of the Amazon EBS volume.
+
+### Alarms
+
+https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html#alarm-evaluation
