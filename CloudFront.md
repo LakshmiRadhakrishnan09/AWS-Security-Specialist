@@ -204,3 +204,10 @@ Custom routing accelerators only support virtual private cloud (VPC) subnet endp
 #### Resource Ownership
 
 AWS account is the resource owner ( irrespective of who created the resource)
+
+### Restrcting access to S3 for CF
+
+OAC and OAI
+
+Read more
+https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html
