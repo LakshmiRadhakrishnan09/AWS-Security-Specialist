@@ -1,0 +1,4 @@
+## SCP
+
+- Service control policies: Maximum limit of 5120 characters. Maximum 5 attached to root. Maximum 5 attached per OU. Maximum 5 attached per account.
+- However, an SCP never grants permissions. Instead, SCPs are access controls that specify the maximum available permissions for the IAM users and IAM roles in your organization. 
